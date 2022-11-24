@@ -1,0 +1,18 @@
+{
+    "name": "GetReady.RGN.Core.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cf87a66721c783241b810ce809921a27"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
