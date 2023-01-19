@@ -77,8 +77,11 @@ namespace RGN.MyEditor
         public static void SetEnvironment(BuildCredentials sourceCredentials)
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
-            applicationStore.googleSignInWebClientID = sourceCredentials.googleSignInWebClientID;
-            applicationStore.googleSignInReverseClientID = sourceCredentials.googleSignInReverseClientID;
+            applicationStore.RGNProjectId = sourceCredentials.rgnProjectId;
+            applicationStore.googleSignInWebClientIdAndroid = sourceCredentials.googleSignInWebClientIdAndroid;
+            applicationStore.googleSignInReverseClientIdAndroid = sourceCredentials.googleSignInReverseClientIdAndroid;
+            applicationStore.googleSignInWebClientIdiOS = sourceCredentials.googleSignInWebClientIdiOS;
+            applicationStore.googleSignInReverseClientIdiOS = sourceCredentials.googleSignInReverseClientIdiOS;
             applicationStore.RGNMasterApiKey = sourceCredentials.firebaseMasterApiKey;
             applicationStore.RGNMasterAndroidAppID = sourceCredentials.firebaseMasterAndroidAppID;
             applicationStore.RGNMasterIOSAppID = sourceCredentials.firebaseMasterIOSAppID;

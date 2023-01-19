@@ -76,7 +76,7 @@ namespace RGN
         }
 
         [Header("RGN APP")]
-        public string RGNAppId = "";
+        public string RGNProjectId = "";
 
         [Header("Base")]
         public string iosAppID = "";
@@ -90,8 +90,10 @@ namespace RGN
         public string firestorePort = ":8080";
         public string functionsPort = ":5001";
 
-        [HideInInspector] public string googleSignInWebClientID = "";
-        [HideInInspector] public string googleSignInReverseClientID = "";
+        [HideInInspector] public string googleSignInWebClientIdAndroid = "";
+        [HideInInspector] public string googleSignInReverseClientIdAndroid = "";
+        [HideInInspector] public string googleSignInWebClientIdiOS = "";
+        [HideInInspector] public string googleSignInReverseClientIdiOS = "";
         [HideInInspector] public string firebaseAssociatedDomain = "";
         [HideInInspector] public string RGNMasterApiKey = "";
         [HideInInspector] public string RGNMasterAndroidAppID = "";
@@ -118,7 +120,7 @@ namespace RGN
         }
 
         public string GetRGNMasterAppID => RGNMasterAppID;
-        public string GetRGNAppID => RGNAppId;
+        public string GetRGNProjectId => RGNProjectId;
         public string GetiOSAppId => iosAppID;
         public string GetAppLinkPrefix => appLinkPrefix;
         public bool GetIsProduction => isProduction;
@@ -126,8 +128,10 @@ namespace RGN
         public string GetEmulatorServerIp => emulatorServerIp;
         public string GetFirestorePort => firestorePort;
         public string GetFunctionsPort => functionsPort;
-        public string GetGoogleSignInWebClientID => googleSignInWebClientID;
-        public string GetGoogleSignInReverseClientID => googleSignInReverseClientID;
+        public string GetGoogleSignInWebClientIdAndroid => googleSignInWebClientIdAndroid;
+        public string GetGoogleSignInReverseClientIdAndroid => googleSignInReverseClientIdAndroid;
+        public string GetGoogleSignInWebClientIdiOS => googleSignInWebClientIdiOS;
+        public string GetGoogleSignInReverseClientIdiOS => googleSignInReverseClientIdiOS;
         public string GetFirebaseAssociatedDomain => firebaseAssociatedDomain;
         public string GetRGNMasterApiKey => RGNMasterApiKey;
         public string GetRGNMasterAndroidAppID => RGNMasterAndroidAppID;

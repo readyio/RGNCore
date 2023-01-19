@@ -5,9 +5,13 @@ namespace RGN
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/BuildCredentials", order = 2)]
     public class BuildCredentials : ScriptableObject
     {
+        public string rgnProjectId;
+
         [Header("Google SignIn Credentials")]
-        public string googleSignInWebClientID = "";
-        public string googleSignInReverseClientID = "";
+        public string googleSignInWebClientIdAndroid = "";
+        public string googleSignInReverseClientIdAndroid = "";
+        public string googleSignInWebClientIdiOS = "";
+        public string googleSignInReverseClientIdiOS = "";
 
         [Header("Game Credentials")]
         public string firebaseAssociatedDomain = "";
