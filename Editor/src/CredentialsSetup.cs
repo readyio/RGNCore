@@ -12,6 +12,7 @@ namespace RGN.MyEditor
         private const string SET_STAGING = READY_MENU + "Set Staging";
         private const string SET_PRODUCTION = READY_MENU + "Set Production";
         private const string SET_EMULATOR = READY_MENU + "Set Emulator";
+        private const string EXPORT_CREDENTIALS = READY_MENU + "Export Credentials";
 
         static CredentialsSetup()
         {
@@ -104,6 +105,16 @@ namespace RGN.MyEditor
                     sourceCredentials.FirebaseCredentialsContentAndroid);
             }
             AssetDatabase.Refresh();
+        }
+
+        [MenuItem(EXPORT_CREDENTIALS)]
+        public static void ExportCredentials()
+        {
+            string[] assetPathNames = {
+                "Assets/ReadyGamesNetwork",
+            };
+            string fileName = "credentials.unitypackage";
+            AssetDatabase.ExportPackage(assetPathNames, fileName, ExportPackageOptions.Recurse);
         }
     }
 }
