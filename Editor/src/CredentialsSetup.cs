@@ -90,19 +90,25 @@ namespace RGN.MyEditor
             applicationStore.RGNMasterDatabaseUrl = sourceCredentials.firebaseMasterDatabaseUrl;
 
             EditorUtility.SetDirty(applicationStore);
+            AssetDatabase.SaveAssets();
 
-            if (applicationStore.iOS)
+            const string PLIST_PATH = "Assets/ReadyGamesNetwork/Credentials/GoogleService-Info.plist";
+            const string JSON_PATH = "Assets/ReadyGamesNetwork/Credentials/google-services.json";
+            if (string.IsNullOrEmpty(sourceCredentials.FirebaseCredentialsContentIOS))
             {
-                AssetDatabase.SaveAssets();
+                File.Delete(PLIST_PATH);
             }
-            File.WriteAllText(
-                "Assets/ReadyGamesNetwork/Credentials/GoogleService-Info.plist",
-                sourceCredentials.FirebaseCredentialsContentIOS);
-            if (applicationStore.android)
+            else
             {
-                File.WriteAllText(
-                    "Assets/ReadyGamesNetwork/Credentials/google-services.json",
-                    sourceCredentials.FirebaseCredentialsContentAndroid);
+                File.WriteAllText(PLIST_PATH, sourceCredentials.FirebaseCredentialsContentIOS);
+            }
+            if (string.IsNullOrEmpty(sourceCredentials.FirebaseCredentialsContentAndroid))
+            {
+                File.Delete(JSON_PATH);
+            }
+            else
+            {
+                File.WriteAllText(JSON_PATH, sourceCredentials.FirebaseCredentialsContentAndroid);
             }
             AssetDatabase.Refresh();
         }

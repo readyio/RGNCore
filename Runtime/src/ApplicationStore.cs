@@ -34,7 +34,8 @@ namespace RGN
                 Debug.LogError(
                     $"The application store file was missing, created automatically new one at location: {APPLICATION_STORE_FILE_NEW_LOCATION}");
                 Debug.LogError(
-                    $"Please contact RGN team to provide you the right settings for the new {APPLICATION_STORE_FILE_NAME_WITH_EXTENSION} file");
+                    $"Please download the credentials.unitypackage from developers dashboard and import it. " +
+                    $"Or contact RGN team to provide you the right settings for the new {APPLICATION_STORE_FILE_NAME_WITH_EXTENSION} file");
             }
             else if (oldLocationFileExists && !newLocationFileExists)
             {
@@ -77,10 +78,6 @@ namespace RGN
         [Header("RGN APP")]
         public string RGNAppId = "";
 
-        [Header("Supported Platform")]
-        public bool android = false;
-        public bool iOS = false;
-
         [Header("Base")]
         public string iosAppID = "";
         public string appLinkPrefix = "";
@@ -122,8 +119,6 @@ namespace RGN
 
         public string GetRGNMasterAppID => RGNMasterAppID;
         public string GetRGNAppID => RGNAppId;
-        public bool IsAndroidSupported => android;
-        public bool IsiOSSupported => iOS;
         public string GetiOSAppId => iosAppID;
         public string GetAppLinkPrefix => appLinkPrefix;
         public bool GetIsProduction => isProduction;
