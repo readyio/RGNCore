@@ -11,7 +11,9 @@ namespace RGN.MyEditor
         private const string APPLICATION_STORE = READY_MENU + "Application Store";
         private const string SET_STAGING = READY_MENU + "Set Staging";
         private const string SET_PRODUCTION = READY_MENU + "Set Production";
+#if READY_DEVELOPMENT
         private const string SET_EMULATOR = READY_MENU + "Set Emulator";
+#endif
         private const string EXPORT_CREDENTIALS = READY_MENU + "Export Credentials";
 
         static CredentialsSetup()
@@ -25,7 +27,9 @@ namespace RGN.MyEditor
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
             Menu.SetChecked(SET_STAGING, !applicationStore.isProduction);
             Menu.SetChecked(SET_PRODUCTION, applicationStore.isProduction);
+#if READY_DEVELOPMENT
             Menu.SetChecked(SET_EMULATOR, applicationStore.usingEmulator);
+#endif
         }
 
         [MenuItem(APPLICATION_STORE)]
@@ -63,6 +67,8 @@ namespace RGN.MyEditor
             SetEnvironment(sourceCredentials);
             UpdateUI();
         }
+        
+#if READY_DEVELOPMENT
         [MenuItem(SET_EMULATOR)]
         public static void SetEmulator()
         {
@@ -73,6 +79,7 @@ namespace RGN.MyEditor
             AssetDatabase.Refresh();
             UpdateUI();
         }
+#endif
 
         public static void SetEnvironment(BuildCredentials sourceCredentials)
         {
