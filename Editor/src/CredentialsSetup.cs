@@ -67,7 +67,7 @@ namespace RGN.MyEditor
             SetEnvironment(sourceCredentials);
             UpdateUI();
         }
-        
+
 #if READY_DEVELOPMENT
         [MenuItem(SET_EMULATOR)]
         public static void SetEmulator()
@@ -123,6 +123,7 @@ namespace RGN.MyEditor
             AssetDatabase.Refresh();
         }
 
+#if READY_DEVELOPMENT
         [MenuItem(EXPORT_CREDENTIALS)]
         public static void ExportCredentials()
         {
@@ -132,5 +133,6 @@ namespace RGN.MyEditor
             string fileName = "credentials.unitypackage";
             AssetDatabase.ExportPackage(assetPathNames, fileName, ExportPackageOptions.Recurse);
         }
+#endif
     }
 }

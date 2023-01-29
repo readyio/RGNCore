@@ -15,10 +15,10 @@ namespace RGN
 
         [Header("Game Credentials")]
         public string firebaseAssociatedDomain = "";
-        [TextArea(50, 100)]
+        [TextArea(20, 150)]
         [Tooltip("Paste GoogleService-Info.plist file")]
         public string FirebaseCredentialsContentIOS = "";
-        [TextArea(50, 100)]
+        [TextArea(20, 150)]
         [Tooltip("Paste google-services.json file")]
         public string FirebaseCredentialsContentAndroid = "";
 
