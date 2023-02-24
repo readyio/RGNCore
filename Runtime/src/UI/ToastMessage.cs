@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace RGN.UI
 {
-    public sealed class ToastMessage : MonoBehaviour
+    public sealed class ToastMessage : MonoBehaviour, IPointerClickHandler
     {
         [Header("Settings")]
         [SerializeField] private Color _errorColor = Color.red;
@@ -21,7 +22,6 @@ namespace RGN.UI
 
         public static ToastMessage I { get; private set; }
         private float _hideMessageTime;
-        private bool _isShown;
 
         private void Awake()
         {
@@ -41,13 +41,13 @@ namespace RGN.UI
         {
             if (Time.time > _hideMessageTime)
             {
-                _isShown = false;
+                _canvasGroup.blocksRaycasts = false;
             }
-            if (!_isShown && _canvasGroup.alpha > 0)
+            if (!_canvasGroup.blocksRaycasts && _canvasGroup.alpha > 0)
             {
                 _canvasGroup.alpha -= Time.deltaTime / _alphaAnimationOutTimeSec;
             }
-            if (_isShown && _canvasGroup.alpha < 1)
+            if (_canvasGroup.blocksRaycasts && _canvasGroup.alpha < 1)
             {
                 _canvasGroup.alpha += Time.deltaTime / _alphaAnimationInTimeSec;
             }
@@ -65,6 +65,10 @@ namespace RGN.UI
         {
             ShowInternal(message, _normalColor);
         }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _canvasGroup.blocksRaycasts = false;
+        }
 
         private void ShowInternal(string message, Color bgColor)
         {
@@ -72,7 +76,7 @@ namespace RGN.UI
             _messageText.text = message;
 
             _hideMessageTime = Time.time + _showTimeInSeconds;
-            _isShown = true;
+            _canvasGroup.blocksRaycasts = true;
         }
     }
 }
