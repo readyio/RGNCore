@@ -52,6 +52,10 @@ namespace RGN.UI
         }
         public async void OnEndDrag(PointerEventData eventData)
         {
+            if (_reloadImage == null)
+            {
+                return;
+            }
             Vector2 contentAnchoredPosition = _scrollRect.content.anchoredPosition;
             if (contentAnchoredPosition.y > -_refreshDistance)
             {
@@ -59,12 +63,18 @@ namespace RGN.UI
                 return;
             }
             _needToRotate = true;
-            if (RefreshRequested != null)
+            try
             {
-                await RefreshRequested.Invoke();
+                if (RefreshRequested != null)
+                {
+                    await RefreshRequested.Invoke();
+                }
             }
-            _reloadImage.gameObject.SetActive(false);
-            _needToRotate = false;
+            finally
+            {
+                _reloadImage.gameObject.SetActive(false);
+                _needToRotate = false;
+            }
         }
     }
 }
