@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,14 +7,13 @@ namespace RGN.UI
     [RequireComponent(typeof(Button), typeof(RectTransform))]
     public sealed class RGNButton : MonoBehaviour
     {
-        public RectTransform RectTransform { get; private set; }
-        public Button Button { get; private set; }
+        public RectTransform RectTransform { get => _rectTransform; }
+        public Button Button { get => _button; }
+        public TextMeshProUGUI ButtonText { get => _buttonText; }
 
-        private void Awake()
-        {
-            RectTransform = GetComponent<RectTransform>();
-            Button = GetComponent<Button>();
-        }
+        [SerializeField] private RectTransform _rectTransform;
+        [SerializeField] private Button _button;
+        [SerializeField] private TextMeshProUGUI _buttonText;
 
         public float GetHeight()
         {
