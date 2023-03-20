@@ -81,21 +81,21 @@ namespace RGN
 #if UNITY_IOS && !UNITY_TVOS
     internal sealed class IOSBoard : IBoard
     {
-        [DllImport("__Internal")]
+        [System.Runtime.InteropServices.DllImport("__Internal")]
         static extern void Clipboard_SetText_(string str);
-        [DllImport("__Internal")]
+        [System.Runtime.InteropServices.DllImport("__Internal")]
         static extern string Clipboard_GetText_();
 
         public void SetText(string str)
         {
             if (Application.platform != RuntimePlatform.OSXEditor)
             {
-                SetText_(str);
+                Clipboard_SetText_(str);
             }
         }
         public string GetText()
         {
-            return GetText_();
+            return Clipboard_GetText_();
         }
     }
 #endif
