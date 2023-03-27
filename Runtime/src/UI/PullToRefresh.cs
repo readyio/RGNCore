@@ -12,6 +12,7 @@ namespace RGN.UI
 
         [SerializeField] private Image _reloadImagePrefab;
         [SerializeField] private float _refreshDistance = 100f;
+        [SerializeField] private float _rotationSpeed = 300;
 
         private ScrollRect _scrollRect;
         private Image _reloadImage;
@@ -32,7 +33,7 @@ namespace RGN.UI
             {
                 return;
             }
-            _reloadImageRectTransform.Rotate(Vector3.back, 1);
+            _reloadImageRectTransform.Rotate(Vector3.back, _rotationSpeed * Time.deltaTime);
         }
         public void OnDrag(PointerEventData eventData)
         {
