@@ -32,9 +32,14 @@ namespace RGN.UI
             }
             I = this;
             _canvasGroup.alpha = 0;
+            var rootTransform = gameObject.transform;
+            while (rootTransform != null && rootTransform.parent != null)
+            {
+                rootTransform = rootTransform.parent;
+            }
             if (_dontDestroyOnLoad)
             {
-                DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(rootTransform.gameObject);
             }
         }
         private void Update()
