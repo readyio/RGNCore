@@ -7,13 +7,15 @@ namespace RGN.MyEditor
     [InitializeOnLoad]
     public class CredentialsSetup
     {
-        private const string APPLICATION_STORE = UsefulMenuItems.READY_MENU + "Application Store";
-        private const string SET_STAGING = UsefulMenuItems.READY_MENU + "Set Staging";
-        private const string SET_PRODUCTION = UsefulMenuItems.READY_MENU + "Set Production";
+        private const string READY_MENU = "ReadyGamesNetwork/";
+
+        private const string APPLICATION_STORE = READY_MENU + "Application Store";
+        private const string SET_STAGING = READY_MENU + "Set Staging";
+        private const string SET_PRODUCTION = READY_MENU + "Set Production";
 #if READY_DEVELOPMENT
-        private const string SET_EMULATOR = UsefulMenuItems.READY_MENU + "Set Emulator";
+        private const string SET_EMULATOR = READY_MENU + "Set Emulator";
 #endif
-        private const string EXPORT_CREDENTIALS = UsefulMenuItems.READY_MENU + "Export Credentials";
+        private const string EXPORT_CREDENTIALS = READY_MENU + "Export Credentials";
 
         static CredentialsSetup()
         {

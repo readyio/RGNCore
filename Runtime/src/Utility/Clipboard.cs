@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace RGN
 {
+    /// <summary>
+    /// Helper class to copy-paste string values.
+    /// Is supported on standalone and mobile platforms
+    /// </summary>
     public static class Clipboard
     {
         private static IBoard sBoard;
