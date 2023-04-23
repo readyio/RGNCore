@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RGNCore</name>
+    </assembly>
+    <members>
+        <member name="P:RGN.FunctionsClient.ApiException.ErrorCode">
+            <summary>
+            Gets or sets the error code (HTTP status code)
+            </summary>
+            <value>The error code (HTTP status code).</value>
+        </member>
+        <member name="P:RGN.FunctionsClient.ApiException.ErrorContent">
+            <summary>
+            Gets or sets the error content (body json object)
+            </summary>
+            <value>The error content (Http response body).</value>
+        </member>
+        <member name="M:RGN.FunctionsClient.ApiException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
+            </summary>
+        </member>
+        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
+            </summary>
+            <param name="errorCode">HTTP status code.</param>
+            <param name="message">Error message.</param>
+        </member>
+        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
+            </summary>
+            <param name="errorCode">HTTP status code.</param>
+            <param name="message">Error message.</param>
+        </member>
+        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
+            </summary>
+            <param name="errorCode">HTTP status code.</param>
+            <param name="message">Error message.</param>
+            <param name="errorContent">Error content.</param>
+        </member>
+        <member name="P:RGN.IRGNCore.CurrentAuthReadyState">
+            <summary>
+            Returns the current Authentication state for the User
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.AuthorizedProviders">
+            <summary>
+            Mask of all providers, linked to user acc
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.AppIDForRequests">
+            <summary>
+            RGNAppId, set on RGNCoreBuilder.Build() and can override by OverrideApplicationIdentifier()
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.LocalAppUser">
+            <summary>
+            User, that is related to app-specific firebase backend
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.MasterAppUser">
+            <summary>
+            User from ReadyMaster firebase backend
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.IsLoggedIn">
+            <summary>
+            Indicates, that user is currently logged in with one of linked providers
+            </summary>
+        </member>
+        <member name="M:RGN.IRGNCore.SendAllFromDynamicLinkBuffer">
+            <summary>
+            Forces inner buffer to run callback "DynamicLinkReceived" on each not processed message
+            </summary>
+        </member>
+        <member name="M:RGN.IRGNCore.OverrideApplicationIdentifier(System.String)">
+            <summary>
+            Use this to override appId in requests, for example to get work application in PC platform (for testing)
+            </summary>
+        </member>
+        <member name="M:RGN.IRGNCore.GetModule``1">
+            <summary>
+            Use this to get instance of module to access expanded functionality
+            </summary>
+        </member>
+        <member name="M:RGN.IRGNCore.SignOutRGN">
+            <summary>
+            Forces logout from firebase
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.trait_type">
+            <summary>
+            Name of the trait
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.value">
+            <summary>
+            Value of the trait
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.display_type">
+            <summary>
+            Indicating how you would like it to be displayed
+            </summary>
+        </member>
+        <member name="T:RGN.Model.OpenSea.OpenSeaMetadata">
+            <summary>
+            Please review the official OpenSea documentation:
+            https://docs.opensea.io/docs/metadata-standards
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.name">
+            <summary>
+            Name of the item.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.description">
+            <summary>
+            A human readable description of the item. Markdown is supported.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.external_url">
+            <summary>
+            This is the URL that will appear below the asset's image
+            on OpenSea and will allow users to leave OpenSea and view
+            the item on your site.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.background_color">
+            <summary>
+            Background color of the item on OpenSea.
+            Must be a six-character hexadecimal without a pre-pended #.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.animation_url">
+            <summary>
+            URL to a multi-media attachment for the item. The file extensions
+            GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with
+            the audio-only extensions MP3, WAV, and OGA.
+            Animation_url also supports HTML pages, allowing you to build rich
+            experiences and interactive NFTs using JavaScript canvas, WebGL, and more.
+            Scripts and relative paths within the HTML page are now supported.
+            However, access to browser extensions is not supported.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.youtube_url">
+            <summary>
+            A URL to a YouTube video.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.image">
+            <summary>
+            This is the URL to the image of the item. Can be just about any type
+            of image (including SVGs, which will be cached into PNGs by OpenSea),
+            and can be IPFS URLs or paths. We recommend using a 350 x 350 image.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.image_data">
+            <summary>
+            Raw SVG image data, if you want to generate images on the fly (not recommended).
+            Only use this if you're not including the image parameter.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.OpenSea.OpenSeaMetadata.attributes">
+            <summary>
+            These are the attributes for the item, which will show up on the OpenSea page for the item.
+            </summary>
+        </member>
+        <member name="M:RGN.RGNCoreBuilder.CreateAndBuildAsync(RGN.Dependencies.IDependencies,RGN.RGNCore.AuthenticationChangedDelegate)">
+            <summary>
+            This is a convenience method. It calls inside the CreateInstance() and BuildAsync() methods.
+            </summary>
+            <param name="dependencies">Instance of the RGN SDK dependencies implementation</param>
+            <param name="authenticationChanged">Callback to receive user authentication events</param>
+            <returns>RGNCore interface instance</returns>
+        </member>
+    </members>
+</doc>
