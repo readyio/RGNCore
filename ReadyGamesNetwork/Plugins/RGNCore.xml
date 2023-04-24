@@ -43,6 +43,27 @@
             <param name="message">Error message.</param>
             <param name="errorContent">Error content.</param>
         </member>
+        <member name="T:RGN.IRGNCore">
+            <summary>
+            Ready Games Network core class. Is resposible for user auth and modules initialization
+            </summary>
+        </member>
+        <member name="E:RGN.IRGNCore.AuthenticationChanged">
+            <summary>
+            Is called every time the user auth state is changed
+            For example user logs out, logs in as a guest, logs is with email
+            </summary>
+        </member>
+        <member name="E:RGN.IRGNCore.DynamicLinkReceived">
+            <summary>
+            Is called every time the app is opened with a deep link
+            </summary>
+        </member>
+        <member name="E:RGN.IRGNCore.UpdateEvent">
+            <summary>
+            Unity Update event. You can subscribe on this event to receive updates every frame.
+            </summary>
+        </member>
         <member name="P:RGN.IRGNCore.CurrentAuthReadyState">
             <summary>
             Returns the current Authentication state for the User
