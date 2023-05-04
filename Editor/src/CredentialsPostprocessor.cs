@@ -22,6 +22,12 @@ namespace RGN.MyEditor
             for (int i = 0; i < importedAssets.Length; i++)
             {
                 string asset = importedAssets[i];
+                if (asset.Contains("DevelopmentBuildCredentials"))
+                {
+                    UnityEngine.Debug.Log("Trying to set the development credentials automatically...");
+                    CredentialsSetup.SetStagingEnv();
+                    return;
+                }
                 if (asset.Contains("StagingBuildCredentials"))
                 {
                     UnityEngine.Debug.Log("Trying to set the staging credentials automatically...");

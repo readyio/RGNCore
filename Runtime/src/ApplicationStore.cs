@@ -86,7 +86,7 @@ namespace RGN
         public string iosAppID = "";
         public string appLinkPrefix = "";
 
-        [ReadOnly] public bool isProduction = false;
+        [ReadOnly] public EnumRGNEnvironment RGNEnvironment = EnumRGNEnvironment.Staging;
 
         [Header("Emulator Setup")]
         public bool usingEmulator = false;
@@ -127,7 +127,7 @@ namespace RGN
         public string GetRGNProjectId => RGNProjectId;
         public string GetiOSAppId => iosAppID;
         public string GetAppLinkPrefix => appLinkPrefix;
-        public bool GetIsProduction => isProduction;
+        public EnumRGNEnvironment GetRGNEnvironment => RGNEnvironment;
         public bool IsUsingEmulator => usingEmulator;
         public string GetEmulatorServerIp => emulatorServerIp;
         public string GetFirestorePort => firestorePort;

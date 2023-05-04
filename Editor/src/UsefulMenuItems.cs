@@ -7,9 +7,8 @@ namespace RGN.MyEditor
     {
         private const string READY_MENU = "ReadyGamesNetwork/Developer/";
 
-
 #if READY_DEVELOPMENT
-        [MenuItem(READY_MENU + "Open Persistent Data Path")]
+        [MenuItem(READY_MENU + "Open Persistent Data Path", priority = 10)]
         public static void SetEmulator()
         {
             EditorUtility.RevealInFinder(Application.persistentDataPath);

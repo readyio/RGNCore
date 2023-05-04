@@ -13,9 +13,9 @@ namespace RGN.MyEditor
         private const string SET_STAGING = READY_MENU + "Set Staging";
         private const string SET_PRODUCTION = READY_MENU + "Set Production";
 #if READY_DEVELOPMENT
+        private const string SET_DEVELOPMENT = READY_MENU + "Set Development";
         private const string SET_EMULATOR = READY_MENU + "Set Emulator";
 #endif
-        private const string EXPORT_CREDENTIALS = READY_MENU + "Export Credentials";
 
         static CredentialsSetup()
         {
@@ -26,9 +26,10 @@ namespace RGN.MyEditor
             EditorApplication.delayCall -= UpdateUI;
             ApplicationStore.MoveToResourcesFolderOrCreateNewIfNeeded();
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
-            Menu.SetChecked(SET_STAGING, !applicationStore.isProduction);
-            Menu.SetChecked(SET_PRODUCTION, applicationStore.isProduction);
+            Menu.SetChecked(SET_STAGING, applicationStore.GetRGNEnvironment == EnumRGNEnvironment.Staging);
+            Menu.SetChecked(SET_PRODUCTION, applicationStore.GetRGNEnvironment == EnumRGNEnvironment.Production);
 #if READY_DEVELOPMENT
+            Menu.SetChecked(SET_DEVELOPMENT, applicationStore.GetRGNEnvironment == EnumRGNEnvironment.Development);
             Menu.SetChecked(SET_EMULATOR, applicationStore.usingEmulator);
 #endif
         }
@@ -39,8 +40,7 @@ namespace RGN.MyEditor
             Selection.activeObject = ApplicationStore.LoadFromResources();
         }
 
-
-        [MenuItem(SET_STAGING)]
+        [MenuItem(SET_STAGING, priority = 1)]
         public static void SetStagingEnv()
         {
             BuildCredentials sourceCredentials = AssetDatabase.LoadAssetAtPath<BuildCredentials>(
@@ -50,11 +50,11 @@ namespace RGN.MyEditor
                 Debug.LogError("Can not find source credentials for staging environment, please contact RGN team for help");
                 return;
             }
-            ApplicationStore.LoadFromResources().isProduction = false;
+            ApplicationStore.LoadFromResources().RGNEnvironment = EnumRGNEnvironment.Staging;
             SetEnvironment(sourceCredentials);
             UpdateUI();
         }
-        [MenuItem(SET_PRODUCTION)]
+        [MenuItem(SET_PRODUCTION, priority = 2)]
         public static void SetProductionEnv()
         {
             BuildCredentials sourceCredentials = AssetDatabase.LoadAssetAtPath<BuildCredentials>(
@@ -64,13 +64,27 @@ namespace RGN.MyEditor
                 Debug.LogError("Can not find source credentials for production environment, please contact RGN team for help");
                 return;
             }
-            ApplicationStore.LoadFromResources().isProduction = true;
+            ApplicationStore.LoadFromResources().RGNEnvironment = EnumRGNEnvironment.Production;
             SetEnvironment(sourceCredentials);
             UpdateUI();
         }
 
 #if READY_DEVELOPMENT
-        [MenuItem(SET_EMULATOR)]
+        [MenuItem(SET_DEVELOPMENT, priority = 0)]
+        public static void SetDevelopmentEnv()
+        {
+            BuildCredentials sourceCredentials = AssetDatabase.LoadAssetAtPath<BuildCredentials>(
+                "Assets/ReadyGamesNetwork/Credentials/DevelopmentBuildCredentials.asset");
+            if (sourceCredentials == null)
+            {
+                Debug.LogError("Can not find source credentials for development environment, please contact RGN team for help");
+                return;
+            }
+            ApplicationStore.LoadFromResources().RGNEnvironment = EnumRGNEnvironment.Development;
+            SetEnvironment(sourceCredentials);
+            UpdateUI();
+        }
+        [MenuItem(SET_EMULATOR, priority = 3)]
         public static void SetEmulator()
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
@@ -123,17 +137,5 @@ namespace RGN.MyEditor
             }
             AssetDatabase.Refresh();
         }
-
-#if READY_DEVELOPMENT
-        [MenuItem(EXPORT_CREDENTIALS)]
-        public static void ExportCredentials()
-        {
-            string[] assetPathNames = {
-                "Assets/ReadyGamesNetwork",
-            };
-            string fileName = "credentials.unitypackage";
-            AssetDatabase.ExportPackage(assetPathNames, fileName, ExportPackageOptions.Recurse);
-        }
-#endif
     }
 }
