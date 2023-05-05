@@ -4,6 +4,17 @@
         <name>RGNCore</name>
     </assembly>
     <members>
+        <member name="T:RGN.BaseModule`1">
+            <summary>
+            Represents a base module for other RGN modules to inherit from.
+            </summary>
+            <typeparam name="TModule">The type of the derived module.</typeparam>
+        </member>
+        <member name="P:RGN.BaseModule`1.I">
+            <summary>
+            Gets the singleton instance of the derived module.
+            </summary>
+        </member>
         <member name="P:RGN.FunctionsClient.ApiException.ErrorCode">
             <summary>
             Gets or sets the error code (HTTP status code)
