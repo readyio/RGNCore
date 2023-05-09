@@ -20,6 +20,7 @@ namespace RGN
             APPLICATION_STORE_FILE_NAME_WITH_EXTENSION;
 
         // Email WebForm sign in URL
+        [HideInInspector] private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://rgndemo-05j.web.app/?url_redirect=";
         [HideInInspector] private const string STAGING_EMAIL_SIGN_IN_URL = "https://rgn-auth.web.app/?url_redirect=";
         [HideInInspector] private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth2.ready.gg/?url_redirect=";
 
@@ -147,7 +148,8 @@ namespace RGN
         public Uri GetRGNMasterDatabaseUrl => new Uri(RGNMasterDatabaseUrl);
         public string GetRGNFriendInviteMessage => RGNFriendInviteMessage;
         // Email WebForm sign in URL
-        public string GetRGNStatingEmailSignInURL => STAGING_EMAIL_SIGN_IN_URL;
+        public string GetRGNDevelopmentEmailSignInURL => DEVELOPMENT_EMAIL_SIGN_IN_URL;
+        public string GetRGNStagingEmailSignInURL => STAGING_EMAIL_SIGN_IN_URL;
         public string GetRGNProductionEmailSignInURL => PRODUCTION_EMAIL_SIGN_IN_URL;
     }
 }
