@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace RGN.MyEditor
 {
     public sealed class UsefulMenuItems
     {
-        private const string READY_MENU = "ReadyGamesNetwork/Developer/";
+        public const string READY_MENU = "ReadyGamesNetwork/Developer/";
 
 #if READY_DEVELOPMENT
         [MenuItem(READY_MENU + "Open Persistent Data Path", priority = 10)]
