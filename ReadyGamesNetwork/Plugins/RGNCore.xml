@@ -15,6 +15,135 @@
             Gets the singleton instance of the derived module.
             </summary>
         </member>
+        <member name="T:RGN.EnumLoginError">
+            <summary>
+            An enumeration representing potential login errors within the RGN SDK.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.Ok">
+            <summary>
+            Login successful, no errors encountered.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.AccountAlreadyLinked">
+            <summary>
+            Login unsuccessful due to a previous link with an account.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.AccountExistsWithDifferentCredentials">
+            <summary>
+            Login unsuccessful because an account exists with different credentials.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.AccountNeedsRecentLogin">
+            <summary>
+            Login unsuccessful due to the need for a more recent login.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.Unknown">
+            <summary>
+            Login unsuccessful due to an unknown error.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginError.Cancelled">
+            <summary>
+            Login cancelled by the user.
+            </summary>
+        </member>
+        <member name="T:RGN.EnumLoginState">
+            <summary>
+            An enumeration representing the current login state within the RGN SDK.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginState.NotLoggedIn">
+            <summary>
+            User is not logged in.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginState.Success">
+            <summary>
+            User successfully logged in.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginState.Error">
+            <summary>
+            An error occurred during the login process.
+            </summary>
+        </member>
+        <member name="T:RGN.EnumRGNEnvironment">
+            <summary>
+            An enumeration representing the different environments in which the RGN SDK can operate.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumRGNEnvironment.Staging">
+            <summary>
+            The staging environment, a pre-production environment used for testing.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumRGNEnvironment.Production">
+            <summary>
+            The production environment, where the live version of the application runs.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumRGNEnvironment.Development">
+            <summary>
+            The development environment, used by RGN SDK developers for programming and debugging.
+            </summary>
+        </member>
+        <member name="T:RGN.Extensions.CollectionExtensions">
+            <summary>
+            A static class housing extension methods for collections.
+            </summary>
+        </member>
+        <member name="M:RGN.Extensions.CollectionExtensions.RemoveNullValues``2(System.Collections.Generic.Dictionary{``0,``1})">
+            <summary>
+            Removes all entries with null values from a source dictionary.
+            </summary>
+            <typeparam name="T1">The type of keys in the dictionary.</typeparam>
+            <typeparam name="T2">The type of values in the dictionary.</typeparam>
+            <param name="source">The source dictionary from which to remove null values.</param>
+            <returns>A dictionary of the same type as the source, with all entries having null values removed.</returns>
+        </member>
+        <member name="T:RGN.Extensions.TasksExtensions">
+            <summary>
+            A static class housing extension methods for Task objects.
+            </summary>
+        </member>
+        <member name="M:RGN.Extensions.TasksExtensions.AsIEnumeratorReturnNull``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Converts a Task object to an IEnumerator, returning null.
+            </summary>
+            <typeparam name="T">The type of the Task's result.</typeparam>
+            <param name="task">The task to be converted.</param>
+            <returns>An IEnumerator representing the task.</returns>
+        </member>
+        <member name="M:RGN.Extensions.TasksExtensions.AsIEnumeratorReturnNull(System.Threading.Tasks.Task)">
+            <summary>
+            Converts a Task object to an IEnumerator, returning null.
+            </summary>
+            <param name="task">The task to be converted.</param>
+            <returns>An IEnumerator representing the task.</returns>
+        </member>
+        <member name="M:RGN.Extensions.TasksExtensions.AsIEnumeratorReturnNullDontThrow``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Converts a Task object to an IEnumerator, returning null and not throwing exceptions.
+            </summary>
+            <typeparam name="T">The type of the Task's result.</typeparam>
+            <param name="task">The task to be converted.</param>
+            <returns>An IEnumerator representing the task.</returns>
+        </member>
+        <member name="M:RGN.Extensions.TasksExtensions.AsIEnumeratorReturnNullDontThrow(System.Threading.Tasks.Task)">
+            <summary>
+            Converts a Task object to an IEnumerator, returning null and not throwing exceptions.
+            </summary>
+            <param name="task">The task to be converted.</param>
+            <returns>An IEnumerator representing the task.</returns>
+        </member>
+        <member name="T:RGN.FunctionsClient.ApiException">
+            <summary>
+            Represents an exception thrown by the SDK
+            </summary>
+        </member>
         <member name="P:RGN.FunctionsClient.ApiException.ErrorCode">
             <summary>
             Gets or sets the error code (HTTP status code)
@@ -36,7 +165,6 @@
             <summary>
             Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
             </summary>
-            <param name="errorCode">HTTP status code.</param>
             <param name="message">Error message.</param>
         </member>
         <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String)">
@@ -53,6 +181,121 @@
             <param name="errorCode">HTTP status code.</param>
             <param name="message">Error message.</param>
             <param name="errorContent">Error content.</param>
+        </member>
+        <member name="T:RGN.IApplicationStore">
+            <summary>
+            Defines the required contract for ApplicationStore, providing necessary application information and configurations.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterAppID">
+            <summary>
+            Gets the RGN Master Application ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNProjectId">
+            <summary>
+            Gets the RGN Project ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetiOSAppId">
+            <summary>
+            Gets the iOS Application ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetAppLinkPrefix">
+            <summary>
+            Gets the Application Link Prefix.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNEnvironment">
+            <summary>
+            Gets the RGN Environment.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.IsUsingEmulator">
+            <summary>
+            Indicates if using an emulator.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetEmulatorServerIp">
+            <summary>
+            Gets the Emulator Server IP.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetFunctionsPort">
+            <summary>
+            Gets the Functions Port.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetGoogleSignInWebClientIdAndroid">
+            <summary>
+            Gets the Google Sign-In Web Client ID for Android.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetGoogleSignInReverseClientIdAndroid">
+            <summary>
+            Gets the Google Sign-In Reverse Client ID for Android.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetGoogleSignInWebClientIdiOS">
+            <summary>
+            Gets the Google Sign-In Web Client ID for iOS.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetGoogleSignInReverseClientIdiOS">
+            <summary>
+            Gets the Google Sign-In Reverse Client ID for iOS.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetFirebaseAssociatedDomain">
+            <summary>
+            Gets the Firebase Associated Domain.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterApiKey">
+            <summary>
+            Gets the RGN Master API Key.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterAndroidAppID">
+            <summary>
+            Gets the RGN Master Android App ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterIOSAppID">
+            <summary>
+            Gets the RGN Master iOS App ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterProjectId">
+            <summary>
+            Gets the RGN Master Project ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNStorageURL">
+            <summary>
+            Gets the RGN Storage URL.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNFriendInviteMessage">
+            <summary>
+            Gets the RGN Friend Invite Message.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterMessageSenderId">
+            <summary>
+            Gets the RGN Master Message Sender ID.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterStorageBucket">
+            <summary>
+            Gets the RGN Master Storage Bucket.
+            </summary>
+        </member>
+        <member name="P:RGN.IApplicationStore.GetRGNMasterDatabaseUrl">
+            <summary>
+            Gets the RGN Master Database URL.
+            </summary>
         </member>
         <member name="T:RGN.IRGNCore">
             <summary>
@@ -78,6 +321,11 @@
         <member name="P:RGN.IRGNCore.CurrentAuthReadyState">
             <summary>
             Returns the current Authentication state for the User
+            </summary>
+        </member>
+        <member name="P:RGN.IRGNCore.Dependencies">
+            <summary>
+            The RGN SDK dependencies contract
             </summary>
         </member>
         <member name="P:RGN.IRGNCore.AuthorizedProviders">
@@ -123,6 +371,22 @@
         <member name="M:RGN.IRGNCore.SignOutRGN">
             <summary>
             Forces logout from firebase
+            </summary>
+        </member>
+        <member name="T:RGN.IRGNModule">
+            <summary>
+            Defines the required contract for RGN Modules, providing necessary methods for initialization and disposal.
+            </summary>
+        </member>
+        <member name="M:RGN.IRGNModule.SetRGNCore(RGN.IRGNRolesCore)">
+            <summary>
+            Sets the RGN Core for the module.
+            </summary>
+            <param name="rgnCore">The RGN Core to set.</param>
+        </member>
+        <member name="M:RGN.IRGNModule.Init">
+            <summary>
+            Initializes the module.
             </summary>
         </member>
         <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.trait_type">
