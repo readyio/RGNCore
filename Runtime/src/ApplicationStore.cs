@@ -20,9 +20,9 @@ namespace RGN
             APPLICATION_STORE_FILE_NAME_WITH_EXTENSION;
 
         // Email WebForm sign in URL
-        [HideInInspector] private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://rgndemo-05j.web.app/?url_redirect=";
-        [HideInInspector] private const string STAGING_EMAIL_SIGN_IN_URL = "https://rgn-auth.web.app/?url_redirect=";
-        [HideInInspector] private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth2.ready.gg/?url_redirect=";
+        [HideInInspector] private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.ready.gg/?url_redirect=";
+        [HideInInspector] private const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
+        [HideInInspector] private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
 
 #if UNITY_EDITOR
         public static void MoveToResourcesFolderOrCreateNewIfNeeded()
