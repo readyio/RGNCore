@@ -31,6 +31,13 @@ namespace RGN.MyEditor
             Debug.Log(token);
             Clipboard.SetText(token);
         }
+
+        [MenuItem(READY_MENU + "Clear PlayerPrefs")]
+        public static void ClearPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("PlayerPrefs cleared!");
+        }
 #endif
     }
 }
