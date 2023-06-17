@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Codice.Utils;
 using Firebase;
 using Firebase.Auth;
 using Newtonsoft.Json;
@@ -219,12 +218,7 @@ namespace RGN.MyEditor
                 var builder = new UriBuilder(functionUrl) {
                     Port = _functionsPort
                 };
-                var query = HttpUtility.ParseQueryString(builder.Query);
-                foreach (var param in queryParameters)
-                {
-                    query[param.Key] = param.Value;
-                }
-                builder.Query = query.ToString();
+                builder.Query = string.Join("&", queryParameters.Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
                 functionUrl = builder.ToString();
             }
             Debug.Log("Calling function with url: " + functionUrl);
