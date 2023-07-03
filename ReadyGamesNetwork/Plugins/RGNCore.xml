@@ -520,5 +520,26 @@
             Disposes of the resources used by the RGNCoreBuilder.
             </summary>
         </member>
+        <member name="T:RGN.Utility.BaseMigrationRequestData">
+            <summary>
+            This class supports multiple versions of an API by appending a "version" parameter to the request data.
+            </summary>
+        </member>
+        <member name="P:RGN.Utility.BaseMigrationRequestData.Default">
+            <summary>
+            Singleton instance of BaseMigrationRequestData to minimize object allocations.
+            </summary>
+        </member>
+        <member name="F:RGN.Utility.BaseMigrationRequestData.version">
+            <summary>
+            Represents the current version of the API implementation on the server.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.BaseMigrationRequestData.#ctor">
+            <summary>
+            A protected constructor to restrict the direct instantiation of this class and
+            ensure it's only used within an inheritance hierarchy.
+            </summary>
+        </member>
     </members>
 </doc>
