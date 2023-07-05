@@ -541,5 +541,74 @@
             ensure it's only used within an inheritance hierarchy.
             </summary>
         </member>
+        <member name="T:RGN.Utility.DateTimeUtility">
+            <summary>
+            Provides utility functions for handling DateTime values in Unity. This class contains methods that convert Unix timestamp to DateTime and
+            DateTime to ISO format strings. It's designed to work with the Ready Games Network (RGN) Unity SDK.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.UnixTimeStampToDateTime(System.Double)">
+            <summary>
+            Converts a Unix timestamp (milliseconds) to a DateTime object.
+            </summary>
+            <param name="unixTimeStamp">The Unix timestamp in milliseconds to convert, represented as a double.</param>
+            <returns>A DateTime object that represents the specified Unix timestamp converted to local time.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.DateTimeToISOString(System.DateTime)">
+            <summary>
+            Converts a DateTime object to an ISO format string, including milliseconds.
+            </summary>
+            <param name="dateTime">The DateTime object to convert.</param>
+            <returns>A string representation of the specified DateTime in ISO format with millisecond precision.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.DateTimeToISOLikeStringNoMilliseconds(System.DateTime)">
+            <summary>
+            Converts a DateTime object to an ISO-like format string, excluding milliseconds.
+            </summary>
+            <param name="dateTime">The DateTime object to convert.</param>
+            <returns>A string representation of the specified DateTime in ISO-like format without millisecond precision.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.UnixTimeStampToISO(System.Double)">
+            <summary>
+            Converts a Unix timestamp to an ISO format string.
+            </summary>
+            <param name="unixTimeStamp">The Unix timestamp to convert, represented as a double.</param>
+            <returns>A string representation of the specified Unix timestamp in ISO format with millisecond precision.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.UnixTimeStampToISOLikeStringNoMilliseconds(System.Double)">
+            <summary>
+            Converts a Unix timestamp to an ISO-like format string, excluding milliseconds.
+            </summary>
+            <param name="unixTimeStamp">The Unix timestamp to convert, represented as a double.</param>
+            <returns>A string representation of the specified Unix timestamp in ISO-like format without millisecond precision.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.UnixTimeStampToDateTimeOffset(System.Double)">
+            <summary>
+            Converts a Unix timestamp to a DateTimeOffset object.
+            </summary>
+            <param name="unixTimeStamp">The Unix timestamp to convert, represented as a double.</param>
+            <returns>A DateTimeOffset object that represents the specified Unix timestamp.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.DateTimeOffsetToUnixTimeStamp(System.DateTimeOffset)">
+            <summary>
+            Converts a DateTimeOffset object to a Unix timestamp.
+            </summary>
+            <param name="dateTimeOffset">The DateTimeOffset object to convert.</param>
+            <returns>A Unix timestamp representation of the specified DateTimeOffset.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.DateTimeOffsetToISOString(System.DateTimeOffset)">
+            <summary>
+            Converts a DateTimeOffset object to an ISO format string.
+            </summary>
+            <param name="dateTimeOffset">The DateTimeOffset object to convert.</param>
+            <returns>A string representation of the specified DateTimeOffset in ISO format.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.ISOStringToDateTimeOffset(System.String)">
+            <summary>
+            Converts an ISO format string to a DateTimeOffset object.
+            </summary>
+            <param name="isoString">The ISO string to convert.</param>
+            <returns>A DateTimeOffset object that represents the specified ISO string.</returns>
+        </member>
     </members>
 </doc>
