@@ -491,6 +491,18 @@
             This method is currently empty and can be filled with cleanup logic if needed in the future.
             </summary>
         </member>
+        <member name="M:RGN.RGNAnalytics.LogEventAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously logs an analytic event with provided event name into RGN analytics backend
+            Later you can request 
+            </summary>
+            <param name="eventName">The analytics event name</param>
+            <param name="eventParameters">Optional event parameters to store with the event</param>
+            <param name="cancellationToken">Optional parameter to enable cancellation of the task.
+            Default value is an unset CancellationToken.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when eventName is null or empty.</exception>
+            <exception cref="T:System.OperationCanceledException">Thrown when the operation is cancelled via the cancellationToken.</exception>
+        </member>
         <member name="T:RGN.RGNCoreBuilder">
             <summary>
             Responsible for creating RGNCore instance and initializing it
