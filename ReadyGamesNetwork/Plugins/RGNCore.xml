@@ -467,6 +467,30 @@
             These are the attributes for the item, which will show up on the OpenSea page for the item.
             </summary>
         </member>
+        <member name="T:RGN.RGNAnalytics">
+            <summary>
+            Represents the analytics module in the RGN system. This class allows to track custom
+            analytic events with arbitrary data
+            </summary>
+        </member>
+        <member name="M:RGN.RGNAnalytics.SetRGNCore(RGN.IRGNRolesCore)">
+            <summary>
+            Sets the Ready Games Network (RGN) core reference.
+            </summary>
+            <param name="rgnCore">The RGN core to be set.</param>
+        </member>
+        <member name="M:RGN.RGNAnalytics.Init">
+            <summary>
+            Initializes the RGNAnalytics.
+            This method is currently empty and can be filled with initial setup logic if needed in the future.
+            </summary>
+        </member>
+        <member name="M:RGN.RGNAnalytics.Dispose">
+            <summary>
+            Releases all resources used by the RGNAnalytics.
+            This method is currently empty and can be filled with cleanup logic if needed in the future.
+            </summary>
+        </member>
         <member name="T:RGN.RGNCoreBuilder">
             <summary>
             Responsible for creating RGNCore instance and initializing it
