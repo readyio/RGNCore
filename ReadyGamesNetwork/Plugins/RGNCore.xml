@@ -4,6 +4,32 @@
         <name>RGNCore</name>
     </assembly>
     <members>
+        <member name="T:RGN.AuthState">
+            <summary>
+            Represents current user authentication state within the RGN SDK.
+            </summary>
+        </member>
+        <member name="P:RGN.AuthState.LoginState">
+            <summary>
+            Representing the current login state within the RGN SDK.
+            </summary>
+        </member>
+        <member name="P:RGN.AuthState.AuthProvider">
+            <summary>
+            Represents the Auth provider that is used to authenticate the user.
+            </summary>
+        </member>
+        <member name="P:RGN.AuthState.LoginResult">
+            <summary>
+            Represents potential login results within the RGN SDK.
+            </summary>
+        </member>
+        <member name="M:RGN.AuthState.ToString">
+            <summary>
+            Represents the AuthState as a string
+            </summary>
+            <returns>AuthState as a string</returns>
+        </member>
         <member name="T:RGN.BaseModule`1">
             <summary>
             Represents a base module for other RGN modules to inherit from.
@@ -15,37 +41,82 @@
             Gets the singleton instance of the derived module.
             </summary>
         </member>
-        <member name="T:RGN.EnumLoginError">
+        <member name="T:RGN.EnumAuthProvider">
             <summary>
-            An enumeration representing potential login errors within the RGN SDK.
+            Represents the Auth provider that is used to authenticate the user.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.Ok">
+        <member name="F:RGN.EnumAuthProvider.None">
+            <summary>
+            User is not logged in, or the auth provider is not yet initialized
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Firebase">
+            <summary>
+            Firebase auth provider
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Facebook">
+            <summary>
+            Facebook auth provider
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Google">
+            <summary>
+            Google auth provider
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Apple">
+            <summary>
+            Apple auth provider
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Email">
+            <summary>
+            Email auth provider
+            </summary>
+        </member>
+        <member name="F:RGN.EnumAuthProvider.Guest">
+            <summary>
+            Guest auth provider
+            </summary>
+        </member>
+        <member name="T:RGN.EnumLoginResult">
+            <summary>
+            An enumeration representing potential login results within the RGN SDK.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginResult.None">
+            <summary>
+            Default login result, when the SDK is initialized
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginResult.Ok">
             <summary>
             Login successful, no errors encountered.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.AccountAlreadyLinked">
+        <member name="F:RGN.EnumLoginResult.AccountAlreadyLinked">
             <summary>
             Login unsuccessful due to a previous link with an account.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.AccountExistsWithDifferentCredentials">
+        <member name="F:RGN.EnumLoginResult.AccountExistsWithDifferentCredentials">
             <summary>
             Login unsuccessful because an account exists with different credentials.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.AccountNeedsRecentLogin">
+        <member name="F:RGN.EnumLoginResult.AccountNeedsRecentLogin">
             <summary>
             Login unsuccessful due to the need for a more recent login.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.Unknown">
+        <member name="F:RGN.EnumLoginResult.Unknown">
             <summary>
             Login unsuccessful due to an unknown error.
             </summary>
         </member>
-        <member name="F:RGN.EnumLoginError.Cancelled">
+        <member name="F:RGN.EnumLoginResult.Cancelled">
             <summary>
             Login cancelled by the user.
             </summary>
@@ -53,6 +124,11 @@
         <member name="T:RGN.EnumLoginState">
             <summary>
             An enumeration representing the current login state within the RGN SDK.
+            </summary>
+        </member>
+        <member name="F:RGN.EnumLoginState.Processing">
+            <summary>
+            User is logging in, awating for backend response
             </summary>
         </member>
         <member name="F:RGN.EnumLoginState.NotLoggedIn">
@@ -318,7 +394,7 @@
             Unity Update event. You can subscribe on this event to receive updates every frame.
             </summary>
         </member>
-        <member name="P:RGN.IRGNCore.CurrentAuthReadyState">
+        <member name="P:RGN.IRGNCore.CurrentAuthState">
             <summary>
             Returns the current Authentication state for the User
             </summary>
