@@ -414,11 +414,6 @@
             RGNAppId, set on RGNCoreBuilder.Build() and can override by OverrideApplicationIdentifier()
             </summary>
         </member>
-        <member name="P:RGN.IRGNCore.LocalAppUser">
-            <summary>
-            User, that is related to app-specific firebase backend
-            </summary>
-        </member>
         <member name="P:RGN.IRGNCore.MasterAppUser">
             <summary>
             User from ReadyMaster firebase backend
