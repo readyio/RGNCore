@@ -41,6 +41,33 @@
             Gets the singleton instance of the derived module.
             </summary>
         </member>
+        <member name="F:RGN.BaseModule`1._rgnCore">
+            <summary>
+            The RGN core reference to use in the module code
+            </summary>
+        </member>
+        <member name="M:RGN.BaseModule`1.SetRGNCore(RGN.IRGNRolesCore)">
+            <summary>
+            Sets the Ready Games Network (RGN) core reference.
+            </summary>
+            <param name="rgnCore">The RGN core to be set.</param>
+        </member>
+        <member name="M:RGN.BaseModule`1.Init">
+            <summary>
+            Initializes the module
+            </summary>
+        </member>
+        <member name="M:RGN.BaseModule`1.Dispose(System.Boolean)">
+            <summary>
+            Sets the static instance of the module to default value
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:RGN.BaseModule`1.Dispose">
+            <summary>
+            Implements the disposing pattern
+            </summary>
+        </member>
         <member name="T:RGN.EnumAuthProvider">
             <summary>
             Represents the Auth provider that is used to authenticate the user.
@@ -179,6 +206,20 @@
             <typeparam name="T2">The type of values in the dictionary.</typeparam>
             <param name="source">The source dictionary from which to remove null values.</param>
             <returns>A dictionary of the same type as the source, with all entries having null values removed.</returns>
+        </member>
+        <member name="T:RGN.Extensions.StringExtensions">
+            <summary>
+            A static class housing extension methods for strings.
+            </summary>
+        </member>
+        <member name="M:RGN.Extensions.StringExtensions.FirstCharToUpper(System.String)">
+            <summary>
+            Capitalizes the first character of a string
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:RGN.Extensions.TasksExtensions">
             <summary>
@@ -542,24 +583,6 @@
             <summary>
             Represents the analytics module in the RGN system. This class allows to track custom
             analytic events with arbitrary data
-            </summary>
-        </member>
-        <member name="M:RGN.RGNAnalytics.SetRGNCore(RGN.IRGNRolesCore)">
-            <summary>
-            Sets the Ready Games Network (RGN) core reference.
-            </summary>
-            <param name="rgnCore">The RGN core to be set.</param>
-        </member>
-        <member name="M:RGN.RGNAnalytics.Init">
-            <summary>
-            Initializes the RGNAnalytics.
-            This method is currently empty and can be filled with initial setup logic if needed in the future.
-            </summary>
-        </member>
-        <member name="M:RGN.RGNAnalytics.Dispose">
-            <summary>
-            Releases all resources used by the RGNAnalytics.
-            This method is currently empty and can be filled with cleanup logic if needed in the future.
             </summary>
         </member>
         <member name="M:RGN.RGNAnalytics.LogEventAsync(System.String,System.String,System.Threading.CancellationToken)">
