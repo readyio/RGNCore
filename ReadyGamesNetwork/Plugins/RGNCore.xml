@@ -425,11 +425,6 @@
             For example user logs out, logs in as a guest, logs is with email
             </summary>
         </member>
-        <member name="E:RGN.IRGNCore.DynamicLinkReceived">
-            <summary>
-            Is called every time the app is opened with a deep link
-            </summary>
-        </member>
         <member name="E:RGN.IRGNCore.UpdateEvent">
             <summary>
             Unity Update event. You can subscribe on this event to receive updates every frame.
@@ -463,11 +458,6 @@
         <member name="P:RGN.IRGNCore.IsLoggedIn">
             <summary>
             Indicates, that user is currently logged in with one of linked providers
-            </summary>
-        </member>
-        <member name="M:RGN.IRGNCore.SendAllFromDynamicLinkBuffer">
-            <summary>
-            Forces inner buffer to run callback "DynamicLinkReceived" on each not processed message
             </summary>
         </member>
         <member name="M:RGN.IRGNCore.OverrideApplicationIdentifier(System.String)">
