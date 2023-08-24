@@ -569,13 +569,13 @@
             These are the attributes for the item, which will show up on the OpenSea page for the item.
             </summary>
         </member>
-        <member name="T:RGN.RGNAnalytics">
+        <member name="T:RGN.ModuleDependencies.IRGNAnalytics">
             <summary>
-            Represents the analytics module in the RGN system. This class allows to track custom
-            analytic events with arbitrary data
+            This interface is used to inject the module dependency and make it optional
+            If the developers do not use the Analytics RGN package, this interface will be implemented with stub
             </summary>
         </member>
-        <member name="M:RGN.RGNAnalytics.LogEventAsync(System.String,System.String,System.Threading.CancellationToken)">
+        <member name="M:RGN.ModuleDependencies.IRGNAnalytics.LogEventAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Asynchronously logs an analytic event with provided event name into RGN analytics backend
             Later you can request 
@@ -611,7 +611,7 @@
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when module already exists in the list.</exception>
         </member>
-        <member name="M:RGN.RGNCoreBuilder.CreateAndBuildAsync(RGN.Dependencies.IDependencies,RGN.RGNCore.AuthenticationChangedDelegate)">
+        <member name="M:RGN.RGNCoreBuilder.CreateAndBuildAsync(RGN.IDependencies,RGN.RGNCore.AuthenticationChangedDelegate)">
             <summary>
             Creates and builds an asynchronous instance of the RGNCore.
             </summary>
@@ -620,11 +620,11 @@
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <returns>Asynchronous operation that returns an IRGNCore instance.</returns>
         </member>
-        <member name="M:RGN.RGNCoreBuilder.CreateInstance(RGN.Dependencies.IDependencies)">
+        <member name="M:RGN.RGNCoreBuilder.CreateInstance(RGN.IDependencies)">
             <summary>
             Creates an instance of the IRGNCore.
             </summary>
-            <param name="dependencies">Dependencies needed to create the instance.</param>
+            <param name="dependencies">ImplDependencies needed to create the instance.</param>
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <returns>Instance of IRGNCore created.</returns>
         </member>

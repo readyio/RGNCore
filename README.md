@@ -1,2 +1,2 @@
 # RGN Core
-Package version: 0.7.0-dev.322
+Package version: 0.7.0-dev.324
