@@ -6,6 +6,7 @@ namespace RGN
     public class BuildCredentials : ScriptableObject
     {
         public string rgnProjectId;
+        public string rgnApiKey;
 
         [Header("Google SignIn Credentials")]
         public string googleSignInWebClientIdAndroid = "";

@@ -100,6 +100,7 @@ namespace RGN.MyEditor
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
             applicationStore.RGNProjectId = sourceCredentials.rgnProjectId;
+            applicationStore.RGNApiKey = sourceCredentials.rgnApiKey;
             applicationStore.googleSignInWebClientIdAndroid = sourceCredentials.googleSignInWebClientIdAndroid;
             applicationStore.googleSignInReverseClientIdAndroid = sourceCredentials.googleSignInReverseClientIdAndroid;
             applicationStore.googleSignInWebClientIdiOS = sourceCredentials.googleSignInWebClientIdiOS;

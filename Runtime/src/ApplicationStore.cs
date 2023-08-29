@@ -82,7 +82,7 @@ namespace RGN
 
         [Header("RGN APP")]
         public string RGNProjectId = "";
-        [SerializeField] private string _apiKey = "";
+        public string RGNApiKey = "";
 
         [Header("Base")]
         public string iosAppID = "";
@@ -126,7 +126,7 @@ namespace RGN
         }
 
         public string GetRGNMasterAppID => RGNMasterAppID;
-        public string GetRGNApiKey => _apiKey;
+        public string GetRGNApiKey => RGNApiKey;
         public string GetRGNProjectId => RGNProjectId;
         public string GetiOSAppId => iosAppID;
         public string GetAppLinkPrefix => appLinkPrefix;
