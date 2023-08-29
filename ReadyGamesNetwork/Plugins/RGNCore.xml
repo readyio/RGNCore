@@ -314,6 +314,11 @@
             Gets the RGN Project ID.
             </summary>
         </member>
+        <member name="P:RGN.IApplicationStore.GetRGNApiKey">
+            <summary>
+            Gets the RGN Api Key
+            </summary>
+        </member>
         <member name="P:RGN.IApplicationStore.GetiOSAppId">
             <summary>
             Gets the iOS Application ID.
