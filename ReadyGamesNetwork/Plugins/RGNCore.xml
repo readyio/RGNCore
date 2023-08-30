@@ -465,21 +465,6 @@
             Indicates, that user is currently logged in with one of linked providers
             </summary>
         </member>
-        <member name="M:RGN.IRGNCore.OverrideApplicationIdentifier(System.String)">
-            <summary>
-            Use this to override appId in requests, for example to get work application in PC platform (for testing)
-            </summary>
-        </member>
-        <member name="M:RGN.IRGNCore.GetModule``1">
-            <summary>
-            Use this to get instance of module to access expanded functionality
-            </summary>
-        </member>
-        <member name="M:RGN.IRGNCore.SignOutRGN">
-            <summary>
-            Forces logout from firebase
-            </summary>
-        </member>
         <member name="T:RGN.IRGNModule">
             <summary>
             Defines the required contract for RGN Modules, providing necessary methods for initialization and disposal.
