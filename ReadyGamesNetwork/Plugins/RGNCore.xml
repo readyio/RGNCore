@@ -726,5 +726,33 @@
             <param name="isoString">The ISO string to convert.</param>
             <returns>A DateTimeOffset object that represents the specified ISO string.</returns>
         </member>
+        <member name="T:RGN.Utility.Obfuscator">
+            <summary>
+            This class will generate obfuscated data and generate a key to deofscate the data later.
+            </summary>
+        </member>
+        <member name="T:RGN.Utility.Obfuscator.InvalidOrderArray">
+            <summary>
+            An Exception thrown when the order array provided is invalid or shorter than the number of data slices made.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.Obfuscator.Obfuscate(System.Byte[],System.Int32[],System.Int32@)">
+            <summary>
+            Generates the obfucscation data.
+            </summary>
+            <param name="data"> Public data to be obfuscated. </param>
+            <param name="order"> The array, passed by reference, of order of the data slices used to obfuscate the data with. </param>
+            <param name="rkey"> Outputs the encryption key to deobfuscate the data at runtime </param>
+            <returns>The obfucated public key</returns>
+        </member>
+        <member name="M:RGN.Utility.Obfuscator.DeObfuscate(System.Byte[],System.Int32[],System.Int32)">
+            <summary>
+            Deofuscates the obfuscated data
+            </summary>
+            <param name="data"> Public data to be obfuscated. </param>
+            <param name="order"> The array, passed by reference, of order of the data slices used to obfuscate the data with. </param>
+            <param name="key"> Outputs the encryption key to deobfuscate the data at runtime </param>
+            <returns>The obfucated public key</returns>
+        </member>
     </members>
 </doc>
