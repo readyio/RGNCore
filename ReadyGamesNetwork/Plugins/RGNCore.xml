@@ -670,6 +670,13 @@
             <param name="unixTimeStamp">The Unix timestamp in milliseconds to convert, represented as a double.</param>
             <returns>A DateTime object that represents the specified Unix timestamp converted to local time.</returns>
         </member>
+        <member name="M:RGN.Utility.DateTimeUtility.DateTimeToUnixTimeStamp(System.DateTime)">
+            <summary>
+            Converts a DateTime object to Unix Timestamp in milliseconds
+            </summary>
+            <param name="dateTime">The date time to convert</param>
+            <returns>Milliseconds since Unix epoch (midnight of 1970 year)</returns>
+        </member>
         <member name="M:RGN.Utility.DateTimeUtility.DateTimeToISOString(System.DateTime)">
             <summary>
             Converts a DateTime object to an ISO format string, including milliseconds.

@@ -79,12 +79,22 @@ namespace RGN
             }
         }
 
-        protected void OnDestroy()
+        private void OnDestroy()
         {
             if (sInstance == this)
             {
                 OnDestroyInternal();
                 sObjectIsDestroyed = true;
+                sInstance = null;
+            }
+        }
+        private void OnApplicationQuit()
+        {
+            if (sInstance == this)
+            {
+                OnDestroyInternal();
+                sObjectIsDestroyed = true;
+                sInstance = null;
             }
         }
 
