@@ -577,6 +577,17 @@
             <exception cref="T:System.ArgumentNullException">Thrown when eventName is null or empty.</exception>
             <exception cref="T:System.OperationCanceledException">Thrown when the operation is cancelled via the cancellationToken.</exception>
         </member>
+        <member name="T:RGN.ModuleDependencies.IRGNGuestSignIn">
+            <summary>
+            This interface is used to inject the module dependency and make it optional
+            If the developers do not use the RGN Guest Sign In package, the value in Dependencies will be null
+            </summary>
+        </member>
+        <member name="M:RGN.ModuleDependencies.IRGNGuestSignIn.TryToSignInAsync">
+            <summary>
+            Tries to sign in with anonymous account to Ready Games Network (RGN)
+            </summary>
+        </member>
         <member name="T:RGN.ModuleDependencies.IRGNMessaging">
             <summary>
             This interface is used to inject the module dependency and make it optional
