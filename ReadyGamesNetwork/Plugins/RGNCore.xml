@@ -559,6 +559,27 @@
             These are the attributes for the item, which will show up on the OpenSea page for the item.
             </summary>
         </member>
+        <member name="T:RGN.Model.Request.BaseMigrationRequestData">
+            <summary>
+            This class supports multiple versions of an API by appending a "version" parameter to the request data.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.Request.BaseMigrationRequestData.Default">
+            <summary>
+            Singleton instance of BaseMigrationRequestData to minimize object allocations.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Request.BaseMigrationRequestData.version">
+            <summary>
+            Represents the current version of the API implementation on the server.
+            </summary>
+        </member>
+        <member name="M:RGN.Model.Request.BaseMigrationRequestData.#ctor">
+            <summary>
+            A protected constructor to restrict the direct instantiation of this class and
+            ensure it's only used within an inheritance hierarchy.
+            </summary>
+        </member>
         <member name="T:RGN.ModuleDependencies.IRGNAnalytics">
             <summary>
             This interface is used to inject the module dependency and make it optional
@@ -645,27 +666,6 @@
         <member name="M:RGN.RGNCoreBuilder.Dispose">
             <summary>
             Disposes of the resources used by the RGNCoreBuilder.
-            </summary>
-        </member>
-        <member name="T:RGN.Utility.BaseMigrationRequestData">
-            <summary>
-            This class supports multiple versions of an API by appending a "version" parameter to the request data.
-            </summary>
-        </member>
-        <member name="P:RGN.Utility.BaseMigrationRequestData.Default">
-            <summary>
-            Singleton instance of BaseMigrationRequestData to minimize object allocations.
-            </summary>
-        </member>
-        <member name="F:RGN.Utility.BaseMigrationRequestData.version">
-            <summary>
-            Represents the current version of the API implementation on the server.
-            </summary>
-        </member>
-        <member name="M:RGN.Utility.BaseMigrationRequestData.#ctor">
-            <summary>
-            A protected constructor to restrict the direct instantiation of this class and
-            ensure it's only used within an inheritance hierarchy.
             </summary>
         </member>
         <member name="T:RGN.Utility.DateTimeUtility">
