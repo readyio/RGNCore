@@ -580,6 +580,145 @@
             ensure it's only used within an inheritance hierarchy.
             </summary>
         </member>
+        <member name="T:RGN.Model.TimeInfo">
+            <summary>
+            Represents the time information.
+            This information can be used for time-limited entities.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.hasStart">
+            <summary>
+            Indicates whether a start time is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.start">
+            <summary>
+            The start time. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasStart"/> is true.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.hasEnd">
+            <summary>
+            Indicates whether an end time is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.end">
+            <summary>
+            The end time. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasEnd"/> is true.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.hasInterval">
+            <summary>
+            Indicates whether an interval is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.intervalDuration">
+            <summary>
+            The interval duration. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasInterval"/> is true.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.intervalDelay">
+            <summary>
+            The interval delay. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasInterval"/> is true.
+            </summary>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.#ctor">
+            <summary>
+            Default parameterless ctor
+            </summary>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.#ctor(System.Boolean,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64,System.Int64)">
+            <summary>
+            Constructs TimeInfo
+            </summary>
+            <param name="hasStart"></param>
+            <param name="start"></param>
+            <param name="hasEnd"></param>
+            <param name="end"></param>
+            <param name="hasInterval"></param>
+            <param name="intervalDuration"></param>
+            <param name="intervalDelay"></param>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.ToString">
+            <summary>
+            Converts the object's properties to strings representation
+            </summary>
+            <returns>A string that represents the object's properties</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.Equals(RGN.Model.TimeInfo)">
+            <summary>
+            Implements standart Equals operation
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.Equals(System.Object)">
+            <summary>
+            Implements standart Equals operation
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.GetHashCode">
+            <summary>
+            Returns hash code
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreatePermanent">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object that represents a permanent time, with no specific start, end or interval.
+            </summary>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithStartTime(System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with a specified start time.
+            </summary>
+            <param name="start">The start time.</param>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithEndTime(System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with a specified end time.
+            </summary>
+            <param name="end">The end time.</param>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithStartAndEndTime(System.Int64,System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with specified start and end times.
+            </summary>
+            <param name="start">The start time.</param>
+            <param name="end">The end time.</param>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithStartTimeAndInterval(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with a specified start time and interval.
+            </summary>
+            <param name="start">The start time.</param>
+            <param name="intervalDuration">The interval duration.</param>
+            <param name="intervalDelay">The interval delay.</param>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithEndTimeAndInterval(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with a specified end time and interval.
+            </summary>
+            <param name="end">The end time.</param>
+            <param name="intervalDuration">The interval duration.</param>
+            <param name="intervalDelay">The interval delay.</param>
+            <returns>A new <see cref="T:RGN.Model.TimeInfo"/> instance.</returns>
+        </member>
+        <member name="M:RGN.Model.TimeInfo.CreateWithStartEndTimeAndInterval(System.Int64,System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Creates a <see cref="T:RGN.Model.TimeInfo"/> object with specified start time, end time, and interval.
+            </summary>
+            <param name="start">The start time.</param>
+            <param name="end">The end time.</param>
+            <param name="intervalDuration">The interval duration.</param>
+            <param name="intervalDelay">The interval delay.</param>
+        </member>
         <member name="T:RGN.ModuleDependencies.IRGNAnalytics">
             <summary>
             This interface is used to inject the module dependency and make it optional
