@@ -4,6 +4,20 @@
         <name>RGNCore</name>
     </assembly>
     <members>
+        <member name="T:RGN.Attributes.GeneratorCustomImplAttribute">
+            <summary>
+            Attribute to mark a class or a method with a custom implementation for the generator.
+            This is typically used within the RGN SDK to specify when a default generation
+            process should be overridden with a specific implementation.
+            </summary>
+        </member>
+        <member name="T:RGN.Attributes.GeneratorExcludeAttribute">
+            <summary>
+            Attribute to indicate that a class or method should be excluded from the generation process.
+            When applied, the RGN SDK's generator will ignore the marked element, effectively
+            preventing any automated processing or inclusion in the generated output.
+            </summary>
+        </member>
         <member name="T:RGN.AuthState">
             <summary>
             Represents current user authentication state within the RGN SDK.
@@ -418,6 +432,151 @@
             <summary>
             Gets the RGN Master Database URL.
             </summary>
+        </member>
+        <member name="T:RGN.IDependencies">
+            <summary>
+            Defines the dependencies required by the RGN (Ready Games Network) SDK.
+            Provides access to various SDK functionality such as analytics, messaging,
+            authentication, and more, by exposing interfaces to interact with these services.
+            </summary>
+        </member>
+        <member name="P:RGN.IDependencies.RGNAnalytics">
+            <value>Gets the analytics service specific to RGN.</value>
+        </member>
+        <member name="P:RGN.IDependencies.RGNMessaging">
+            <value>Gets the messaging service specific to RGN.</value>
+        </member>
+        <member name="P:RGN.IDependencies.RGNGuestSignIn">
+            <value>Gets the guest sign-in functionality.</value>
+        </member>
+        <member name="P:RGN.IDependencies.ApplicationStore">
+            <value>Gets the application store service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.App">
+            <value>Gets the general application interface.</value>
+        </member>
+        <member name="P:RGN.IDependencies.Analytics">
+            <value>Gets the analytics service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.ReadyMasterAuth">
+            <value>Gets the authentication service for Ready Master.</value>
+        </member>
+        <member name="P:RGN.IDependencies.ReadyMasterFunction">
+            <value>Gets the functions service for Ready Master.</value>
+        </member>
+        <member name="P:RGN.IDependencies.Messaging">
+            <value>Gets the messaging service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.Json">
+            <value>Gets the JSON serialization service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.EngineApp">
+            <value>Gets the engine application service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.Time">
+            <value>Gets the time service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.Logger">
+            <value>Gets the logging service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.AssetDownloader">
+            <value>Gets the asset downloader service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.AssetCache">
+            <value>Gets the asset caching service.</value>
+        </member>
+        <member name="T:RGN.ImplDependencies.Assets.AssetCategory">
+            <summary>
+            Enumerates the categories of assets used within the RGN (Ready Games Network) SDK.
+            This helps in identifying the type of asset being handled, such as user profile pictures,
+            virtual item images, etc.
+            </summary>
+        </member>
+        <member name="F:RGN.ImplDependencies.Assets.AssetCategory.None">
+            <summary>
+            Represents no specified category. This is the default value.
+            </summary>
+        </member>
+        <member name="F:RGN.ImplDependencies.Assets.AssetCategory.UserProfilePicture">
+            <summary>
+            Represents an asset that is a user's profile picture.
+            </summary>
+        </member>
+        <member name="F:RGN.ImplDependencies.Assets.AssetCategory.VirtualItemImage">
+            <summary>
+            Represents an asset that is an image of a virtual item.
+            </summary>
+        </member>
+        <member name="T:RGN.ImplDependencies.Assets.IAssetCache">
+            <summary>
+            Provides an interface for caching assets in the RGN (Ready Games Network) SDK.
+            This allows for storing and retrieving assets such as images and other binary data
+            efficiently by categorizing them and using a string key.
+            </summary>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetCache.HasInCache(RGN.ImplDependencies.Assets.AssetCategory,System.String)">
+            <summary>
+            Determines whether the specified asset is available in the cache.
+            </summary>
+            <param name="category">The category of the asset.</param>
+            <param name="key">The unique key representing the asset.</param>
+            <returns>true if the asset is in the cache; otherwise, false.</returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetCache.ReadFromCache(RGN.ImplDependencies.Assets.AssetCategory,System.String)">
+            <summary>
+            Reads the specified asset from the cache.
+            </summary>
+            <param name="category">The category of the asset.</param>
+            <param name="key">The unique key representing the asset.</param>
+            <returns>The asset data as a byte array.</returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetCache.TryReadFromCache(RGN.ImplDependencies.Assets.AssetCategory,System.String,System.Byte[]@)">
+            <summary>
+            Tries to read the specified asset from the cache and outputs it if found.
+            </summary>
+            <param name="category">The category of the asset.</param>
+            <param name="key">The unique key representing the asset.</param>
+            <param name="data">When this method returns, contains the asset data as a byte array,
+            if the asset is found; otherwise, null. This parameter is passed uninitialized.</param>
+            <returns>true if the asset is found in the cache; otherwise, false.</returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetCache.WriteToCache(RGN.ImplDependencies.Assets.AssetCategory,System.String,System.Byte[])">
+            <summary>
+            Writes the specified asset to the cache.
+            </summary>
+            <param name="category">The category of the asset to be written to the cache.</param>
+            <param name="key">The unique key representing the asset.</param>
+            <param name="data">The asset data as a byte array to be written to the cache.</param>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetCache.Clear">
+            <summary>
+            Clears all assets from the cache.
+            </summary>
+        </member>
+        <member name="T:RGN.ImplDependencies.Assets.IAssetDownloader">
+            <summary>
+            Provides an interface for downloading assets in the RGN (Ready Games Network) SDK.
+            This allows for asynchronous download of assets such as images and other binary data
+            from specified URLs with support for optional caching behavior.
+            </summary>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetDownloader.DownloadAsync(RGN.ImplDependencies.Assets.AssetCategory,System.String,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously downloads an asset from the given URL, with an option to bypass the cache.
+            </summary>
+            <param name="category">The category of the asset to download.</param>
+            <param name="url">The URL from where the asset is to be downloaded.</param>
+            <param name="bypassCache">If set to true, the cache will be bypassed; otherwise, the cache will be checked first.</param>
+            <param name="cancellationToken">A token for canceling the operation if necessary.</param>
+            <returns>A task that represents the asynchronous download operation, containing the downloaded asset as a byte array.</returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Assets.IAssetDownloader.DownloadNoCacheAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously downloads an asset from the given URL without using the cache.
+            </summary>
+            <param name="url">The URL from where the asset is to be downloaded.</param>
+            <param name="cancellationToken">A token for canceling the operation if necessary.</param>
+            <returns>A task that represents the asynchronous download operation, containing the downloaded asset as a byte array.</returns>
         </member>
         <member name="T:RGN.IRGNCore">
             <summary>
