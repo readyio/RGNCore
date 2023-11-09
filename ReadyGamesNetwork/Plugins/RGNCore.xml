@@ -640,19 +640,97 @@
             Initializes the module.
             </summary>
         </member>
+        <member name="T:RGN.Model.ImageSize">
+            <summary>
+            Defines the available image sizes that can be requested or manipulated within the system.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ImageSize.Source">
+            <summary>
+            The original size of the image as it was sourced.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ImageSize.Small">
+            <summary>
+            A small version of the image, typically used for thumbnails or icons.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ImageSize.Medium">
+            <summary>
+            A medium version of the image, suitable for previews or list views.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ImageSize.Large">
+            <summary>
+            A large version of the image, which can be used for detailed viewing.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.ImageUrl">
+            <summary>
+            Represents a mapping of image URLs to their respective size identifiers.
+            Inherits from a dictionary with string keys and string values.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.ImageUrl.source">
+            <summary>
+            Gets the source size image URL if available; otherwise, gets a placeholder URL.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.ImageUrl.large">
+            <summary>
+            Gets the large size image URL if available; otherwise, gets a placeholder URL.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.ImageUrl.medium">
+            <summary>
+            Gets the medium size image URL if available; otherwise, gets a placeholder URL.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.ImageUrl.small">
+            <summary>
+            Gets the small size image URL if available; otherwise, gets a placeholder URL.
+            </summary>
+        </member>
+        <member name="M:RGN.Model.ImageUrl.GetPlaceholderUrl(RGN.Model.ImageSize)">
+            <summary>
+            Provides a mechanism to retrieve a placeholder URL for a given image size.
+            This method is intended to be overridden by derived classes to supply custom placeholder URLs.
+            </summary>
+            <param name="size">The size of the image for which a placeholder URL is required.</param>
+            <returns>A string representing the placeholder URL.</returns>
+        </member>
+        <member name="M:RGN.Model.ImageUrl.GetUrl(RGN.Model.ImageSize)">
+            <summary>
+            Retrieves the URL for the specified image size.
+            </summary>
+            <param name="size">The size for which to retrieve the image URL.</param>
+            <returns>The image URL associated with the specified size.</returns>
+        </member>
+        <member name="M:RGN.Model.ImageUrl.ToString">
+            <summary>
+            Returns a string that represents all the key-value pairs contained in the ImageUrl dictionary.
+            </summary>
+            <returns>A string with each key-value pair on a new line.</returns>
+        </member>
+        <member name="T:RGN.Model.OpenSea.OpenSeaAttribute">
+            <summary>
+            Represents an attribute for an item on OpenSea, typically a trait associated with a collectible or NFT.
+            </summary>
+        </member>
         <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.trait_type">
             <summary>
-            Name of the trait
+            The name of the trait that this attribute represents.
             </summary>
         </member>
         <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.value">
             <summary>
-            Value of the trait
+            The value of the trait. This can be a string, number, or any other type of object.
             </summary>
         </member>
         <member name="F:RGN.Model.OpenSea.OpenSeaAttribute.display_type">
             <summary>
-            Indicating how you would like it to be displayed
+            A string specifying how the trait should be displayed. 
+            Could be used to indicate whether the trait is a date, a percentage, etc.
             </summary>
         </member>
         <member name="T:RGN.Model.OpenSea.OpenSeaMetadata">
@@ -737,6 +815,43 @@
             <summary>
             A protected constructor to restrict the direct instantiation of this class and
             ensure it's only used within an inheritance hierarchy.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.Request.BaseRequestData">
+            <summary>
+            Base class for request data that is sent to a server.
+            It includes common data that is required for all requests.
+            </summary>
+        </member>
+        <member name="P:RGN.Model.Request.BaseRequestData.Default">
+            <summary>
+            Gets the default instance of <see cref="T:RGN.Model.Request.BaseRequestData"/>.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Request.BaseRequestData.appPackageName">
+            <summary>
+            The package name of the app making the request. This is typically used for identification purposes.
+            </summary>
+        </member>
+        <member name="M:RGN.Model.Request.BaseRequestData.#ctor">
+            <summary>
+            Protected constructor for <see cref="T:RGN.Model.Request.BaseRequestData"/>.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.Response.BaseResponseData">
+            <summary>
+            Represents the base class for response data received from a server.
+            It contains common properties that are expected in all responses.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Response.BaseResponseData.status">
+            <summary>
+            The status code of the response, typically indicating success or failure of the request.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Response.BaseResponseData.message">
+            <summary>
+            A message providing additional information about the response, such as an error message or a status update.
             </summary>
         </member>
         <member name="T:RGN.Model.TimeInfo">
@@ -1042,6 +1157,57 @@
             <param name="isoString">The ISO string to convert.</param>
             <returns>A DateTimeOffset object that represents the specified ISO string.</returns>
         </member>
+        <member name="T:RGN.Utility.ExceptionHelper">
+            <summary>
+            Provides utility methods to assist with exception handling,
+            specifically tailored for logging exceptions using the provided RGN ILogger interface.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ExceptionHelper.PrintToLog(RGN.ImplDependencies.Engine.ILogger,System.Exception)">
+            <summary>
+            Logs the specified exception using the given logger.
+            Validates the logger and exception arguments to ensure they are not null before logging.
+            </summary>
+            <param name="logger">The logger to which the exception information will be written.</param>
+            <param name="exception">The exception to log.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if either <paramref name="logger"/> or <paramref name="exception"/> is null.</exception>
+        </member>
+        <member name="T:RGN.Utility.MathUtils">
+            <summary>
+            Provides utility methods for mathematical calculations and operations
+            that are commonly used throughout the RGN (Ready Games Network) SDK.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.MathUtils.GetHashInt(System.String)">
+            <summary>
+            Computes a hash code for the specified string.
+            </summary>
+            <param name="value">The string to compute the hash code for.</param>
+            <returns>An integer hash code for the specified string.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="value"/> is null or empty.</exception>
+        </member>
+        <member name="T:RGN.Utility.NonceGenerator">
+            <summary>
+            Provides methods for generating random nonces and their SHA256 hashed versions.
+            Nonces are used to ensure a message, transaction, or request is unique.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.NonceGenerator.GenerateRandomString(System.Int32)">
+            <summary>
+            Generates a random string of a specified length using a cryptographically secure algorithm.
+            The characters used in the string are alphanumeric including some special characters (-._).
+            </summary>
+            <param name="length">The desired length of the random string.</param>
+            <returns>A random string of the specified length.</returns>
+            <exception cref="T:System.Exception">Thrown when a non-positive length is specified.</exception>
+        </member>
+        <member name="M:RGN.Utility.NonceGenerator.GenerateSHA256NonceFromRawNonce(System.String)">
+            <summary>
+            Generates a SHA256 hash of a raw nonce string. 
+            </summary>
+            <param name="rawNonce">The raw string to hash.</param>
+            <returns>A SHA256 hash of the raw nonce.</returns>
+        </member>
         <member name="T:RGN.Utility.Obfuscator">
             <summary>
             This class will generate obfuscated data and generate a key to deofscate the data later.
@@ -1069,6 +1235,113 @@
             <param name="order"> The array, passed by reference, of order of the data slices used to obfuscate the data with. </param>
             <param name="key"> Outputs the encryption key to deobfuscate the data at runtime </param>
             <returns>The obfucated public key</returns>
+        </member>
+        <member name="T:RGN.Utility.StringsUtility">
+            <summary>
+            Provides utility methods for operations involving strings, such as
+            building a single string from a list of strings.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.StringsUtility.BuildStringFromStringsList(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Concatenates the elements of a string list, using a specified separator between each element.
+            </summary>
+            <param name="strings">The list of strings to concatenate.</param>
+            <param name="name">A descriptive name for the elements of the list used in the absence message.</param>
+            <returns>A string that consists of the elements in <paramref name="strings"/> delimited by commas,
+            or a message indicating no elements are set if <paramref name="strings"/> is empty or null.</returns>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf">
+            <summary>
+            Contains static methods for throwing exceptions when common checks fail, such as null or empty checks on arguments.
+            </summary>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.Argument">
+            <summary>
+            Nested class containing methods for argument validation.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Argument.IsNull(System.Object,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the provided argument is null.
+            </summary>
+            <param name="argument">The argument to validate.</param>
+            <param name="argumentName">The name of the argument, used in the exception message.</param>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.String">
+            <summary>
+            Nested class containing methods for string validation.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.String.IsNullOrEmpty(System.String,System.String)">
+            <summary>
+            Throws an exception if the provided string is null or empty.
+            </summary>
+            <param name="str">The string to validate.</param>
+            <param name="strName">The name of the string, used in the exception message.</param>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.Collection">
+            <summary>
+            Nested class containing methods for collection validation.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Collection.IsNullOrEmpty(System.Collections.ICollection,System.String)">
+            <summary>
+            Throws an exception if the provided collection is null or empty.
+            </summary>
+            <param name="collection">The collection to validate.</param>
+            <param name="collectionName">The name of the collection, used in the exception message.</param>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.Field">
+            <summary>
+            Nested class containing methods for field validation.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Field.IsNull(System.Object,System.String)">
+            <summary>
+            Throws an InvalidOperationException if the provided field is null.
+            </summary>
+            <param name="argument">The field to validate.</param>
+            <param name="argumentName">The name of the field, used in the exception message.</param>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Field.IsNotNull(System.Object,System.String)">
+            <summary>
+            Throws an InvalidOperationException if the provided field is not null.
+            </summary>
+            <param name="argument">The field to validate.</param>
+            <param name="argumentName">The name of the field, used in the exception message.</param>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.Value">
+            <summary>
+            Nested class containing methods for value validation.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Value.IsZero(System.Int32,System.String)">
+            <summary>
+            Throws an ArgumentException if the provided value is zero.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="valueName">The name of the value, used in the exception message.</param>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Value.IsZeroOrNegative(System.Int32,System.String)">
+            <summary>
+            Throws an ArgumentException if the provided value is zero or negative.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="valueName">The name of the value, used in the exception message.</param>
+        </member>
+        <member name="T:RGN.Utility.ThrowIf.Index">
+            <summary>
+            Nested class containing methods for index validation within a collection.
+            </summary>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.Index.IsOutOfBounds(System.Int32,System.String,System.Collections.ICollection)">
+            <summary>
+            Throws an ArgumentOutOfRangeException if the provided index is out of bounds of the collection.
+            </summary>
+            <param name="index">The index to validate.</param>
+            <param name="collectionName">The name of the collection, used in the exception message.</param>
+            <param name="collection">The collection to validate against.</param>
         </member>
     </members>
 </doc>
