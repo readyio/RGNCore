@@ -32,6 +32,7 @@ namespace RGN.MyEditor
             Menu.SetChecked(SET_DEVELOPMENT, applicationStore.GetRGNEnvironment == EnumRGNEnvironment.Development);
             Menu.SetChecked(SET_EMULATOR, applicationStore.usingEmulator);
 #endif
+            CreateOrReplaceGitIgnoreFileInRGNFolder();
         }
 
         [MenuItem(APPLICATION_STORE)]
@@ -137,6 +138,12 @@ namespace RGN.MyEditor
                 File.WriteAllText(JSON_PATH, sourceCredentials.FirebaseCredentialsContentAndroid);
             }
             AssetDatabase.Refresh();
+        }
+
+        private static void CreateOrReplaceGitIgnoreFileInRGNFolder()
+        {
+            string filePath = Path.Combine(Application.dataPath, "ReadyGamesNetwork", ".gitignore");
+            File.WriteAllText(filePath, $"Linker/*\nLinker.meta");
         }
     }
 }
