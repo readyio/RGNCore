@@ -895,12 +895,32 @@
             The interval delay. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasInterval"/> is true.
             </summary>
         </member>
+        <member name="F:RGN.Model.TimeInfo.hasPromo">
+            <summary>
+            Indicates whether a promo is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.promo">
+            <summary>
+            The promo duration. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasPromo"/> is true.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.hasGrace">
+            <summary>
+            Indicates whether a grace is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.grace">
+            <summary>
+            The grace duration. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasGrace"/> is true.
+            </summary>
+        </member>
         <member name="M:RGN.Model.TimeInfo.#ctor">
             <summary>
             Default parameterless ctor
             </summary>
         </member>
-        <member name="M:RGN.Model.TimeInfo.#ctor(System.Boolean,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64,System.Int64)">
+        <member name="M:RGN.Model.TimeInfo.#ctor(System.Boolean,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64)">
             <summary>
             Constructs TimeInfo
             </summary>
@@ -911,6 +931,10 @@
             <param name="hasInterval"></param>
             <param name="intervalDuration"></param>
             <param name="intervalDelay"></param>
+            <param name="hasPromo"></param>
+            <param name="promo"></param>
+            <param name="hasGrace"></param>
+            <param name="grace"></param>
         </member>
         <member name="M:RGN.Model.TimeInfo.ToString">
             <summary>
