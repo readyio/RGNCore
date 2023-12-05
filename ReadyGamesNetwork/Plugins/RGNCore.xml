@@ -902,7 +902,8 @@
         </member>
         <member name="F:RGN.Model.TimeInfo.promo">
             <summary>
-            The promo duration. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasPromo"/> is true.
+            The promo duration in milliseconds before the start time.
+            This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasPromo"/> and <see cref="F:RGN.Model.TimeInfo.hasStart"/> are true.
             </summary>
         </member>
         <member name="F:RGN.Model.TimeInfo.hasGrace">
@@ -912,7 +913,8 @@
         </member>
         <member name="F:RGN.Model.TimeInfo.grace">
             <summary>
-            The grace duration. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasGrace"/> is true.
+            The grace duration in milliseconds after the end time.
+            This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasGrace"/> and <see cref="F:RGN.Model.TimeInfo.hasEnd"/> are true.
             </summary>
         </member>
         <member name="M:RGN.Model.TimeInfo.#ctor">
