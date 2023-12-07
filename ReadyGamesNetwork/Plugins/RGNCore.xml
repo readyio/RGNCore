@@ -270,6 +270,55 @@
             <param name="task">The task to be converted.</param>
             <returns>An IEnumerator representing the task.</returns>
         </member>
+        <member name="T:RGN.Extensions.TimeInfoPeriod">
+            Defines available time periods for TimeInfo structure
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.NotStarted">
+            The specified time in the structure has not yet started
+            CurrentTimestamp less than StartTime (if defined)
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Promo">
+            The specified time in the structure is in the promo period
+            CurrentTimestamp less than StartTime, but greater than StartTime minus Promo
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Active">
+            The specified time in the structure is active
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Inactive">
+            The specified time in the structure is in interval duration and temporary inactive
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Grace">
+            The specified time in the structure is in the grace period
+            CurrentTimestamp grater than EndTime, but less than EndTime plus Grace
+        </member>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Ended">
+            The specified time in the structure ended
+            CurrentTimestamp grater than EndTime (if defined)
+        </member>
+        <member name="T:RGN.Extensions.TimeInfoExtensions">
+            Utility methods to simplify work with TimeInfo structure
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by start or end values
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsStartTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by start value
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsEndTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by end value
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.HasTimeIntervals(RGN.Model.TimeInfo)">
+            Has the time structure intervals
+            Note: It means hasIntervals equals to true, or one of interval parameters grater than 0
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.GetCurrentPeriod(RGN.Model.TimeInfo)">
+            Returns current period of provided time structure and remaining time of the period
+            The method uses timestamp equals to DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.GetCurrentPeriod(RGN.Model.TimeInfo,System.Int64)">
+            Returns current period of provided time structure and remaining time of the period
+            The method uses provided timestamp for calculations
+        </member>
         <member name="T:RGN.FunctionsClient.ApiException">
             <summary>
             Represents an exception thrown by the SDK
