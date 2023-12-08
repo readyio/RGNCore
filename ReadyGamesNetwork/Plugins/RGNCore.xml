@@ -534,6 +534,17 @@
         <member name="P:RGN.IDependencies.AssetCache">
             <value>Gets the asset caching service.</value>
         </member>
+        <member name="P:RGN.IDependencies.DeepLink">
+            <value>Gets the deeplink service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.WebForm">
+            <value>Gets the webform service.</value>
+        </member>
+        <member name="M:RGN.IDependencies.Init(RGN.RGNCore)">
+            <summary>
+            Called after RGN Core build
+            </summary>
+        </member>
         <member name="T:RGN.ImplDependencies.Assets.AssetCategory">
             <summary>
             Enumerates the categories of assets used within the RGN (Ready Games Network) SDK.
