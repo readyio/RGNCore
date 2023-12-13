@@ -856,6 +856,35 @@
             These are the attributes for the item, which will show up on the OpenSea page for the item.
             </summary>
         </member>
+        <member name="T:RGN.Model.ParticipationFee">
+            <summary>
+            A class that represents a participation fee on Ready Games Network.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.type">
+            <summary>
+            Specifies the type of the fee.
+            Specifies the type of the participation fee.
+            Available types are:
+            - `currency` - the user needs to pay a specific amount of currency to join a leaderboard.
+            - `gamepass_by_id` - the user needs to have a gamepass with a specific id to join a leaderboard.
+            - `gamepass_by_request_name` - the user needs to have a gamepass with a specific request name to join a
+            leaderboard.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.id">
+            <summary>
+            The id of the entity to check in user data. For example, if the type is `gamepass_by_id`, the id is the id of the
+            gamepass.If the type is `gamepass_by_request_name`, the id is the request name of the gamepass.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.quantity">
+            <summary>
+            The quantity of the entity to check in user data. For example, if the type is `currency`, the quantity is the
+            amount of currency.If the type is `gamepass_by_id`, the quantity is the quantity of the game passes the user
+            needs to have.
+            </summary>
+        </member>
         <member name="T:RGN.Model.Request.BaseMigrationRequestData">
             <summary>
             This class supports multiple versions of an API by appending a "version" parameter to the request data.
@@ -905,20 +934,44 @@
         </member>
         <member name="F:RGN.Model.Requirement.type">
             <summary>
-            Specifies the type of the join requirement
-            Right now 5 types are implemented:
-            - `gamepass` - the user needs to have a gamepass with a specific id to join the leaderboard.
-            - `item_by_id` - the user needs to have a virtual item with a specific id to join the leaderboard.
-            - `item_by_tag` - the user needs to have a virtual item with a specific tag to join the leaderboard.
-            - `achievement_by_id` - the user needs to complete an achievement to join the leaderboard.
-            - `achievement_by_requestName` - the user needs to complete an achievement with a specific request name to
-            join the leaderboard.
+            Specifies the type of the requirement.
+            Available types are:
+            - `gamepass_by_id` - the user needs to have a gamepass with a specific id to join a leaderboard or purchase a
+            store offer.
+            - `gamepass_by_request_name` - the user needs to have a gamepass with a specific request name to join a
+            leaderboard or purchase a store offer.
+            - `item_by_id` - the user needs to have a virtual item with a specific id to join a leaderboard or purchase a
+            store offer.
+            - `item_by_tag` - the user needs to have a virtual item with a specific tag to join a leaderboard or
+            purchase a store offer.
+            - `achievement_by_id` - the user needs to complete an achievement to join a leaderboard or purchase a store
+            offer.
+            - `achievement_by_request_name` - the user needs to complete an achievement with a specific request name to
+            join a leaderboard or purchase a store offer.
             </summary>
         </member>
         <member name="F:RGN.Model.Requirement.id">
             <summary>
-            The id of the entity to check in user data. For example, if the type is `gamepass`, the id is the id of the
+            The id of the entity to check in user data. For example, if the type is `gamepass_by_id`, the id is the id of the
             gamepass.If the type is `item_by_tag`, the id is the tag of the virtual item.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.RequirementData">
+            <summary>
+            A class that represents a leaderboard join or store offer purchase requirements on Ready Games Network.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.RequirementData.operation">
+            <summary>
+            The operation to check the <see cref="F:RGN.Model.RequirementData.requirements"/> with.
+            Available operations are:
+            `and` - the user must meet all of the requirements.
+            `or` - the user must meet at least one of the requirements.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.RequirementData.requirements">
+            <summary>
+            The list of requirements.
             </summary>
         </member>
         <member name="T:RGN.Model.Response.BaseResponseData">
