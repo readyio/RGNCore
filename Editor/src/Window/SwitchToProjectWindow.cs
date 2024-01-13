@@ -210,8 +210,7 @@ namespace RGN.MyEditor
             TParams parameters,
             Dictionary<string, string> queryParameters) where TParams : class
         {
-            HttpClient httpClient = HttpClientFactory.Get(typeof(SwitchToProjectWindow).ToString());
-
+            using HttpClient httpClient = HttpClientFactory.Get(typeof(SwitchToProjectWindow).ToString());
             string functionUrl = _baseCloudAddress + functionName;
             if (queryParameters != null)
             {
