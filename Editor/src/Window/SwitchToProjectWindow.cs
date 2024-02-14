@@ -5,9 +5,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Firebase;
-using Firebase.Auth;
 using Newtonsoft.Json;
+using RGN.ImplDependencies.Core.Auth;
 using RGN.Network;
 using UnityEditor;
 using UnityEngine;
@@ -129,7 +128,7 @@ namespace RGN.MyEditor
             {
                 _errorMessage = null;
                 uiEnabled = false;
-                string token = await GetIdTokenAsync();
+                string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
                 if (string.IsNullOrEmpty(token))
                 {
                     return;
@@ -253,26 +252,12 @@ namespace RGN.MyEditor
                 HttpMethod.Post,
                 functionUrl);
 
-            string token = await GetIdTokenAsync();
-            if (token != null)
+            string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
+            if (!string.IsNullOrEmpty(token))
             {
                 request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + token);
             }
             return request;
-        }
-
-        private static Task<string> GetIdTokenAsync()
-        {
-            var firebaseApp = FirebaseApp.GetInstance(RGNCore.READY_MASTER_APP_CONFIG_NAME);
-            if (firebaseApp != null)
-            {
-                var firebaseAuth = FirebaseAuth.GetAuth(firebaseApp);
-                if (firebaseAuth.CurrentUser != null)
-                {
-                    return firebaseAuth.CurrentUser.TokenAsync(false);
-                }
-            }
-            return Task.FromResult<string>(null);
         }
     }
 }

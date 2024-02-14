@@ -319,49 +319,6 @@
             Returns current period of provided time structure and remaining time of the period
             The method uses provided timestamp for calculations
         </member>
-        <member name="T:RGN.FunctionsClient.ApiException">
-            <summary>
-            Represents an exception thrown by the SDK
-            </summary>
-        </member>
-        <member name="P:RGN.FunctionsClient.ApiException.ErrorCode">
-            <summary>
-            Gets or sets the error code (HTTP status code)
-            </summary>
-            <value>The error code (HTTP status code).</value>
-        </member>
-        <member name="P:RGN.FunctionsClient.ApiException.ErrorContent">
-            <summary>
-            Gets or sets the error content (body json object)
-            </summary>
-            <value>The error content (Http response body).</value>
-        </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-        </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="message">Error message.</param>
-        </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="errorCode">HTTP status code.</param>
-            <param name="message">Error message.</param>
-        </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String,System.Object)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="errorCode">HTTP status code.</param>
-            <param name="message">Error message.</param>
-            <param name="errorContent">Error content.</param>
-        </member>
         <member name="T:RGN.IApplicationStore">
             <summary>
             Defines the required contract for ApplicationStore, providing necessary application information and configurations.
@@ -1318,6 +1275,12 @@
             </summary>
             <param name="isoString">The ISO string to convert.</param>
             <returns>A DateTimeOffset object that represents the specified ISO string.</returns>
+        </member>
+        <member name="M:RGN.Utility.DateTimeUtility.GetUnixEpochDateTimeUtc">
+            <summary>
+            Gets DateTime of Unix epoch (midnight of 1970 year).
+            </summary>
+            <returns>A DateTime object that represents Unix epoch (midnight of 1970 year).</returns>
         </member>
         <member name="T:RGN.Utility.ExceptionHelper">
             <summary>
