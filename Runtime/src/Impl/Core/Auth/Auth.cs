@@ -62,7 +62,7 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         public IUser SetUserTokens(string idToken, string refreshToken)
         {
-            if (!string.IsNullOrEmpty(idToken) && !string.IsNullOrEmpty(refreshToken))
+            if (!string.IsNullOrEmpty(idToken))
             {
                 _currentUser = new User(this, _json, idToken, refreshToken);
             }
