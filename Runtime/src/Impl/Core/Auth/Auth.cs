@@ -43,11 +43,7 @@ namespace RGN.Impl.Firebase.Core.Auth
         {
             string idToken = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName));
             string refreshToken = PlayerPrefs.GetString(AuthTokenKeys.RefreshToken.GetKeyName(Application.productName));
-
-            if (!string.IsNullOrEmpty(idToken) && !string.IsNullOrEmpty(refreshToken))
-            {
-                SetUserTokens(idToken, refreshToken);
-            }
+            SetUserTokens(idToken, refreshToken);
         }
 
         internal void SaveUserTokensToPlayerPrefs()
