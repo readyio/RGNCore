@@ -120,16 +120,20 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             using IHttpResponse response = await httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                if (response.StatusCode == 401 && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
-                {
-                    isRetryRequest = true;
-                    await mReadyMasterAuth.CurrentUser.TokenAsync(true);
-                    await CallInternalAsync(data);
-                    isRetryRequest = false;
-                    return;
-                }
                 string message = await response.ReadAsString();
                 string errorMessage = GetErrorMessage(message);
+                bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
+                if (!isRetryRequest && !isUnauthenticated)
+                {
+                    if (isNotAuthenticatedError && mReadyMasterAuth.CurrentUser != null)
+                    {
+                        isRetryRequest = true;
+                        await mReadyMasterAuth.CurrentUser.TokenAsync(true);
+                        await CallInternalAsync(data);
+                        isRetryRequest = false;
+                        return;
+                    }
+                }
                 throw new HttpRequestException(errorMessage, response.StatusCode);
             }
             await response.ReadAsString();
@@ -184,16 +188,20 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             using IHttpResponse response = await httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                if (response.StatusCode == 401 && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
-                {
-                    isRetryRequest = true;
-                    await mReadyMasterAuth.CurrentUser.TokenAsync(true);
-                    TResult result = await CallInternalAsync<TPayload, TResult>(payload);
-                    isRetryRequest = false;
-                    return result;
-                }
                 string message = await response.ReadAsString();
                 string errorMessage = GetErrorMessage(message);
+                bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
+                if (!isRetryRequest && !isUnauthenticated)
+                {
+                    if (isNotAuthenticatedError && mReadyMasterAuth.CurrentUser != null)
+                    {
+                        isRetryRequest = true;
+                        await mReadyMasterAuth.CurrentUser.TokenAsync(true);
+                        TResult result = await CallInternalAsync<TPayload, TResult>(payload);
+                        isRetryRequest = false;
+                        return result;
+                    }
+                }
                 throw new HttpRequestException(errorMessage, response.StatusCode);
             }
             if (typeof(TResult) == typeof(string))
