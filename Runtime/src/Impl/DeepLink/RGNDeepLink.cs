@@ -41,11 +41,13 @@ namespace RGN.DeepLink
             
             Application.deepLinkActivated += OnDeepLinkActivated;
 
+#if !UNITY_WEBGL
             if (!string.IsNullOrEmpty(Application.absoluteURL))
             {
                 // Cold start and Application.absoluteURL not null so process Deep Link.
                 OnDeepLinkActivated(Application.absoluteURL);
             }
+#endif
             
             _initialized = true;
         }
