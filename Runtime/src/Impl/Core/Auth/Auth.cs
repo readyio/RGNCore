@@ -52,12 +52,11 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         internal void SaveUserTokensToPlayerPrefs()
         {
-            if (_currentUser != null)
-            {
-                PlayerPrefs.SetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName), _currentUser.IdToken);
-                PlayerPrefs.SetString(AuthTokenKeys.RefreshToken.GetKeyName(Application.productName), _currentUser.RefreshToken);
-                PlayerPrefs.Save();
-            }
+            string idToken = _currentUser.IdToken ?? string.Empty;
+            string refreshToken = _currentUser.RefreshToken ?? string.Empty;
+            PlayerPrefs.SetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName), idToken);
+            PlayerPrefs.SetString(AuthTokenKeys.RefreshToken.GetKeyName(Application.productName), refreshToken);
+            PlayerPrefs.Save();
         }
 
         public IUser SetUserTokens(string idToken, string refreshToken)
