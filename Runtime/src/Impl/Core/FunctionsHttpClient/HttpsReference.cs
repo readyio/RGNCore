@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using RGN.Network;
+using RGN.Impl.Firebase.Network;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Core.Functions;
 using RGN.ImplDependencies.Serialization;
-using RGN.Network;
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
 using System.Diagnostics;
 #endif
@@ -102,27 +101,26 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             {
                 content = $"{{\"data\": {jsonContent} }}";
             }
-            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            request.SetStringBody(content);
             if (!isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
             {
                 string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false);
-                request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + token);
+                request.AddHeader("Authorization", "Bearer " + token);
             }
             if (mComputeHmac)
             {
                 string hmac = ComputeHmac(mApiKey, content);
-                request.Headers.TryAddWithoutValidation("hmac", hmac);
+                request.AddHeader("hmac", hmac);
             }
-            string appId = RGNCore.I.AppIDForRequests;
-            if (!string.IsNullOrWhiteSpace(appId))
+            if (!string.IsNullOrWhiteSpace(RGNCore.I.AppIDForRequests))
             {
-                request.Headers.TryAddWithoutValidation("app-id", appId);
+                request.AddHeader("app-id", RGNCore.I.AppIDForRequests);
             }
-            using HttpClient httpClient = HttpClientFactory.Get();
-            using HttpResponseMessage response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            using IHttpClient httpClient = HttpClientFactory.Get();
+            using IHttpResponse response = await httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                if (response.StatusCode == HttpStatusCode.Unauthorized && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
+                if (response.StatusCode == 401 && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
                 {
                     isRetryRequest = true;
                     await mReadyMasterAuth.CurrentUser.TokenAsync(true);
@@ -130,11 +128,11 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                     isRetryRequest = false;
                     return;
                 }
-                string message = await response.Content.ReadAsStringAsync();
+                string message = await response.ReadAsString();
                 string errorMessage = GetErrorMessage(message);
-                throw new HttpRequestExceptionWithStatusCode(errorMessage, response.StatusCode);
+                throw new HttpRequestException(errorMessage, response.StatusCode);
             }
-            await response.Content.ReadAsStringAsync();
+            await response.ReadAsString();
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
             await EmulateColdStart(callSw);
 #endif
@@ -167,27 +165,26 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             {
                 content = $"{{\"data\": {jsonContent} }}";
             }
-            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            request.SetStringBody(content);
             if (!isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
             {
                 string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false);
-                request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + token);
+                request.AddHeader("Authorization", "Bearer " + token);
             }
             if (mComputeHmac)
             {
                 string hmac = ComputeHmac(mApiKey, content);
-                request.Headers.TryAddWithoutValidation("hmac", hmac);
+                request.AddHeader("hmac", hmac);
             }
-            string appId = RGNCore.I.AppIDForRequests;
-            if (!string.IsNullOrWhiteSpace(appId))
+            if (!string.IsNullOrWhiteSpace(RGNCore.I.AppIDForRequests))
             {
-                request.Headers.TryAddWithoutValidation("app-id", appId);
+                request.AddHeader("app-id", RGNCore.I.AppIDForRequests);
             }
-            using HttpClient httpClient = HttpClientFactory.Get();
-            using HttpResponseMessage response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            using IHttpClient httpClient = HttpClientFactory.Get();
+            using IHttpResponse response = await httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                if (response.StatusCode == HttpStatusCode.Unauthorized && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
+                if (response.StatusCode == 401 && !isRetryRequest && !isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
                 {
                     isRetryRequest = true;
                     await mReadyMasterAuth.CurrentUser.TokenAsync(true);
@@ -195,19 +192,19 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                     isRetryRequest = false;
                     return result;
                 }
-                string message = await response.Content.ReadAsStringAsync();
+                string message = await response.ReadAsString();
                 string errorMessage = GetErrorMessage(message);
-                throw new HttpRequestExceptionWithStatusCode(errorMessage, response.StatusCode);
+                throw new HttpRequestException(errorMessage, response.StatusCode);
             }
             if (typeof(TResult) == typeof(string))
             {
-                string result = await response.Content.ReadAsStringAsync();
+                string result = await response.ReadAsString();
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
                 await EmulateColdStart(callSw);
 #endif
                 return (TResult)(object)result;
             }
-            var stream = await response.Content.ReadAsStreamAsync();
+            var stream = await response.ReadAsStream();
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
             await EmulateColdStart(callSw);
 #endif

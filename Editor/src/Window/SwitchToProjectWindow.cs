@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RGN.Impl.Firebase.Network;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.Network;
 using UnityEditor;
 using UnityEngine;
+using HttpMethod = RGN.Network.HttpMethod;
+using HttpRequestMessage = RGN.Network.HttpRequestMessage;
 
 namespace RGN.MyEditor
 {
@@ -55,13 +56,11 @@ namespace RGN.MyEditor
             if (appStore.IsUsingEmulator)
             {
                 _functionsPort = int.Parse(appStore.GetFunctionsPort.Substring(1));
-                _baseCloudAddress =
-                    $"http://{appStore.GetEmulatorServerIp + appStore.GetFunctionsPort}/{appStore.GetRGNMasterProjectId}/{REGION}/";
+                _baseCloudAddress = $"http://{appStore.GetEmulatorServerIp + appStore.GetFunctionsPort}/{appStore.GetRGNMasterProjectId}/{REGION}/";
             }
             else
             {
-                _baseCloudAddress =
-                    $"https://{REGION}-{appStore.GetRGNMasterProjectId}.cloudfunctions.net/";
+                _baseCloudAddress = $"https://{REGION}-{appStore.GetRGNMasterProjectId}.cloudfunctions.net/";
             }
             await ReloadProjectsListAsync();
         }
@@ -142,7 +141,7 @@ namespace RGN.MyEditor
                     null,
                     queryParameters);
 
-                byte[] data = await result.Content.ReadAsByteArrayAsync();
+                byte[] data = await result.ReadAsBytes();
 
                 // Use data as needed, e.g., save to a file
                 string filePath = Path.Combine(Application.persistentDataPath, "credentials.unitypackage");
@@ -195,41 +194,38 @@ namespace RGN.MyEditor
             Dictionary<string, string> queryParameters = null)
             where TParams : class
         {
-            HttpResponseMessage httpResult = await CallHttpRequestFunctionAsync(
+            IHttpResponse httpResult = await CallHttpRequestFunctionAsync(
                 functionName,
                 parameters,
                 queryParameters);
-            string resposeJson = await httpResult.Content.ReadAsStringAsync();
+            string resposeJson = await httpResult.ReadAsString();
             var result = JsonConvert.DeserializeObject<TReturn>(resposeJson);
             return result;
         }
 
-        private async Task<HttpResponseMessage> CallHttpRequestFunctionAsync<TParams>(
+        private async Task<IHttpResponse> CallHttpRequestFunctionAsync<TParams>(
             string functionName,
             TParams parameters,
             Dictionary<string, string> queryParameters) where TParams : class
         {
-            using HttpClient httpClient = HttpClientFactory.Get(typeof(SwitchToProjectWindow).ToString());
+            using IHttpClient httpClient = HttpClientFactory.Get(typeof(SwitchToProjectWindow).ToString());
             string functionUrl = _baseCloudAddress + functionName;
             if (queryParameters != null)
             {
                 var builder = new UriBuilder(functionUrl) {
-                    Port = _functionsPort
+                    Port = _functionsPort,
+                    Query = string.Join("&", queryParameters.Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"))
                 };
-                builder.Query = string.Join("&", queryParameters.Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
                 functionUrl = builder.ToString();
             }
             Debug.Log("Calling function with url: " + functionUrl);
-            var request = await BuildHttpRequestAsync(functionUrl);
+            HttpRequestMessage request = BuildHttpRequest(functionUrl);
             if (parameters != null)
             {
                 string jsonRequest = JsonConvert.SerializeObject(parameters);
-                request.Content = new StringContent(
-                   jsonRequest,
-                   Encoding.UTF8,
-                   "application/json");
+                request.SetStringBody(jsonRequest);
             }
-            var httpResult = await httpClient.SendAsync(request);
+            IHttpResponse httpResult = await httpClient.SendAsync(request);
             httpResult.EnsureSuccessStatusCode();
             return httpResult;
         }
@@ -246,16 +242,13 @@ namespace RGN.MyEditor
             }
         }
 
-        private async Task<HttpRequestMessage> BuildHttpRequestAsync(string functionUrl)
+        private HttpRequestMessage BuildHttpRequest(string functionUrl)
         {
-            var request = new HttpRequestMessage(
-                HttpMethod.Post,
-                functionUrl);
-
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(functionUrl));
             string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
             if (!string.IsNullOrEmpty(token))
             {
-                request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + token);
+                request.AddHeader("Authorization", "Bearer " + token);
             }
             return request;
         }

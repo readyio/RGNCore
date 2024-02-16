@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
-using RGN.Impl.Firebase.Core.FunctionsHttpClient;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Serialization;
 using RGN.Jwt;
+using RGN.Network;
 
 namespace RGN.Impl.Firebase.Core.Auth
 {
@@ -44,9 +43,9 @@ namespace RGN.Impl.Firebase.Core.Auth
                     _userIdTokenInfo = CreateTokenInfo(tokensPair.IdToken);
                     mAuth.SaveUserTokensToPlayerPrefs();
                 }
-                catch (HttpRequestExceptionWithStatusCode httpException)
+                catch (HttpRequestException httpException)
                 {
-                    if (httpException.StatusCode == HttpStatusCode.BadRequest)
+                    if (httpException.StatusCode == 400)
                     {
                         mAuth.SignOut();
                     }
