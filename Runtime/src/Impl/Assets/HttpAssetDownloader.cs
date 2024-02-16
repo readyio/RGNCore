@@ -27,8 +27,18 @@ namespace RGN.Impl.Firebase.Assets
         {
             try
             {
+                string token = string.Empty;
+                if (RGNCore.I.IsLoggedIn)
+                {
+                    token = await RGNCore.I.MasterAppUser.TokenAsync(false);
+                }
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
+                if (!string.IsNullOrEmpty(token))
+                {
+                    requestMessage.AddHeader("Authorization", $"Bearer ${token}");
+                }
                 using IHttpClient httpClient = HttpClientFactory.Get("assets");
-                using IHttpResponse result = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(url)), cancellationToken);
+                using IHttpResponse result = await httpClient.SendAsync(requestMessage, cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
                 byte[] bytes = await result.ReadAsBytes();
                 cancellationToken.ThrowIfCancellationRequested();
