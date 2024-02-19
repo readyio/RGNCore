@@ -1,2 +1,2 @@
 # RGN Core
-Package version: 0.9.0-dev.502
+Package version: 0.9.0-dev.503
