@@ -2,6 +2,7 @@ using RGN.DeepLink;
 using RGN.ImplDependencies.Assets;
 using RGN.ImplDependencies.Core;
 using RGN.ImplDependencies.Core.Auth;
+using RGN.ImplDependencies.Core.DynamicLinks;
 using RGN.ImplDependencies.Core.Functions;
 using RGN.ImplDependencies.Core.Messaging;
 using RGN.ImplDependencies.DeepLink;
@@ -17,6 +18,7 @@ namespace RGN.Impl.Firebase
     {
         public IRGNAnalytics RGNAnalytics { get; }
         public IRGNMessaging RGNMessaging { get; }
+        public IRGNDynamicLinks RGNDynamicLinks { get; }
         public IRGNGuestSignIn RGNGuestSignIn { get; }
         public IApplicationStore ApplicationStore { get; }
         public IApp App { get; }
@@ -24,6 +26,7 @@ namespace RGN.Impl.Firebase
         public IAuth ReadyMasterAuth { get; }
         public IFunctions ReadyMasterFunction { get; }
         public IMessaging Messaging { get; }
+        public IDynamicLinks DynamicLinks { get; }
         public IJson Json { get; }
         public IEngineApp EngineApp { get; }
         public ITime Time { get; }
@@ -52,6 +55,7 @@ namespace RGN.Impl.Firebase
             readyMasterAuth.LoadUserTokensFromPlayerPrefs();
 
             Messaging = new Core.MessagingStub();
+            DynamicLinks = new Core.DynamicLinksStub();
 
             EngineApp = new Engine.EngineApp();
             Time = new Engine.Time();
