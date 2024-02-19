@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RGN.Impl.Firebase.Core.Auth;
 using RGN.Impl.Firebase.Network;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.Network;
@@ -127,7 +128,7 @@ namespace RGN.MyEditor
             {
                 _errorMessage = null;
                 uiEnabled = false;
-                string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName));
+                string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
                 if (string.IsNullOrEmpty(token))
                 {
                     return;
@@ -245,7 +246,7 @@ namespace RGN.MyEditor
         private HttpRequestMessage BuildHttpRequest(string functionUrl)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, new Uri(functionUrl));
-            string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName));
+            string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
             if (!string.IsNullOrEmpty(token))
             {
                 request.AddHeader("Authorization", "Bearer " + token);

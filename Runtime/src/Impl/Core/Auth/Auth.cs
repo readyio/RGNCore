@@ -41,8 +41,8 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         internal void LoadUserTokensFromPlayerPrefs()
         {
-            string idToken = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName));
-            string refreshToken = PlayerPrefs.GetString(AuthTokenKeys.RefreshToken.GetKeyName(Application.productName));
+            string idToken = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
+            string refreshToken = PlayerPrefs.GetString(AuthTokenKeys.RefreshToken.GetKeyName());
             SetUserTokens(idToken, refreshToken);
         }
 
@@ -50,8 +50,8 @@ namespace RGN.Impl.Firebase.Core.Auth
         {
             string idToken = _currentUser != null ? _currentUser.IdToken : string.Empty;
             string refreshToken = _currentUser != null ? _currentUser.RefreshToken : string.Empty;
-            PlayerPrefs.SetString(AuthTokenKeys.IdToken.GetKeyName(Application.productName), idToken);
-            PlayerPrefs.SetString(AuthTokenKeys.RefreshToken.GetKeyName(Application.productName), refreshToken);
+            PlayerPrefs.SetString(AuthTokenKeys.IdToken.GetKeyName(), idToken);
+            PlayerPrefs.SetString(AuthTokenKeys.RefreshToken.GetKeyName(), refreshToken);
             PlayerPrefs.Save();
         }
 
