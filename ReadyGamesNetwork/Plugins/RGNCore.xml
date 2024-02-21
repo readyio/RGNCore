@@ -612,11 +612,6 @@
             For example user logs out, logs in as a guest, logs is with email
             </summary>
         </member>
-        <member name="E:RGN.IRGNCore.InitializedEvent">
-            <summary>
-            This event is invoked when the SDK is fully initialized.
-            </summary>
-        </member>
         <member name="E:RGN.IRGNCore.UpdateEvent">
             <summary>
             Unity Update event. You can subscribe on this event to receive updates every frame.
@@ -1162,6 +1157,11 @@
             <summary>
             This interface is used to inject the module dependency and make it optional
             If the developers do not use the RGN Messaging package, the value in Dependencies will be null
+            </summary>
+        </member>
+        <member name="E:RGN.RGNCore.InitializedEvent">
+            <summary>
+            This event is invoked when the SDK is fully initialized.
             </summary>
         </member>
         <member name="T:RGN.RGNCoreBuilder">
