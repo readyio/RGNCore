@@ -6,7 +6,7 @@ namespace RGN.Impl.Firebase.Core
 {
     public sealed class AppStub : IApp
     {
-        async Task<DependencyStatus> IApp.CheckAndFixDependenciesAsync() => await Task.FromResult(DependencyStatus.Available);
+        Task<DependencyStatus> IApp.CheckAndFixDependenciesAsync() => Task.FromResult(DependencyStatus.Available);
         public string GetFirebaseSdkVersion() => "unknown";
     }
 }
