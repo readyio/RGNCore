@@ -30,7 +30,8 @@ namespace RGN.WebForm
             _onWebFormCreateWalletRedirect = redirectCallback;
             string redirectUrl = RGNDeepLinkHttpUtility.GetDeepLinkRedirectScheme();
             string url = GetWebFormUrl(redirectUrl) +
-                         "&returnSecureToken=false" +
+                         "&returnSecureToken=true" +
+                         "&returnRefreshToken=true" +
                          "&idToken=" + idToken +
                          "&view=createwallet";
             OpenWebForm(url, redirectUrl);
@@ -62,23 +63,35 @@ namespace RGN.WebForm
                 appFocusWatcher.Destroy();
 
                 _onWebFormSignInRedirect?.Invoke(true, "");
-                _onWebFormCreateWalletRedirect?.Invoke(true);
+                _onWebFormCreateWalletRedirect?.Invoke(true, "");
             }
         }
         
         private void OnDeepLink(string url)
         {
+            string token = "";
+            string[] urlParts = url.Split('?');
+            if (urlParts.Length > 1)
+            {
+                string parameters = urlParts[1];
+                NameValueCollection parsedParameters = RGNDeepLinkHttpUtility.ParseQueryString(parameters);
+                if (!string.IsNullOrEmpty(parsedParameters["token"]))
+                {
+                    token = parsedParameters["token"];
+                }
+            }
+            
             if (_onWebFormSignInRedirect != null)
             {
-                string parameters = url.Split("?"[0])[1];
-                NameValueCollection parsedParameters = RGNDeepLinkHttpUtility.ParseQueryString(parameters);
-                string token = parsedParameters["token"];
                 _onWebFormSignInRedirect.Invoke(false, token);
                 _onWebFormSignInRedirect = null;
             }
             
-            _onWebFormCreateWalletRedirect?.Invoke(false);
-            _onWebFormCreateWalletRedirect = null;
+            if (_onWebFormCreateWalletRedirect != null)
+            {
+                _onWebFormCreateWalletRedirect.Invoke(false, token);
+                _onWebFormCreateWalletRedirect = null;
+            }
         }
 
         private string GetWebFormUrl(string redirectUrl) =>
