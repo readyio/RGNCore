@@ -41,7 +41,7 @@ namespace RGN.Impl.Firebase.Core.Auth
                     IdToken = tokensPair.IdToken;
                     RefreshToken = tokensPair.RefreshToken;
                     _userIdTokenInfo = CreateTokenInfo(tokensPair.IdToken);
-                    mAuth.SaveUserTokensToPlayerPrefs();
+                    mAuth.SaveUserTokens();
                 }
                 catch (HttpRequestException httpException)
                 {

@@ -5,13 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RGN.Impl.Firebase.Core.Auth;
+using RGN.Impl.Firebase.Engine;
 using RGN.Impl.Firebase.Network;
 using RGN.ImplDependencies.Core.Auth;
+using RGN.ImplDependencies.Engine;
 using RGN.Network;
 using UnityEditor;
 using UnityEngine;
 using HttpMethod = RGN.Network.HttpMethod;
 using HttpRequestMessage = RGN.Network.HttpRequestMessage;
+using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace RGN.MyEditor
 {
@@ -34,6 +37,7 @@ namespace RGN.MyEditor
 
         private const string REGION = "us-central1";
 
+        private IPersistenceData persistenceData = new PersistenceData();
         private string searchField = "";
         private List<ProjectData> projectsList = new List<ProjectData>();
         private List<ProjectData> filteredProjectsList = new List<ProjectData>();
@@ -128,7 +132,7 @@ namespace RGN.MyEditor
             {
                 _errorMessage = null;
                 uiEnabled = false;
-                string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
+                string token = persistenceData.LoadFile(AuthTokenKeys.IdToken.GetKeyName());
                 if (string.IsNullOrEmpty(token))
                 {
                     return;
@@ -246,7 +250,7 @@ namespace RGN.MyEditor
         private HttpRequestMessage BuildHttpRequest(string functionUrl)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, new Uri(functionUrl));
-            string token = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
+            string token = persistenceData.LoadFile(AuthTokenKeys.IdToken.GetKeyName());
             if (!string.IsNullOrEmpty(token))
             {
                 request.AddHeader("Authorization", "Bearer " + token);

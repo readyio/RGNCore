@@ -482,6 +482,9 @@
         <member name="P:RGN.IDependencies.Json">
             <value>Gets the JSON serialization service.</value>
         </member>
+        <member name="P:RGN.IDependencies.PersistenceData">
+            <value>Gets the persistence data service.</value>
+        </member>
         <member name="P:RGN.IDependencies.EngineApp">
             <value>Gets the engine application service.</value>
         </member>

@@ -1,4 +1,5 @@
 using RGN.DeepLink;
+using RGN.Impl.Firebase.Engine;
 using RGN.ImplDependencies.Assets;
 using RGN.ImplDependencies.Core;
 using RGN.ImplDependencies.Core.Auth;
@@ -28,6 +29,7 @@ namespace RGN.Impl.Firebase
         public IMessaging Messaging { get; }
         public IDynamicLinks DynamicLinks { get; }
         public IJson Json { get; }
+        public IPersistenceData PersistenceData { get; }
         public IEngineApp EngineApp { get; }
         public ITime Time { get; }
         public ILogger Logger { get; }
@@ -45,14 +47,14 @@ namespace RGN.Impl.Firebase
             ApplicationStore = applicationStore;
             App = new Core.AppStub();
             Json = new Serialization.Json();
+            PersistenceData = new PersistenceData();
             
             var readyMasterAuth = new Core.Auth.Auth();
             ReadyMasterAuth = readyMasterAuth;
             ReadyMasterFunction = new Core.FunctionsHttpClient.Functions(Json, ReadyMasterAuth, ApplicationStore.GetRGNMasterProjectId, applicationStore.GetRGNApiKey);
             
-            readyMasterAuth.SetJson(Json);
-            readyMasterAuth.SetFunctions(ReadyMasterFunction);
-            readyMasterAuth.LoadUserTokensFromPlayerPrefs();
+            readyMasterAuth.SetDependencies(ReadyMasterFunction, PersistenceData, Json);
+            readyMasterAuth.LoadUserTokens();
 
             Messaging = new Core.MessagingStub();
             DynamicLinks = new Core.DynamicLinksStub();

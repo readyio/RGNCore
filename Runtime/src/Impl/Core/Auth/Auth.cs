@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Core.Functions;
+using RGN.ImplDependencies.Engine;
 using RGN.ImplDependencies.Serialization;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace RGN.Impl.Firebase.Core.Auth
         private readonly HashSet<EventHandler> mListeners = new HashSet<EventHandler>();
         
         private IFunctions _functions;
+        private IPersistenceData _persistenceData;
         private IJson _json;
         private IUser _currentUser;
 
@@ -29,30 +31,26 @@ namespace RGN.Impl.Firebase.Core.Auth
             remove => mListeners.Remove(value);
         }
         
-        internal void SetJson(IJson json)
-        {
-            _json = json;
-        }
-        
-        internal void SetFunctions(IFunctions functions)
+        internal void SetDependencies(IFunctions functions, IPersistenceData persistenceData, IJson json)
         {
             _functions = functions;
+            _persistenceData = persistenceData;
+            _json = json;
         }
 
-        internal void LoadUserTokensFromPlayerPrefs()
+        internal void LoadUserTokens()
         {
-            string idToken = PlayerPrefs.GetString(AuthTokenKeys.IdToken.GetKeyName());
-            string refreshToken = PlayerPrefs.GetString(AuthTokenKeys.RefreshToken.GetKeyName());
+            string idToken = _persistenceData.LoadFile(AuthTokenKeys.IdToken.GetKeyName());
+            string refreshToken = _persistenceData.LoadFile(AuthTokenKeys.RefreshToken.GetKeyName());
             SetUserTokens(idToken, refreshToken);
         }
 
-        internal void SaveUserTokensToPlayerPrefs()
+        internal void SaveUserTokens()
         {
             string idToken = _currentUser != null ? _currentUser.IdToken : string.Empty;
             string refreshToken = _currentUser != null ? _currentUser.RefreshToken : string.Empty;
-            PlayerPrefs.SetString(AuthTokenKeys.IdToken.GetKeyName(), idToken);
-            PlayerPrefs.SetString(AuthTokenKeys.RefreshToken.GetKeyName(), refreshToken);
-            PlayerPrefs.Save();
+            _persistenceData.SaveFile(AuthTokenKeys.IdToken.GetKeyName(), idToken);
+            _persistenceData.SaveFile(AuthTokenKeys.RefreshToken.GetKeyName(), refreshToken);
         }
 
         public IUser SetUserTokens(string idToken, string refreshToken)
@@ -66,7 +64,7 @@ namespace RGN.Impl.Firebase.Core.Auth
                 _currentUser = null;
             }
             
-            SaveUserTokensToPlayerPrefs();
+            SaveUserTokens();
 
             foreach (EventHandler listener in mListeners)
             {
