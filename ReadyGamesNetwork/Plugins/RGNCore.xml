@@ -1425,6 +1425,14 @@
             <param name="str">The string to validate.</param>
             <param name="strName">The name of the string, used in the exception message.</param>
         </member>
+        <member name="M:RGN.Utility.ThrowIf.String.LengthExceedsMax(System.String,System.String,System.Int32)">
+            <summary>
+            Throws an exception if the provided string's length is greater than the maximum allowed length.
+            </summary>
+            <param name="str">The string to validate.</param>
+            <param name="strName">The name of the string, used in the exception message.</param>
+            <param name="maxLength">The maximum allowed length of the string.</param>
+        </member>
         <member name="T:RGN.Utility.ThrowIf.Collection">
             <summary>
             Nested class containing methods for collection validation.
