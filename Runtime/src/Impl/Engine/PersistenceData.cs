@@ -7,7 +7,7 @@ namespace RGN.Impl.Firebase.Engine
 {
     public class PersistenceData : IPersistenceData
     {
-#if UNITY_WEBGL
+#if UNITY_WEBGL && !UNITY_EDITOR
         [DllImport("__Internal")]
         private static extern void JsFileSystemSync();
 #endif
@@ -32,7 +32,7 @@ namespace RGN.Impl.Firebase.Engine
             {
                 string filePath = System.IO.Path.Combine(Application.persistentDataPath, name);
                 System.IO.File.WriteAllText(filePath, content);
-#if UNITY_WEBGL
+#if UNITY_WEBGL && !UNITY_EDITOR
                 JsFileSystemSync();
 #endif
             }

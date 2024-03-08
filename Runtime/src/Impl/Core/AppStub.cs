@@ -4,7 +4,7 @@ using DependencyStatus = RGN.ImplDependencies.Core.DependencyStatus;
 
 namespace RGN.Impl.Firebase.Core
 {
-    public sealed class AppStub : IApp
+    public sealed class AppStub : IApp, IImplStub
     {
         Task<DependencyStatus> IApp.CheckAndFixDependenciesAsync() => Task.FromResult(DependencyStatus.Available);
         public string GetFirebaseSdkVersion() => "unknown";
