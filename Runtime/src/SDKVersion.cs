@@ -2,6 +2,6 @@ namespace RGN
 {
     public static class SDKVersion
     {
-        public static string Version = "0.9.0-dev.524";
+        public static string Version = "0.10.0-dev.525";
     }
 }
