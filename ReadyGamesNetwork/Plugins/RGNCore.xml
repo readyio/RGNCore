@@ -270,48 +270,54 @@
             <param name="task">The task to be converted.</param>
             <returns>An IEnumerator representing the task.</returns>
         </member>
-        <member name="T:RGN.FunctionsClient.ApiException">
-            <summary>
-            Represents an exception thrown by the SDK
-            </summary>
+        <member name="T:RGN.Extensions.TimeInfoPeriod">
+            Defines available time periods for TimeInfo structure
         </member>
-        <member name="P:RGN.FunctionsClient.ApiException.ErrorCode">
-            <summary>
-            Gets or sets the error code (HTTP status code)
-            </summary>
-            <value>The error code (HTTP status code).</value>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.NotStarted">
+            The specified time in the structure has not yet started
+            CurrentTimestamp less than StartTime (if defined)
         </member>
-        <member name="P:RGN.FunctionsClient.ApiException.ErrorContent">
-            <summary>
-            Gets or sets the error content (body json object)
-            </summary>
-            <value>The error content (Http response body).</value>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Promo">
+            The specified time in the structure is in the promo period
+            CurrentTimestamp less than StartTime, but greater than StartTime minus Promo
         </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Active">
+            The specified time in the structure is active
         </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="message">Error message.</param>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Inactive">
+            The specified time in the structure is in interval duration and temporary inactive
         </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="errorCode">HTTP status code.</param>
-            <param name="message">Error message.</param>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Grace">
+            The specified time in the structure is in the grace period
+            CurrentTimestamp grater than EndTime, but less than EndTime plus Grace
         </member>
-        <member name="M:RGN.FunctionsClient.ApiException.#ctor(System.Int32,System.String,System.Object)">
-            <summary>
-            Initializes a new instance of the <see cref="T:RGN.FunctionsClient.ApiException"/> class.
-            </summary>
-            <param name="errorCode">HTTP status code.</param>
-            <param name="message">Error message.</param>
-            <param name="errorContent">Error content.</param>
+        <member name="F:RGN.Extensions.TimeInfoPeriod.Ended">
+            The specified time in the structure ended
+            CurrentTimestamp grater than EndTime (if defined)
+        </member>
+        <member name="T:RGN.Extensions.TimeInfoExtensions">
+            Utility methods to simplify work with TimeInfo structure
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by start or end values
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsStartTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by start value
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IsEndTimeLimited(RGN.Model.TimeInfo)">
+            Is the time structure limited by end value
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.HasTimeIntervals(RGN.Model.TimeInfo)">
+            Has the time structure intervals
+            Note: It means hasIntervals equals to true, or one of interval parameters grater than 0
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.GetCurrentPeriod(RGN.Model.TimeInfo)">
+            Returns current period of provided time structure and remaining time of the period
+            The method uses timestamp equals to DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.GetCurrentPeriod(RGN.Model.TimeInfo,System.Int64)">
+            Returns current period of provided time structure and remaining time of the period
+            The method uses provided timestamp for calculations
         </member>
         <member name="T:RGN.IApplicationStore">
             <summary>
@@ -446,6 +452,9 @@
         <member name="P:RGN.IDependencies.RGNMessaging">
             <value>Gets the messaging service specific to RGN.</value>
         </member>
+        <member name="P:RGN.IDependencies.RGNDynamicLinks">
+            <value>Gets the dynamic links service specific to RGN.</value>
+        </member>
         <member name="P:RGN.IDependencies.RGNGuestSignIn">
             <value>Gets the guest sign-in functionality.</value>
         </member>
@@ -467,8 +476,14 @@
         <member name="P:RGN.IDependencies.Messaging">
             <value>Gets the messaging service.</value>
         </member>
+        <member name="P:RGN.IDependencies.DynamicLinks">
+            <value>Gets the dynamiclinks service.</value>
+        </member>
         <member name="P:RGN.IDependencies.Json">
             <value>Gets the JSON serialization service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.PersistenceData">
+            <value>Gets the persistence data service.</value>
         </member>
         <member name="P:RGN.IDependencies.EngineApp">
             <value>Gets the engine application service.</value>
@@ -484,6 +499,17 @@
         </member>
         <member name="P:RGN.IDependencies.AssetCache">
             <value>Gets the asset caching service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.DeepLink">
+            <value>Gets the deeplink service.</value>
+        </member>
+        <member name="P:RGN.IDependencies.WebForm">
+            <value>Gets the webform service.</value>
+        </member>
+        <member name="M:RGN.IDependencies.Init(RGN.RGNCore)">
+            <summary>
+            Called after RGN Core build
+            </summary>
         </member>
         <member name="T:RGN.ImplDependencies.Assets.AssetCategory">
             <summary>
@@ -796,6 +822,35 @@
             These are the attributes for the item, which will show up on the OpenSea page for the item.
             </summary>
         </member>
+        <member name="T:RGN.Model.ParticipationFee">
+            <summary>
+            A class that represents a participation fee on Ready Games Network.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.type">
+            <summary>
+            Specifies the type of the fee.
+            Specifies the type of the participation fee.
+            Available types are:
+            - `currency` - the user needs to pay a specific amount of currency to join a leaderboard.
+            - `gamepass_by_id` - the user needs to have a gamepass with a specific id to join a leaderboard.
+            - `gamepass_by_request_name` - the user needs to have a gamepass with a specific request name to join a
+            leaderboard.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.id">
+            <summary>
+            The id of the entity to check in user data. For example, if the type is `gamepass_by_id`, the id is the id of the
+            gamepass.If the type is `gamepass_by_request_name`, the id is the request name of the gamepass.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.ParticipationFee.quantity">
+            <summary>
+            The quantity of the entity to check in user data. For example, if the type is `currency`, the quantity is the
+            amount of currency.If the type is `gamepass_by_id`, the quantity is the quantity of the game passes the user
+            needs to have.
+            </summary>
+        </member>
         <member name="T:RGN.Model.Request.BaseMigrationRequestData">
             <summary>
             This class supports multiple versions of an API by appending a "version" parameter to the request data.
@@ -836,6 +891,53 @@
         <member name="M:RGN.Model.Request.BaseRequestData.#ctor">
             <summary>
             Protected constructor for <see cref="T:RGN.Model.Request.BaseRequestData"/>.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.Requirement">
+            <summary>
+            A class that represents a leaderboard join or store offer purchase requirement on Ready Games Network.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Requirement.type">
+            <summary>
+            Specifies the type of the requirement.
+            Available types are:
+            - `gamepass_by_id` - the user needs to have a gamepass with a specific id to join a leaderboard or purchase a
+            store offer.
+            - `gamepass_by_request_name` - the user needs to have a gamepass with a specific request name to join a
+            leaderboard or purchase a store offer.
+            - `item_by_id` - the user needs to have a virtual item with a specific id to join a leaderboard or purchase a
+            store offer.
+            - `item_by_tag` - the user needs to have a virtual item with a specific tag to join a leaderboard or
+            purchase a store offer.
+            - `achievement_by_id` - the user needs to complete an achievement to join a leaderboard or purchase a store
+            offer.
+            - `achievement_by_request_name` - the user needs to complete an achievement with a specific request name to
+            join a leaderboard or purchase a store offer.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Requirement.id">
+            <summary>
+            The id of the entity to check in user data. For example, if the type is `gamepass_by_id`, the id is the id of the
+            gamepass.If the type is `item_by_tag`, the id is the tag of the virtual item.
+            </summary>
+        </member>
+        <member name="T:RGN.Model.RequirementData">
+            <summary>
+            A class that represents a leaderboard join or store offer purchase requirements on Ready Games Network.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.RequirementData.operation">
+            <summary>
+            The operation to check the <see cref="F:RGN.Model.RequirementData.requirements"/> with.
+            Available operations are:
+            `and` - the user must meet all of the requirements.
+            `or` - the user must meet at least one of the requirements.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.RequirementData.requirements">
+            <summary>
+            The list of requirements.
             </summary>
         </member>
         <member name="T:RGN.Model.Response.BaseResponseData">
@@ -895,12 +997,34 @@
             The interval delay. This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasInterval"/> is true.
             </summary>
         </member>
+        <member name="F:RGN.Model.TimeInfo.hasPromo">
+            <summary>
+            Indicates whether a promo is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.promo">
+            <summary>
+            The promo duration in milliseconds before the start time.
+            This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasPromo"/> and <see cref="F:RGN.Model.TimeInfo.hasStart"/> are true.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.hasGrace">
+            <summary>
+            Indicates whether a grace is specified.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.TimeInfo.grace">
+            <summary>
+            The grace duration in milliseconds after the end time.
+            This field is relevant only if <see cref="F:RGN.Model.TimeInfo.hasGrace"/> and <see cref="F:RGN.Model.TimeInfo.hasEnd"/> are true.
+            </summary>
+        </member>
         <member name="M:RGN.Model.TimeInfo.#ctor">
             <summary>
             Default parameterless ctor
             </summary>
         </member>
-        <member name="M:RGN.Model.TimeInfo.#ctor(System.Boolean,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64,System.Int64)">
+        <member name="M:RGN.Model.TimeInfo.#ctor(System.Boolean,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64,System.Int64,System.Boolean,System.Int64,System.Boolean,System.Int64)">
             <summary>
             Constructs TimeInfo
             </summary>
@@ -911,6 +1035,10 @@
             <param name="hasInterval"></param>
             <param name="intervalDuration"></param>
             <param name="intervalDelay"></param>
+            <param name="hasPromo"></param>
+            <param name="promo"></param>
+            <param name="hasGrace"></param>
+            <param name="grace"></param>
         </member>
         <member name="M:RGN.Model.TimeInfo.ToString">
             <summary>
@@ -1011,6 +1139,12 @@
             <exception cref="T:System.ArgumentNullException">Thrown when eventName is null or empty.</exception>
             <exception cref="T:System.OperationCanceledException">Thrown when the operation is cancelled via the cancellationToken.</exception>
         </member>
+        <member name="T:RGN.ModuleDependencies.IRGNDynamicLinks">
+            <summary>
+            This interface is used to inject the module dependency and make it optional
+            If the developers do not use the RGN Dynamic Links package, the value in Dependencies will be null
+            </summary>
+        </member>
         <member name="T:RGN.ModuleDependencies.IRGNGuestSignIn">
             <summary>
             This interface is used to inject the module dependency and make it optional
@@ -1026,6 +1160,11 @@
             <summary>
             This interface is used to inject the module dependency and make it optional
             If the developers do not use the RGN Messaging package, the value in Dependencies will be null
+            </summary>
+        </member>
+        <member name="E:RGN.RGNCore.InitializedEvent">
+            <summary>
+            This event is invoked when the SDK is fully initialized.
             </summary>
         </member>
         <member name="T:RGN.RGNCoreBuilder">
@@ -1157,6 +1296,12 @@
             <param name="isoString">The ISO string to convert.</param>
             <returns>A DateTimeOffset object that represents the specified ISO string.</returns>
         </member>
+        <member name="M:RGN.Utility.DateTimeUtility.GetUnixEpochDateTimeUtc">
+            <summary>
+            Gets DateTime of Unix epoch (midnight of 1970 year).
+            </summary>
+            <returns>A DateTime object that represents Unix epoch (midnight of 1970 year).</returns>
+        </member>
         <member name="T:RGN.Utility.ExceptionHelper">
             <summary>
             Provides utility methods to assist with exception handling,
@@ -1279,6 +1424,14 @@
             </summary>
             <param name="str">The string to validate.</param>
             <param name="strName">The name of the string, used in the exception message.</param>
+        </member>
+        <member name="M:RGN.Utility.ThrowIf.String.LengthExceedsMax(System.String,System.String,System.Int32)">
+            <summary>
+            Throws an exception if the provided string's length is greater than the maximum allowed length.
+            </summary>
+            <param name="str">The string to validate.</param>
+            <param name="strName">The name of the string, used in the exception message.</param>
+            <param name="maxLength">The maximum allowed length of the string.</param>
         </member>
         <member name="T:RGN.Utility.ThrowIf.Collection">
             <summary>
