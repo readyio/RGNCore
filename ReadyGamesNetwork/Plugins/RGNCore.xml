@@ -604,6 +604,12 @@
             <param name="cancellationToken">A token for canceling the operation if necessary.</param>
             <returns>A task that represents the asynchronous download operation, containing the downloaded asset as a byte array.</returns>
         </member>
+        <member name="T:RGN.ImplDependencies.Core.IImpl`1">
+            <summary>
+            This interface is used to mark some classes that implement dependencies for IDependencies interface
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="T:RGN.IRGNCore">
             <summary>
             Ready Games Network core class. Is resposible for user auth and modules initialization
