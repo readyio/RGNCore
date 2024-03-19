@@ -31,6 +31,8 @@
     "/Editor",
     "/Editor.meta",
     "/link.xml",
-    "/link.xml.meta"
+    "/link.xml.meta",
+    "/Plugins",
+    "/Plugins.meta"
   ]
 }
