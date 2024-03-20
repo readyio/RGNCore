@@ -5,7 +5,6 @@ using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Core.Functions;
 using RGN.ImplDependencies.Engine;
 using RGN.ImplDependencies.Serialization;
-using UnityEngine;
 
 namespace RGN.Impl.Firebase.Core.Auth
 {
@@ -79,7 +78,7 @@ namespace RGN.Impl.Firebase.Core.Auth
             if (!mUserTokensCache.TryGetValue(email, out UserTokensPair userTokensPair))
             {
                 userTokensPair = await SignInWithEmailAndPasswordHttpAsync(email, password);
-                mUserTokensCache.Add(email, userTokensPair);
+                mUserTokensCache[email] = userTokensPair;
             }
             return SetUserTokens(userTokensPair.IdToken, userTokensPair.RefreshToken);
         }
