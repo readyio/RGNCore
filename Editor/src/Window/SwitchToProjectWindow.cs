@@ -14,7 +14,6 @@ using UnityEditor;
 using UnityEngine;
 using HttpMethod = RGN.Network.HttpMethod;
 using HttpRequestMessage = RGN.Network.HttpRequestMessage;
-using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace RGN.MyEditor
 {
@@ -112,12 +111,10 @@ namespace RGN.MyEditor
                     Application.OpenURL("https://console.firebase.google.com/u/0/project/" + project.projectId);
                 }
 
-                GUI.enabled = project.firebase_apps != null && project.firebase_apps.Count > 0;
                 if (GUILayout.Button("Apply Credentials", GUILayout.MaxWidth(200)))
                 {
                     await ApplyCredentialsAsync(project.id);
                 }
-                GUI.enabled = uiEnabled;
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -254,6 +251,7 @@ namespace RGN.MyEditor
             if (!string.IsNullOrEmpty(token))
             {
                 request.AddHeader("Authorization", "Bearer " + token);
+                request.AddHeader("app-id", "io.getready.rgntest");
             }
             return request;
         }
