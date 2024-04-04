@@ -17,6 +17,7 @@ namespace RGN.Impl.Firebase.Core.Auth
         private IPersistenceData _persistenceData;
         private IJson _json;
         private IUser _currentUser;
+        private TaskCompletionSource<UserTokensPair> _refreshTokensTask;
 
         public IUser CurrentUser => _currentUser;
 
@@ -131,16 +132,35 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         private async Task<UserTokensPair> RefreshTokensHttpAsync(string oldRefreshToken)
         {
-            var function = _functions.GetHttpsCallable("user-refreshTokens");
-            function.SetUnauthenticated(true);
-            var response = await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(
-                new Dictionary<string, object> {
-                    { "refreshToken", oldRefreshToken }
-                }
-            );
-            string idToken = (string)response["idToken"];
-            string refreshToken = (string)response["refreshToken"];
-            return new UserTokensPair(idToken, refreshToken);
+            if (_refreshTokensTask != null)
+            {
+                return await _refreshTokensTask.Task;
+            }
+            _refreshTokensTask = new TaskCompletionSource<UserTokensPair>();
+            try
+            {
+                var function = _functions.GetHttpsCallable("user-refreshTokens");
+                function.SetUnauthenticated(true);
+                var response = await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(
+                    new Dictionary<string, object> {
+                        { "refreshToken", oldRefreshToken }
+                    }
+                );
+                string idToken = (string)response["idToken"];
+                string refreshToken = (string)response["refreshToken"];
+                var tokens = new UserTokensPair(idToken, refreshToken);
+                _refreshTokensTask.SetResult(tokens);
+                return tokens;
+            }
+            catch (Exception ex)
+            {
+                _refreshTokensTask.SetException(ex);
+                throw;
+            }
+            finally
+            {
+                _refreshTokensTask = null;
+            }
         }
 
         private async Task SendPasswordResetEmailHttpAsync(string email)
