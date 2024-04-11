@@ -452,9 +452,6 @@
         <member name="P:RGN.IDependencies.RGNMessaging">
             <value>Gets the messaging service specific to RGN.</value>
         </member>
-        <member name="P:RGN.IDependencies.RGNDynamicLinks">
-            <value>Gets the dynamic links service specific to RGN.</value>
-        </member>
         <member name="P:RGN.IDependencies.RGNGuestSignIn">
             <value>Gets the guest sign-in functionality.</value>
         </member>
@@ -475,9 +472,6 @@
         </member>
         <member name="P:RGN.IDependencies.Messaging">
             <value>Gets the messaging service.</value>
-        </member>
-        <member name="P:RGN.IDependencies.DynamicLinks">
-            <value>Gets the dynamiclinks service.</value>
         </member>
         <member name="P:RGN.IDependencies.Json">
             <value>Gets the JSON serialization service.</value>
@@ -1144,12 +1138,6 @@
             Default value is an unset CancellationToken.</param>
             <exception cref="T:System.ArgumentNullException">Thrown when eventName is null or empty.</exception>
             <exception cref="T:System.OperationCanceledException">Thrown when the operation is cancelled via the cancellationToken.</exception>
-        </member>
-        <member name="T:RGN.ModuleDependencies.IRGNDynamicLinks">
-            <summary>
-            This interface is used to inject the module dependency and make it optional
-            If the developers do not use the RGN Dynamic Links package, the value in Dependencies will be null
-            </summary>
         </member>
         <member name="T:RGN.ModuleDependencies.IRGNGuestSignIn">
             <summary>
