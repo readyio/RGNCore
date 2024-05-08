@@ -9,7 +9,8 @@ namespace RGN.MyEditor
     {
         private const string READY_MENU = "ReadyGamesNetwork/";
 
-        private const string APPLICATION_STORE = READY_MENU + "Application Store";
+        private const string CREDENTIALS = READY_MENU + "Credentials";
+        private const string OPEN_DEVELOPERS_DASHBOARD = READY_MENU + "Open Developers Dashboard";
         private const string SET_STAGING = READY_MENU + "Set Staging";
         private const string SET_PRODUCTION = READY_MENU + "Set Production";
 #if READY_DEVELOPMENT
@@ -35,10 +36,15 @@ namespace RGN.MyEditor
             CreateOrReplaceGitIgnoreFileInRGNFolder();
         }
 
-        [MenuItem(APPLICATION_STORE)]
+        [MenuItem(CREDENTIALS, priority = 10)]
         public static void OpenApplicationStore()
         {
             Selection.activeObject = ApplicationStore.LoadFromResources();
+        }
+        [MenuItem(OPEN_DEVELOPERS_DASHBOARD, priority = 11)]
+        public static void OpenDevelopersDashboard()
+        {
+            Application.OpenURL("https://dev.ready.gg/");
         }
 
         [MenuItem(SET_STAGING, priority = 1)]
