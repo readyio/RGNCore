@@ -229,8 +229,7 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
         {
 #if READY_DEVELOPMENT
             string urlToFunctionLog =
-                        @$"https://console.cloud.google.com/logs/query;query=resource.type%3D%22
-cloud_function%22%20resource.labels.function_name%3D%22{mFunctionName}%22?project={mRngMasterProjectId}&authuser=0&hl=en";
+                        @$"https://console.cloud.google.com/logs/query;query=resource.type%3D%22cloud_run_revision%22%20resource.labels.service_name%3D%22{mFunctionName}%22?project={mRngMasterProjectId}&authuser=0&hl=en";
             string errorMessage = mFunctionName + ": " + message + ", url: " + urlToFunctionLog;
             return errorMessage;
 #else

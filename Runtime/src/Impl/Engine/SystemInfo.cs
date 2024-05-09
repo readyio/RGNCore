@@ -14,5 +14,6 @@ namespace RGN.Impl.Firebase.Engine
         public string UnityVersion => UnityEngine.Application.unityVersion;
         public string FirebaseSDKVersion => FirebaseVersionRetriever.GetFirebaseSdkVersion();
         public string RGNSDKVersion => SDKVersion.Version;
+        public string AppIdentifier => UnityEngine.Application.identifier;
     }
 }
