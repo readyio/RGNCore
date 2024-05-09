@@ -1145,7 +1145,7 @@
             If the developers do not use the RGN Guest Sign In package, the value in Dependencies will be null
             </summary>
         </member>
-        <member name="M:RGN.ModuleDependencies.IRGNGuestSignIn.TryToSignInAsync">
+        <member name="M:RGN.ModuleDependencies.IRGNGuestSignIn.TryToSignInAsync(RGN.Modules.SignIn.Models.RGNGuestSignInCallbackDelegate)">
             <summary>
             Tries to sign in with anonymous account to Ready Games Network (RGN)
             </summary>
