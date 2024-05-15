@@ -1185,12 +1185,13 @@
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when module already exists in the list.</exception>
         </member>
-        <member name="M:RGN.RGNCoreBuilder.CreateAndBuildAsync(RGN.IDependencies,RGN.RGNCore.AuthenticationChangedDelegate)">
+        <member name="M:RGN.RGNCoreBuilder.CreateAndBuildAsync(RGN.IDependencies,RGN.RGNCore.AuthenticationChangedDelegate,System.Threading.CancellationToken)">
             <summary>
             Creates and builds an asynchronous instance of the RGNCore.
             </summary>
             <param name="dependencies">Instance of the RGN SDK dependencies implementation.</param>
             <param name="authenticationChanged">Callback to receive user authentication events.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <returns>Asynchronous operation that returns an IRGNCore instance.</returns>
         </member>
@@ -1202,10 +1203,11 @@
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is not null.</exception>
             <returns>Instance of IRGNCore created.</returns>
         </member>
-        <member name="M:RGN.RGNCoreBuilder.BuildAsync">
+        <member name="M:RGN.RGNCoreBuilder.BuildAsync(System.Threading.CancellationToken)">
             <summary>
             Asynchronously builds the RGNCore.
             </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
             <exception cref="T:System.InvalidOperationException">Thrown when RGNCore instance is null.</exception>
             <returns>Task representing the operation.</returns>
         </member>
