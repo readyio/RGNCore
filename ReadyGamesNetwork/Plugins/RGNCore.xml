@@ -319,6 +319,10 @@
             Returns current period of provided time structure and remaining time of the period
             The method uses provided timestamp for calculations
         </member>
+        <member name="M:RGN.Extensions.TimeInfoExtensions.IncludesTimestamp(RGN.Model.TimeInfo,System.Int64,System.Boolean)">
+            Checks if the provided timestamp is included in the time structure
+            The method uses timestamp equals to DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        </member>
         <member name="T:RGN.IApplicationStore">
             <summary>
             Defines the required contract for ApplicationStore, providing necessary application information and configurations.
