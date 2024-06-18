@@ -1355,33 +1355,29 @@
         </member>
         <member name="T:RGN.Utility.Obfuscator">
             <summary>
-            This class will generate obfuscated data and generate a key to deofscate the data later.
+            This class will generate obfuscated data and generate a key to deobfuscate the data later.
             </summary>
         </member>
-        <member name="T:RGN.Utility.Obfuscator.InvalidOrderArray">
+        <member name="T:RGN.Utility.Obfuscator.ObfuscationException">
             <summary>
-            An Exception thrown when the order array provided is invalid or shorter than the number of data slices made.
+            An Exception thrown when the provided data or parameters are invalid.
             </summary>
         </member>
-        <member name="M:RGN.Utility.Obfuscator.Obfuscate(System.Byte[],System.Int32[],System.Int32,System.Int32@)">
+        <member name="M:RGN.Utility.Obfuscator.Obfuscate(System.Byte[],System.Int32)">
             <summary>
-            Generates the obfucscation data.
+            Obfuscates the provided data using a random seed.
             </summary>
-            <param name="data"> Public data to be obfuscated. </param>
-            <param name="order"> The array, passed by reference, of order of the data slices used to obfuscate the data with. </param>
-            <param name="sliceSize"> The size of the slizes to shuffle the data array </param>
-            <param name="rkey"> Outputs the encryption key to deobfuscate the data at runtime </param>
-            <returns>The obfucated public key</returns>
+            <param name="data">Data to be obfuscated.</param>
+            <param name="seed">Random seed for reproducibility.</param>
+            <returns>The obfuscated data.</returns>
         </member>
-        <member name="M:RGN.Utility.Obfuscator.DeObfuscate(System.Byte[],System.Int32[],System.Int32,System.Int32)">
+        <member name="M:RGN.Utility.Obfuscator.Deobfuscate(System.Byte[],System.Int32)">
             <summary>
-            Deofuscates the obfuscated data
+            Deobfuscates the provided data using a random seed.
             </summary>
-            <param name="data"> Public data to be obfuscated. </param>
-            <param name="order"> The array, passed by reference, of order of the data slices used to deobfuscate the data with. </param>
-            <param name="sliceSize"> The size of the slizes to shuffle the data array </param>
-            <param name="key"> The encryption key to deobfuscate the data at runtime </param>
-            <returns>The obfucated public key</returns>
+            <param name="data">Data to be deobfuscated.</param>
+            <param name="seed">Random seed for reproducibility.</param>
+            <returns>The deobfuscated data.</returns>
         </member>
         <member name="T:RGN.Utility.StringsUtility">
             <summary>
