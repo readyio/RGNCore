@@ -45,7 +45,7 @@ namespace RGN.DeepLink
         public static string GetDeepLinkRedirectSchemeForBuild()
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
-            string projectId = "rgn" + applicationStore.RGNProjectId;
+            string projectId = "rgn" + applicationStore.GetRGNProjectId;
             return projectId.
                 ToLower().
                 Replace(".", string.Empty).
