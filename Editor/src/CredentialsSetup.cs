@@ -7,10 +7,11 @@ namespace RGN.MyEditor
     [InitializeOnLoad]
     public class CredentialsSetup
     {
-        private const string READY_MENU = "ReadyGamesNetwork/";
+        private const string READY_MENU = "ReadyGG/";
 
         private const string CREDENTIALS = READY_MENU + "Credentials";
         private const string OPEN_DEVELOPERS_DASHBOARD = READY_MENU + "Open Developers Dashboard";
+        private const string OPEN_DOCUMENTATION = READY_MENU + "Open Documentation";
         private const string SET_STAGING = READY_MENU + "Set Staging";
         private const string SET_PRODUCTION = READY_MENU + "Set Production";
 #if READY_DEVELOPMENT
@@ -45,6 +46,11 @@ namespace RGN.MyEditor
         public static void OpenDevelopersDashboard()
         {
             Application.OpenURL("https://dev.ready.gg/");
+        }
+        [MenuItem(OPEN_DOCUMENTATION, priority = 12)]
+        public static void OpenDocumentation()
+        {
+            Application.OpenURL("https://readygames.gitbook.io/readygg-sdk-documentation/");
         }
 
         [MenuItem(SET_STAGING, priority = 1)]

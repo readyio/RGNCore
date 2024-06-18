@@ -5,7 +5,7 @@ namespace RGN
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/BuildCredentials", order = 2)]
     public class BuildCredentials : ScriptableObject
     {
-        [Header("Backend connection settings for the ReadyGG platform")]
+        [Header("Backend connection settings for the ReadyGG platform. Do not put into builds! Use ApplicationStore instead.")]
         public string rgnProjectId;
         public string rgnApiKey;
 
