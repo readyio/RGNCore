@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Reflection;
+using RGN.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,9 +22,11 @@ namespace RGN
             APPLICATION_STORE_FILE_NAME_WITH_EXTENSION;
 
         // Email WebForm sign in URL
-        [HideInInspector] private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.ready.gg/?url_redirect=";
-        [HideInInspector] private const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
-        [HideInInspector] private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
+        private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.ready.gg/?url_redirect=";
+        private const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
+        private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
+
+        private static int sSeedNumber = int.MinValue;
 
 #if UNITY_EDITOR
         public static void MoveToResourcesFolderOrCreateNewIfNeeded()
@@ -126,8 +130,13 @@ namespace RGN
         }
 
         public string GetRGNMasterAppID => RGNMasterAppID;
-        public string GetRGNApiKey => RGNApiKey;
-        public string GetRGNProjectId => RGNProjectId;
+
+        private string _deobfuscatedApiKey;
+        public string GetRGNApiKey => DeobfuscateIfNeeded(ref _deobfuscatedApiKey, RGNApiKey);
+        
+        private string _deobfuscatedProjectId;
+        public string GetRGNProjectId => DeobfuscateIfNeeded(ref _deobfuscatedProjectId, RGNProjectId);
+
         public string GetiOSAppId => iosAppID;
         public string GetAppLinkPrefix => appLinkPrefix;
         public EnumRGNEnvironment GetRGNEnvironment => RGNEnvironment;
@@ -153,5 +162,49 @@ namespace RGN
         public string GetRGNDevelopmentEmailSignInURL => DEVELOPMENT_EMAIL_SIGN_IN_URL;
         public string GetRGNStagingEmailSignInURL => STAGING_EMAIL_SIGN_IN_URL;
         public string GetRGNProductionEmailSignInURL => PRODUCTION_EMAIL_SIGN_IN_URL;
+
+        private string DeobfuscateIfNeeded(ref string parameter, string obfuscatedValue)
+        {
+            if (!string.IsNullOrEmpty(parameter))
+            {
+                return parameter;
+            }
+            int randomSeed = GetRandomSecretSeedNumberForDeobfuscation();
+            parameter = obfuscatedValue;
+            if (randomSeed != int.MinValue)
+            {
+                parameter = Obfuscator.Deobfuscate(obfuscatedValue, randomSeed);
+            }
+            return parameter;
+        }
+        private static int GetRandomSecretSeedNumberForDeobfuscation()
+        {
+            if (sSeedNumber != int.MinValue)
+            {
+                return sSeedNumber;
+            }
+            try
+            {
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                foreach (Assembly assembly in assemblies)
+                {
+                    Type numberHolderType = assembly.GetType("RGN.NumberHolder");
+                    if (numberHolderType != null)
+                    {
+                        FieldInfo fieldInfo = numberHolderType.GetField("s", BindingFlags.Public | BindingFlags.Static);
+                        if (fieldInfo != null && fieldInfo.FieldType == typeof(int))
+                        {
+                            sSeedNumber = (int)fieldInfo.GetValue(null);
+                            return sSeedNumber;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error retrieving secret number: {ex.Message}");
+            }
+            return int.MinValue;
+        }
     }
 }

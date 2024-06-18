@@ -1363,6 +1363,12 @@
             An Exception thrown when the provided data or parameters are invalid.
             </summary>
         </member>
+        <member name="M:RGN.Utility.Obfuscator.ObfuscationException.#ctor(System.String)">
+            <summary>
+            An Exception constructur with the message string
+            </summary>
+            <param name="message"></param>
+        </member>
         <member name="M:RGN.Utility.Obfuscator.Obfuscate(System.Byte[],System.Int32)">
             <summary>
             Obfuscates the provided data using a random seed.
@@ -1378,6 +1384,22 @@
             <param name="data">Data to be deobfuscated.</param>
             <param name="seed">Random seed for reproducibility.</param>
             <returns>The deobfuscated data.</returns>
+        </member>
+        <member name="M:RGN.Utility.Obfuscator.Obfuscate(System.String,System.Int32)">
+            <summary>
+            Obfuscates the provided string using a random seed.
+            </summary>
+            <param name="data">String to be obfuscated.</param>
+            <param name="seed">Random seed for reproducibility.</param>
+            <returns>The obfuscated string in hexadecimal format.</returns>
+        </member>
+        <member name="M:RGN.Utility.Obfuscator.Deobfuscate(System.String,System.Int32)">
+            <summary>
+            Deobfuscates the provided string using a random seed.
+            </summary>
+            <param name="data">Hexadecimal string to be deobfuscated.</param>
+            <param name="seed">Random seed for reproducibility.</param>
+            <returns>The deobfuscated string.</returns>
         </member>
         <member name="T:RGN.Utility.StringsUtility">
             <summary>

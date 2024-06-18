@@ -1,3 +1,4 @@
+using RGN.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,8 +12,13 @@ namespace RGN
             ApplicationStore applicationStore = (ApplicationStore)target;
 
             GUI.enabled = false;
-            EditorGUILayout.TextField(new GUIContent("Project Id / AppId", "The unique identifier for your project"), applicationStore.RGNProjectId);
-            EditorGUILayout.TextField(new GUIContent("API Key", "The API key used for signing requests with hmac. Keep it secret."), applicationStore.RGNApiKey);
+            
+            EditorGUILayout.TextField(
+                new GUIContent("Project Id / AppId", "The unique identifier for your project"),
+                applicationStore.GetRGNProjectId);
+            EditorGUILayout.TextField(
+                new GUIContent("API Key", "The API key used for signing requests with hmac. Keep it secret."),
+                applicationStore.GetRGNApiKey);
 
             EditorGUILayout.EnumPopup("Current Environment", applicationStore.RGNEnvironment);
 
@@ -23,9 +29,15 @@ namespace RGN
                 GUILayout.Label("Emulator Settings:");
 
                 EditorGUI.indentLevel++;
-                applicationStore.emulatorServerIp = EditorGUILayout.TextField(new GUIContent("Emulator Server IP", "The IP address of the emulator server"), applicationStore.emulatorServerIp);
-                applicationStore.firestorePort = EditorGUILayout.TextField(new GUIContent("Firestore Port", "The port number for Firestore in the emulator"), applicationStore.firestorePort);
-                applicationStore.functionsPort = EditorGUILayout.TextField(new GUIContent("Functions Port", "The port number for Functions in the emulator"), applicationStore.functionsPort);
+                applicationStore.emulatorServerIp = EditorGUILayout.TextField(
+                    new GUIContent("Emulator Server IP", "The IP address of the emulator server"),
+                    applicationStore.emulatorServerIp);
+                applicationStore.firestorePort = EditorGUILayout.TextField(
+                    new GUIContent("Firestore Port", "The port number for Firestore in the emulator"),
+                    applicationStore.firestorePort);
+                applicationStore.functionsPort = EditorGUILayout.TextField(
+                    new GUIContent("Functions Port", "The port number for Functions in the emulator"),
+                    applicationStore.functionsPort);
                 EditorGUI.indentLevel--;
             }
 

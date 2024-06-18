@@ -1,4 +1,5 @@
 using System.IO;
+using RGN.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -112,8 +113,9 @@ namespace RGN.MyEditor
         public static void SetEnvironment(BuildCredentials sourceCredentials)
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
-            applicationStore.RGNProjectId = sourceCredentials.rgnProjectId;
-            applicationStore.RGNApiKey = sourceCredentials.rgnApiKey;
+            int randomSeed = GetRandomSecretSeedNumberForObfuscation();
+            applicationStore.RGNProjectId = Obfuscator.Obfuscate(sourceCredentials.rgnProjectId, randomSeed);
+            applicationStore.RGNApiKey = Obfuscator.Obfuscate(sourceCredentials.rgnApiKey, randomSeed);
             applicationStore.googleSignInWebClientIdAndroid = sourceCredentials.googleSignInWebClientIdAndroid;
             applicationStore.googleSignInReverseClientIdAndroid = sourceCredentials.googleSignInReverseClientIdAndroid;
             applicationStore.googleSignInWebClientIdiOS = sourceCredentials.googleSignInWebClientIdiOS;
@@ -156,6 +158,49 @@ namespace RGN.MyEditor
         {
             string filePath = Path.Combine(Application.dataPath, "ReadyGamesNetwork", ".gitignore");
             File.WriteAllText(filePath, $"Linker/*\nLinker.meta");
+        }
+        private static int GetRandomSecretSeedNumberForObfuscation()
+        {
+            string scriptsFolder = Path.Combine(Application.dataPath, "ReadyGamesNetwork", "Source");
+            string randomSecretNumberFile = Path.Combine(scriptsFolder, "NumberHolder.cs");
+            string assemblyDefinitionFile = Path.Combine(scriptsFolder, "GetReady.Developer.Runtime.asmdef");
+
+            if (!Directory.Exists(scriptsFolder))
+            {
+                Directory.CreateDirectory(scriptsFolder);
+            }
+
+            if (!File.Exists(assemblyDefinitionFile))
+            {
+                string asmdefContent = "{\n\t\"name\": \"GetReady.Developer.Runtime\"\n}";
+                File.WriteAllText(assemblyDefinitionFile, asmdefContent);
+            }
+
+            if (!File.Exists(randomSecretNumberFile))
+            {
+                int randomSecretNumber = new System.Random().Next(int.MinValue + 1, int.MaxValue);
+                string numberHolderContent = $"namespace RGN\n{{\n\tpublic static class NumberHolder\n\t{{\n\t\tpublic static readonly int s = {randomSecretNumber};\n\t}}\n}}";
+                File.WriteAllText(randomSecretNumberFile, numberHolderContent);
+                return randomSecretNumber;
+            }
+            else
+            {
+                string[] lines = File.ReadAllLines(randomSecretNumberFile);
+                foreach (string line in lines)
+                {
+                    if (line.Contains("public static readonly int s ="))
+                    {
+                        string numberString = line.Split('=')[1].Trim().TrimEnd(';');
+                        if (int.TryParse(numberString, out int existingNumber))
+                        {
+                            return existingNumber;
+                        }
+                    }
+                }
+            }
+            // Fallback in case of unexpected file content
+            Debug.LogError("Error in getting or generating random number for the obfuscation.");
+            return int.MinValue;
         }
     }
 }
