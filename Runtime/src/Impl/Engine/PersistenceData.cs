@@ -26,12 +26,12 @@ namespace RGN.Impl.Firebase.Engine
             try
             {
                 string filePath = System.IO.Path.Combine(Application.persistentDataPath, formattedName);
-                return System.IO.File.Exists(filePath) ? System.IO.File.ReadAllText(filePath) : string.Empty;
+                return System.IO.File.Exists(filePath) ? System.IO.File.ReadAllText(filePath) : UnityEngine.PlayerPrefs.GetString(formattedName, string.Empty);
             }
             catch (System.Exception exception)
             {
                 Debug.LogWarning($"Exception thrown while loading file: {exception}");
-                return UnityEngine.PlayerPrefs.GetString(formattedName);
+                return UnityEngine.PlayerPrefs.GetString(formattedName, string.Empty);
             }
         }
 
