@@ -163,6 +163,11 @@ namespace RGN
         public string GetRGNStagingEmailSignInURL => STAGING_EMAIL_SIGN_IN_URL;
         public string GetRGNProductionEmailSignInURL => PRODUCTION_EMAIL_SIGN_IN_URL;
 
+        public void ResetCachedDeobfuscatedValuesToNull()
+        {
+            _deobfuscatedProjectId = null;
+            _deobfuscatedApiKey = null;
+        }
         private string DeobfuscateIfNeeded(ref string parameter, string obfuscatedValue)
         {
             if (!string.IsNullOrEmpty(parameter))

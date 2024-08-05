@@ -129,6 +129,7 @@ namespace RGN.MyEditor
             applicationStore.RGNMasterMessageSenderId = sourceCredentials.firebaseMasterMessageSenderId;
             applicationStore.RGNMasterStorageBucket = sourceCredentials.firebaseMasterStorageBucket;
             applicationStore.RGNMasterDatabaseUrl = sourceCredentials.firebaseMasterDatabaseUrl;
+            applicationStore.ResetCachedDeobfuscatedValuesToNull();
 
             EditorUtility.SetDirty(applicationStore);
             AssetDatabase.SaveAssets();
