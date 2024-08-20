@@ -22,9 +22,14 @@ namespace RGN
             APPLICATION_STORE_FILE_NAME_WITH_EXTENSION;
 
         // Email WebForm sign in URL
-        private const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.ready.gg/?url_redirect=";
-        private const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
-        private const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
+        public const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.ready.gg/?url_redirect=";
+        public const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
+        public const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
+
+        // Marketplace URL
+        public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.web.app/?url_redirect=";
+        public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.web.app/?url_redirect=";
+        public const string PRODUCTION_MARKETPLACE_URL = "https://marketplace.web.app/?url_redirect=";
 
         private static int sSeedNumber = int.MinValue;
 
