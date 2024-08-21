@@ -7,6 +7,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
 using System.Diagnostics;
@@ -57,24 +58,24 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
         {
             isUnauthenticated = value;
         }
-        Task IHttpsCallableReference.CallAsync()
+        Task IHttpsCallableReference.CallAsync(CancellationToken cancellationToken)
         {
-            return CallInternalAsync(null);
+            return CallInternalAsync(null, cancellationToken);
         }
-        Task IHttpsCallableReference.CallAsync(object data)
+        Task IHttpsCallableReference.CallAsync(object data, CancellationToken cancellationToken)
         {
-            return CallInternalAsync(data);
+            return CallInternalAsync(data, cancellationToken);
         }
-        Task<TResult> IHttpsCallableReference.CallAsync<TPayload, TResult>()
+        Task<TResult> IHttpsCallableReference.CallAsync<TPayload, TResult>(CancellationToken cancellationToken)
         {
-            return CallInternalAsync<TPayload, TResult>(default);
+            return CallInternalAsync<TPayload, TResult>(default, cancellationToken);
         }
-        Task<TResult> IHttpsCallableReference.CallAsync<TPayload, TResult>(TPayload payload)
+        Task<TResult> IHttpsCallableReference.CallAsync<TPayload, TResult>(TPayload payload, CancellationToken cancellationToken)
         {
-            return CallInternalAsync<TPayload, TResult>(payload);
+            return CallInternalAsync<TPayload, TResult>(payload, cancellationToken);
         }
 
-        private async Task CallInternalAsync(object data)
+        private async Task CallInternalAsync(object data, CancellationToken cancellationToken = default)
         {
 #if READY_DEVELOPMENT
 #if EMULATE_COLDSTART
@@ -104,7 +105,7 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             request.SetStringBody(content);
             if (!isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
             {
-                string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false);
+                string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false, cancellationToken);
                 request.AddHeader("Authorization", "Bearer " + token);
             }
             if (mComputeHmac)
@@ -117,10 +118,10 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                 request.AddHeader("app-id", RGNCore.I.AppIDForRequests);
             }
             using IHttpClient httpClient = HttpClientFactory.Get();
-            using IHttpResponse response = await httpClient.SendAsync(request);
+            using IHttpResponse response = await httpClient.SendAsync(request, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {
-                string message = await response.ReadAsString();
+                string message = await response.ReadAsString(cancellationToken);
                 string errorMessage = GetErrorMessage(message);
                 bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
                 if (!isRetryRequest && !isUnauthenticated)
@@ -128,21 +129,21 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                     if (isNotAuthenticatedError && mReadyMasterAuth.CurrentUser != null)
                     {
                         isRetryRequest = true;
-                        await mReadyMasterAuth.CurrentUser.TokenAsync(true);
-                        await CallInternalAsync(data);
+                        await mReadyMasterAuth.CurrentUser.TokenAsync(true, cancellationToken);
+                        await CallInternalAsync(data, cancellationToken);
                         isRetryRequest = false;
                         return;
                     }
                 }
                 throw new HttpRequestException(errorMessage, response.StatusCode);
             }
-            await response.ReadAsString();
+            await response.ReadAsString(cancellationToken);
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
-            await EmulateColdStart(callSw);
+            await EmulateColdStart(callSw, cancellationToken);
 #endif
         }
 
-        private async Task<TResult> CallInternalAsync<TPayload, TResult>(TPayload payload)
+        private async Task<TResult> CallInternalAsync<TPayload, TResult>(TPayload payload, CancellationToken cancellationToken = default)
         {
 #if READY_DEVELOPMENT
 #if EMULATE_COLDSTART
@@ -172,7 +173,7 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             request.SetStringBody(content);
             if (!isUnauthenticated && mReadyMasterAuth.CurrentUser != null)
             {
-                string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false);
+                string token = await mReadyMasterAuth.CurrentUser.TokenAsync(false, cancellationToken);
                 request.AddHeader("Authorization", "Bearer " + token);
             }
             if (mComputeHmac)
@@ -185,10 +186,10 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                 request.AddHeader("app-id", RGNCore.I.AppIDForRequests);
             }
             using IHttpClient httpClient = HttpClientFactory.Get();
-            using IHttpResponse response = await httpClient.SendAsync(request);
+            using IHttpResponse response = await httpClient.SendAsync(request, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {
-                string message = await response.ReadAsString();
+                string message = await response.ReadAsString(cancellationToken);
                 string errorMessage = GetErrorMessage(message);
                 bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
                 if (!isRetryRequest && !isUnauthenticated)
@@ -196,8 +197,8 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                     if (isNotAuthenticatedError && mReadyMasterAuth.CurrentUser != null)
                     {
                         isRetryRequest = true;
-                        await mReadyMasterAuth.CurrentUser.TokenAsync(true);
-                        TResult result = await CallInternalAsync<TPayload, TResult>(payload);
+                        await mReadyMasterAuth.CurrentUser.TokenAsync(true, cancellationToken);
+                        TResult result = await CallInternalAsync<TPayload, TResult>(payload, cancellationToken);
                         isRetryRequest = false;
                         return result;
                     }
@@ -206,15 +207,15 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             }
             if (typeof(TResult) == typeof(string))
             {
-                string result = await response.ReadAsString();
+                string result = await response.ReadAsString(cancellationToken);
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
-                await EmulateColdStart(callSw);
+                await EmulateColdStart(callSw, cancellationToken);
 #endif
                 return (TResult)(object)result;
             }
-            var stream = await response.ReadAsStream();
+            var stream = await response.ReadAsStream(cancellationToken);
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
-            await EmulateColdStart(callSw);
+            await EmulateColdStart(callSw, cancellationToken);
 #endif
             if (mActAsACallable)
             {
@@ -249,11 +250,11 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
         }
 
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
-        private async Task EmulateColdStart(Stopwatch functionStopwatch)
+        private async Task EmulateColdStart(Stopwatch functionStopwatch, CancellationToken cancellationToken = default)
         {
             functionStopwatch.Stop();
             int delayToReachColdStart = Math.Max(0, COLD_START_EMULATE_DELAY - (int)functionStopwatch.ElapsedMilliseconds);
-            await Task.Delay(delayToReachColdStart);
+            await Task.Delay(delayToReachColdStart, cancellationToken);
         }
 #endif
     }

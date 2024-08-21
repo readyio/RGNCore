@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Serialization;
@@ -31,13 +32,13 @@ namespace RGN.Impl.Firebase.Core.Auth
             _userIdTokenInfo = CreateTokenInfo(idToken);
         }
 
-        public async Task<string> TokenAsync(bool forceRefresh)
+        public async Task<string> TokenAsync(bool forceRefresh, CancellationToken cancellationToken = default)
         {
             if (forceRefresh || _userIdTokenInfo.ExpiredAt < DateTime.UtcNow)
             {
                 try
                 {
-                    IUserTokensPair tokensPair = await mAuth.RefreshTokensAsync(RefreshToken);
+                    IUserTokensPair tokensPair = await mAuth.RefreshTokensAsync(RefreshToken, cancellationToken);
                     IdToken = tokensPair.IdToken;
                     RefreshToken = tokensPair.RefreshToken;
                     _userIdTokenInfo = CreateTokenInfo(tokensPair.IdToken);

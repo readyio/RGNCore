@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using RGN.ImplDependencies.Core;
 
@@ -5,7 +6,7 @@ namespace RGN.Impl.Firebase.Core
 {
     public sealed class AnalyticsStub : IAnalytics, IImplStub
     {
-        public Task<string> GetAnalyticsInstanceIdAsync()
+        public Task<string> GetAnalyticsInstanceIdAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(string.Empty);
         }

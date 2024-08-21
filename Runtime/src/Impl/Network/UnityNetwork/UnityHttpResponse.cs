@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using RGN.Network;
 
@@ -28,13 +29,17 @@ namespace RGN.Impl.Network.UnityNetwork
             }
         }
 
-        public Task<string> ReadAsString() =>
-            Task.FromResult(mText);
+        public Task<string> ReadAsString(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(mText);
+        }
 
-        public Task<byte[]> ReadAsBytes() =>
-            Task.FromResult(mData);
+        public Task<byte[]> ReadAsBytes(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(mData);
+        }
 
-        public Task<Stream> ReadAsStream()
+        public Task<Stream> ReadAsStream(CancellationToken cancellationToken = default)
         {
             Stream stream = new MemoryStream(mData);
             return Task.FromResult(stream);

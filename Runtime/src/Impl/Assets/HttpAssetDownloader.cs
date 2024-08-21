@@ -30,7 +30,7 @@ namespace RGN.Impl.Firebase.Assets
                 string token = string.Empty;
                 if (RGNCore.I.IsLoggedIn)
                 {
-                    token = await RGNCore.I.MasterAppUser.TokenAsync(false);
+                    token = await RGNCore.I.MasterAppUser.TokenAsync(false, cancellationToken);
                 }
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
                 if (!string.IsNullOrEmpty(token))
@@ -39,9 +39,7 @@ namespace RGN.Impl.Firebase.Assets
                 }
                 using IHttpClient httpClient = HttpClientFactory.Get("assets");
                 using IHttpResponse result = await httpClient.SendAsync(requestMessage, cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
-                byte[] bytes = await result.ReadAsBytes();
-                cancellationToken.ThrowIfCancellationRequested();
+                byte[] bytes = await result.ReadAsBytes(cancellationToken);
                 return bytes;
             }
             catch (HttpRequestException ex)

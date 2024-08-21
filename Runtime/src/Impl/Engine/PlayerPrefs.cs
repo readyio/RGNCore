@@ -15,5 +15,6 @@ namespace RGN.Impl.Firebase.Engine
         public void SetFloat(string key, float value) => UnityEngine.PlayerPrefs.SetFloat(key, value);
         public void SetInt(string key, int value) => UnityEngine.PlayerPrefs.SetInt(key, value);
         public void SetString(string key, string value) => UnityEngine.PlayerPrefs.SetString(key, value);
+        public void Save() => UnityEngine.PlayerPrefs.Save();
     }
 }
