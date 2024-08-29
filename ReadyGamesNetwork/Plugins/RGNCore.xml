@@ -887,7 +887,7 @@
             Gets the default instance of <see cref="T:RGN.Model.Request.BaseRequestData"/>.
             </summary>
         </member>
-        <member name="F:RGN.Model.Request.BaseRequestData.appPackageName">
+        <member name="F:RGN.Model.Request.BaseRequestData.appId">
             <summary>
             The package name of the app making the request. This is typically used for identification purposes.
             </summary>
