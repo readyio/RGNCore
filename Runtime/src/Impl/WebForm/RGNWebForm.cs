@@ -78,7 +78,7 @@ namespace RGN.WebForm
 
                 _onWebFormSignInRedirect?.Invoke(true, "");
                 _onWebFormCreateWalletRedirect?.Invoke(true, "");
-                _onWebFormOpenMarketplaceRedirect?.Invoke(true);
+                _onWebFormOpenMarketplaceRedirect?.Invoke(true, "");
             }
         }
 
@@ -110,7 +110,7 @@ namespace RGN.WebForm
 
             if (_onWebFormOpenMarketplaceRedirect != null)
             {
-                _onWebFormOpenMarketplaceRedirect.Invoke(false);
+                _onWebFormOpenMarketplaceRedirect.Invoke(false, token);
                 _onWebFormOpenMarketplaceRedirect = null;
             }
         }

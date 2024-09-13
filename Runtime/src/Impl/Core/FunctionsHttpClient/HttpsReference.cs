@@ -121,7 +121,10 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             using IHttpResponse response = await httpClient.SendAsync(request, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {
-                string message = await response.ReadAsString(cancellationToken);
+                string errorJsonStr = await response.ReadAsString(cancellationToken);
+                var errorJsonDict = mJson.FromJson<Dictionary<string, string>>(errorJsonStr);
+                string message = errorJsonDict["message"];
+                errorJsonDict.TryGetValue("code", out string code);
                 string errorMessage = GetErrorMessage(message);
                 bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
                 if (!isRetryRequest && !isUnauthenticated)
@@ -135,7 +138,7 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                         return;
                     }
                 }
-                throw new HttpRequestException(errorMessage, response.StatusCode);
+                throw new HttpRequestException(errorMessage, response.StatusCode, code);
             }
             await response.ReadAsString(cancellationToken);
 #if READY_DEVELOPMENT && EMULATE_COLDSTART
@@ -189,7 +192,10 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             using IHttpResponse response = await httpClient.SendAsync(request, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {
-                string message = await response.ReadAsString(cancellationToken);
+                string errorJsonStr = await response.ReadAsString(cancellationToken);
+                var errorJsonDict = mJson.FromJson<Dictionary<string, string>>(errorJsonStr);
+                string message = errorJsonDict["message"];
+                errorJsonDict.TryGetValue("code", out string code);
                 string errorMessage = GetErrorMessage(message);
                 bool isNotAuthenticatedError = response.StatusCode == 401 || message.Contains("INVALID_ID_TOKEN");
                 if (!isRetryRequest && !isUnauthenticated)
@@ -203,7 +209,7 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
                         return result;
                     }
                 }
-                throw new HttpRequestException(errorMessage, response.StatusCode);
+                throw new HttpRequestException(errorMessage, response.StatusCode, code);
             }
             if (typeof(TResult) == typeof(string))
             {

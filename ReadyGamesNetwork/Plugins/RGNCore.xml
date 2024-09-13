@@ -887,7 +887,7 @@
             Gets the default instance of <see cref="T:RGN.Model.Request.BaseRequestData"/>.
             </summary>
         </member>
-        <member name="F:RGN.Model.Request.BaseRequestData.appId">
+        <member name="P:RGN.Model.Request.BaseRequestData.appId">
             <summary>
             The package name of the app making the request. This is typically used for identification purposes.
             </summary>
@@ -1159,6 +1159,31 @@
             This interface is used to inject the module dependency and make it optional
             If the developers do not use the RGN Messaging package, the value in Dependencies will be null
             </summary>
+        </member>
+        <member name="T:RGN.Network.HttpRequestException">
+            <summary>
+            Exception type that is used to for error responses from the backend
+            </summary>
+        </member>
+        <member name="P:RGN.Network.HttpRequestException.StatusCode">
+            <summary>
+            The Http Status Code of the response
+            </summary>
+        </member>
+        <member name="P:RGN.Network.HttpRequestException.Code">
+            <summary>
+            Backend specific code that you can use to handle the errors
+            For example 'invalid-argument-' followed by the parameter name
+            Or 'failed-precondition-not-enough-currencies' during the purchase process
+            </summary>
+        </member>
+        <member name="M:RGN.Network.HttpRequestException.#ctor(System.String,System.Int32,System.String)">
+            <summary>
+            Constructor to create an instance
+            </summary>
+            <param name="message">Message with the error details</param>
+            <param name="statusCode">Http status code</param>
+            <param name="code">Backend specific error code</param>
         </member>
         <member name="E:RGN.RGNCore.InitializedEvent">
             <summary>
