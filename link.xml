@@ -13,6 +13,7 @@
     <assembly fullname="RGNGameProgress" preserve="all" />
     <assembly fullname="RGNInventory" preserve="all" />
     <assembly fullname="RGNLeaderboard" preserve="all" />
+    <assembly fullname="RGNLeaderboardCompetitions" preserve="all" />
     <assembly fullname="RGNMarketplace" preserve="all" />
     <assembly fullname="RGNMatchmaking" preserve="all" />
     <assembly fullname="RGNMessaging" preserve="all" />
