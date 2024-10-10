@@ -27,6 +27,17 @@ namespace RGN.WebForm
             OpenWebForm(url, redirectUrl);
         }
 
+        public void SignInWithDeviceCode(string deviceCode, string idToken)
+        {
+            string url = GetWebFormDeviceFlowUrl() +
+                         "&returnSecureToken=true" +
+                         "&returnRefreshToken=true" +
+                         "&device_id=" + deviceCode +
+                         "&idToken=" + idToken +
+                         "&platform=" + GetCurrentPlatform();
+            Application.OpenURL(url);
+        }
+
         public void CreateWallet(WebFormCreateWalletRedirectDelegate redirectCallback, string idToken)
         {
             _onWebFormCreateWalletRedirect = redirectCallback;
@@ -124,6 +135,11 @@ namespace RGN.WebForm
             "&appId=" + RGNCore.I.AppIDForRequests +
             "&lang=" + Utility.LanguageUtility.GetISO631Dash1CodeFromSystemLanguage();
 
+        private string GetWebFormDeviceFlowUrl() =>
+            GetBaseWebFormDeviceFlowUrl() +
+            "?appId=" + RGNCore.I.AppIDForRequests +
+            "&lang=" + Utility.LanguageUtility.GetISO631Dash1CodeFromSystemLanguage();
+
         private string GetBaseWebFormUrl()
         {
             ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
@@ -131,6 +147,17 @@ namespace RGN.WebForm
                 EnumRGNEnvironment.Development => applicationStore.GetRGNDevelopmentEmailSignInURL,
                 EnumRGNEnvironment.Staging => applicationStore.GetRGNStagingEmailSignInURL,
                 EnumRGNEnvironment.Production => applicationStore.GetRGNProductionEmailSignInURL,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        private string GetBaseWebFormDeviceFlowUrl()
+        {
+            ApplicationStore applicationStore = ApplicationStore.LoadFromResources();
+            return applicationStore.GetRGNEnvironment switch {
+                EnumRGNEnvironment.Development => ApplicationStore.DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL,
+                EnumRGNEnvironment.Staging => ApplicationStore.STAGING_DEVICE_FLOW_SIGN_IN_URL,
+                EnumRGNEnvironment.Production => ApplicationStore.PRODUCTION_DEVICE_FLOW_SIGN_IN_URL,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
