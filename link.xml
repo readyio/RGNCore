@@ -22,4 +22,5 @@
     <assembly fullname="RGNUserProfile" preserve="all" />
     <assembly fullname="RGNVirtualItems" preserve="all" />
     <assembly fullname="RGNWallets" preserve="all" />
+    <assembly fullname="RGNTelegram" preserve="all" />
 </linker>
