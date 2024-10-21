@@ -27,7 +27,7 @@ namespace RGN.WebForm
             OpenWebForm(url, redirectUrl);
         }
 
-        public void SignInWithDeviceCode(string deviceCode, string idToken)
+        public void SignInWithDeviceCode(string deviceCode, string idToken, Action<string> openUrlAction = null)
         {
             string url = GetWebFormDeviceFlowUrl() +
                          "&returnSecureToken=true" +
@@ -35,7 +35,14 @@ namespace RGN.WebForm
                          "&device_id=" + deviceCode +
                          "&idToken=" + idToken +
                          "&platform=" + GetCurrentPlatform();
-            Application.OpenURL(url);
+            if (openUrlAction != null)
+            {
+                openUrlAction.Invoke(url);
+            }
+            else
+            {
+                Application.OpenURL(url);
+            }
         }
 
         public void CreateWallet(WebFormCreateWalletRedirectDelegate redirectCallback, string idToken)
