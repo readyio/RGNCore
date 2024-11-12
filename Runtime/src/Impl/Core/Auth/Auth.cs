@@ -17,10 +17,9 @@ namespace RGN.Impl.Firebase.Core.Auth
         private IFunctions _functions;
         private IPersistenceData _persistenceData;
         private IJson _json;
-        private IUser _currentUser;
         private TaskCompletionSource<UserTokensPair> _refreshTokensTask;
 
-        public IUser CurrentUser => _currentUser;
+        public IUser CurrentUser { get; private set; }
 
         event EventHandler IAuth.StateChanged
         {
@@ -48,22 +47,17 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         internal void SaveUserTokens()
         {
-            string idToken = _currentUser != null ? _currentUser.IdToken : string.Empty;
-            string refreshToken = _currentUser != null ? _currentUser.RefreshToken : string.Empty;
+            string idToken = CurrentUser != null ? CurrentUser.IdToken : string.Empty;
+            string refreshToken = CurrentUser != null ? CurrentUser.RefreshToken : string.Empty;
             _persistenceData.SaveFile(AuthTokenKeys.IdToken.GetKeyName(), idToken);
             _persistenceData.SaveFile(AuthTokenKeys.RefreshToken.GetKeyName(), refreshToken);
         }
 
         public IUser SetUserTokens(string idToken, string refreshToken)
         {
-            if (!string.IsNullOrEmpty(idToken))
-            {
-                _currentUser = new User(this, _json, idToken, refreshToken);
-            }
-            else
-            {
-                _currentUser = null;
-            }
+            CurrentUser = string.IsNullOrEmpty(idToken) 
+                ? null 
+                : new User(this, _json, idToken, refreshToken);
             
             SaveUserTokens();
 
@@ -72,66 +66,48 @@ namespace RGN.Impl.Firebase.Core.Auth
                 listener.Invoke(this, null);
             }
 
-            return _currentUser;
+            return CurrentUser;
         }
 
-        public async Task<IUser> SignInWithEmailAndPasswordAsync(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<IUser> SignInWithEmailAndPasswordAsync(string email, string password,
+            CancellationToken cancellationToken = default)
         {
-            if (!mUserTokensCache.TryGetValue(email, out UserTokensPair userTokensPair))
+            if (mUserTokensCache.TryGetValue(email, out UserTokensPair userTokensInCache))
             {
-                userTokensPair = await SignInWithEmailAndPasswordHttpAsync(email, password, cancellationToken);
-                mUserTokensCache[email] = userTokensPair;
+                return SetUserTokens(userTokensInCache.IdToken, userTokensInCache.RefreshToken);
             }
-            return SetUserTokens(userTokensPair.IdToken, userTokensPair.RefreshToken);
+            Dictionary<string, object> functionBody = new Dictionary<string, object> {
+                { "email", email },
+                { "password", password },
+                { "returnSecureToken", true }
+            };
+            IHttpsCallableReference functionRef = _functions
+                .GetHttpsCallable("user-signInWithEmailPassword")
+                .SetUnauthenticated(true);
+            Dictionary<string, object> functionResponse = await functionRef
+                .CallAsync<Dictionary<string, object>, Dictionary<string, object>>(functionBody, cancellationToken);
+            string idToken = (string)functionResponse["idToken"];
+            string refreshToken = (string)functionResponse["refreshToken"];
+            UserTokensPair userTokens = new UserTokensPair(idToken, refreshToken);
+            mUserTokensCache[email] = userTokens;
+            return SetUserTokens(userTokens.IdToken, userTokens.RefreshToken);
         }
 
         public async Task<IUser> SignInAnonymouslyAsync(CancellationToken cancellationToken = default)
         {
-            UserTokensPair userTokensPair = await SignInAnonymouslyHttpAsync(cancellationToken);
-            return SetUserTokens(userTokensPair.IdToken, userTokensPair.RefreshToken);
+            IHttpsCallableReference functionRef = _functions
+                .GetHttpsCallable("user-signUpAnonymously")
+                .SetUnauthenticated(true);
+            Dictionary<string, object> functionResponse = await functionRef
+                .CallAsync<Dictionary<string, object>, Dictionary<string, object>>(cancellationToken);
+            string idToken = (string)functionResponse["idToken"];
+            string refreshToken = (string)functionResponse["refreshToken"];
+            UserTokensPair userTokens = new UserTokensPair(idToken, refreshToken);
+            return SetUserTokens(userTokens.IdToken, userTokens.RefreshToken);
         }
 
-        public async Task<IUserTokensPair> RefreshTokensAsync(string refreshToken, CancellationToken cancellationToken = default)
-        {
-            return await RefreshTokensHttpAsync(refreshToken, cancellationToken);
-        }
-
-        public async Task SendPasswordResetEmailAsync(string email, CancellationToken cancellationToken = default)
-        {
-            await SendPasswordResetEmailHttpAsync(email, cancellationToken);
-        }
-
-        public void SignOut()
-        {
-            SetUserTokens(string.Empty, string.Empty);
-        }
-
-        private async Task<UserTokensPair> SignInWithEmailAndPasswordHttpAsync(string email, string password, CancellationToken cancellationToken = default)
-        {
-            var function = _functions.GetHttpsCallable("user-signInWithEmailPassword");
-            var response = await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(
-                new Dictionary<string, object> {
-                    { "email", email },
-                    { "password", password },
-                    { "returnSecureToken", true }
-                }
-            , cancellationToken);
-            string idToken = (string)response["idToken"];
-            string refreshToken = (string)response["refreshToken"];
-            return new UserTokensPair(idToken, refreshToken);
-        }
-        
-        private async Task<UserTokensPair> SignInAnonymouslyHttpAsync(CancellationToken cancellationToken = default)
-        {
-            var function = _functions.GetHttpsCallable("user-signUpAnonymously");
-            function.SetUnauthenticated(true);
-            var response = await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(cancellationToken);
-            string idToken = (string)response["idToken"];
-            string refreshToken = (string)response["refreshToken"];
-            return new UserTokensPair(idToken, refreshToken);
-        }
-
-        private async Task<UserTokensPair> RefreshTokensHttpAsync(string oldRefreshToken, CancellationToken cancellationToken = default)
+        public async Task<IUserTokensPair> RefreshTokensAsync(string refreshToken,
+            CancellationToken cancellationToken = default)
         {
             if (_refreshTokensTask != null)
             {
@@ -140,16 +116,17 @@ namespace RGN.Impl.Firebase.Core.Auth
             _refreshTokensTask = new TaskCompletionSource<UserTokensPair>();
             try
             {
-                var function = _functions.GetHttpsCallable("user-refreshTokens");
-                function.SetUnauthenticated(true);
-                var response = await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(
-                    new Dictionary<string, object> {
-                        { "refreshToken", oldRefreshToken }
-                    }, cancellationToken
-                );
-                string idToken = (string)response["idToken"];
-                string refreshToken = (string)response["refreshToken"];
-                var tokens = new UserTokensPair(idToken, refreshToken);
+                Dictionary<string, object> functionBody = new Dictionary<string, object> {
+                    { "refreshToken", refreshToken },
+                };
+                IHttpsCallableReference functionRef = _functions
+                    .GetHttpsCallable("user-refreshTokens")
+                    .SetUnauthenticated(true);
+                Dictionary<string, object> functionResponse = await functionRef
+                    .CallAsync<Dictionary<string, object>, Dictionary<string, object>>(functionBody, cancellationToken);
+                string newIdToken = (string)functionResponse["idToken"];
+                string newRefreshToken = (string)functionResponse["refreshToken"];
+                UserTokensPair tokens = new UserTokensPair(newIdToken, newRefreshToken);
                 _refreshTokensTask.SetResult(tokens);
                 return tokens;
             }
@@ -164,15 +141,44 @@ namespace RGN.Impl.Firebase.Core.Auth
             }
         }
 
-        private async Task SendPasswordResetEmailHttpAsync(string email, CancellationToken cancellationToken = default)
+        public async Task SendPasswordResetEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            var function = _functions.GetHttpsCallable("user-resetAccountPassword");
-            function.SetUnauthenticated(true);
-            await function.CallAsync<Dictionary<string, object>, Dictionary<string, object>>(
-                new Dictionary<string, object> {
-                    { "email", email }
-                }
-            , cancellationToken);
+            Dictionary<string, object> functionBody = new Dictionary<string, object> {
+                { "email", email },
+            };
+            IHttpsCallableReference functionRef = _functions
+                .GetHttpsCallable("user-resetAccountPassword")
+                .SetUnauthenticated(true);
+            await functionRef
+                .CallAsync<Dictionary<string, object>, Dictionary<string, object>>(functionBody, cancellationToken);
         }
+
+        public async Task<RequestDeviceCodeResponse> RequestOAuthDeviceCodeAsync(CancellationToken cancellationToken = default)
+        {
+            IHttpsCallableReference functionRef = _functions
+                .GetHttpsCallable("user-device-requestAuthentication")
+                .SetUnauthenticated(true);
+            Dictionary<string, object> functionResponse = await functionRef
+                .CallAsync<Dictionary<string, object>, Dictionary<string, object>>(cancellationToken);
+            string deviceCode = (string)functionResponse["deviceId"];
+            long expireAt = (long)functionResponse["expireAt"];
+            return new RequestDeviceCodeResponse { deviceCode = deviceCode, expireAt = expireAt };
+        }
+
+        public async Task<PollTokenWithDeviceCodeResponse> PollTokenWithDeviceCodeAsync(string deviceCode,
+            CancellationToken cancellationToken = default)
+        {
+            Dictionary<string, object> functionBody = new Dictionary<string, object> {
+                { "deviceId", deviceCode },
+            };
+            IHttpsCallableReference functionRef = _functions
+                .GetHttpsCallable("user-device-token")
+                .SetUnauthenticated(true);
+            return await functionRef
+                .CallAsync<Dictionary<string, object>, PollTokenWithDeviceCodeResponse>(functionBody, cancellationToken);
+        }
+
+        public void SignOut() =>
+            SetUserTokens(string.Empty, string.Empty);
     }
 }

@@ -54,9 +54,10 @@ namespace RGN.Impl.Firebase.Core.FunctionsHttpClient
             mComputeHmac = computeHmac;
         }
 
-        void IHttpsCallableReference.SetUnauthenticated(bool value)
+        IHttpsCallableReference IHttpsCallableReference.SetUnauthenticated(bool value)
         {
             isUnauthenticated = value;
+            return this;
         }
         Task IHttpsCallableReference.CallAsync(CancellationToken cancellationToken)
         {

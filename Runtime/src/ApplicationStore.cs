@@ -26,6 +26,11 @@ namespace RGN
         public const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.ready.gg/?url_redirect=";
         public const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
 
+        // Device flow WebForm URL
+        public const string DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-dev-oauth.firebaseapp.com";
+        public const string STAGING_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-staging-oauth.firebaseapp.com";
+        public const string PRODUCTION_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-prod-oauth.firebaseapp.com";
+
         // Marketplace URL
         public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.web.app/?url_redirect=";
         public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.web.app/?url_redirect=";
