@@ -5,6 +5,7 @@
     <assembly fullname="GetReady.RGN.Impl.Firebase.Runtime" preserve="all" />
     <assembly fullname="GetReady.RGN.SignIn.Email.Runtime" preserve="all" />
     <assembly fullname="RGNAchievement" preserve="all" />
+    <assembly fullname="RGNAds" preserve="all" />
     <assembly fullname="RGNAnalytics" preserve="all" />
     <assembly fullname="RGNCore" preserve="all" />
     <assembly fullname="RGNCreator" preserve="all" />
