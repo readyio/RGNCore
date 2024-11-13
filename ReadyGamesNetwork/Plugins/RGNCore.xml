@@ -670,6 +670,41 @@
             Initializes the module.
             </summary>
         </member>
+        <member name="T:RGN.Model.BinaryUrl">
+            <summary>
+            Represents a mapping of URLs to their respective size identifiers.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.BinaryUrl.contentType">
+            <summary>
+            The content type of the binary. Possible values are:
+            <list type="bullet">
+            <item><description><c>image/jpeg</c> - JPEG image</description></item>
+            <item><description><c>image/png</c> - PNG image</description></item>
+            <item><description><c>video/mp4</c> - MP4 video</description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="F:RGN.Model.BinaryUrl.source">
+            <summary>
+            The source URL of the image or video.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.BinaryUrl.large">
+            <summary>
+            The large URL of the image or video.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.BinaryUrl.medium">
+            <summary>
+            The medium URL of the image or video.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.BinaryUrl.small">
+            <summary>
+            The small URL of the image or video.
+            </summary>
+        </member>
         <member name="T:RGN.Model.ImageSize">
             <summary>
             Defines the available image sizes that can be requested or manipulated within the system.
@@ -1170,6 +1205,31 @@
             <param name="end">The end time.</param>
             <param name="intervalDuration">The interval duration.</param>
             <param name="intervalDelay">The interval delay.</param>
+        </member>
+        <member name="T:RGN.Model.Url">
+            <summary>
+            Represents a URL for redirection, with additional metadata like name, platform ID, and icon URL.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Url.url">
+            <summary>
+            Gets or sets the URL to redirect when the ad is clicked.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Url.name">
+            <summary>
+            Gets or sets the name of the URL.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Url.platformId">
+            <summary>
+            Gets or sets the platform ID of the URL.
+            </summary>
+        </member>
+        <member name="F:RGN.Model.Url.iconUrl">
+            <summary>
+            Gets or sets the icon URL for the specific link on the platform.
+            </summary>
         </member>
         <member name="T:RGN.ModuleDependencies.IRGNAnalytics">
             <summary>
