@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RGN.Impl.Firebase.Engine
 {
-    public sealed class EngineApp : IEngineApp
+    public sealed class EngineApp : IEngineApp, IEngineAppOpenUrlPatcher
     {
         bool IEngineApp.IsStandalonePlatform =>
             Application.platform == RuntimePlatform.OSXPlayer ||
@@ -18,6 +18,8 @@ namespace RGN.Impl.Firebase.Engine
         public ISystemInfo SystemInfo { get; }
         public IPlayerPrefs PlayerPrefs { get; }
 
+        private System.Action<string> _openUrlPatch;
+
         internal EngineApp()
         {
             SystemInfo = new SystemInfo();
@@ -31,6 +33,7 @@ namespace RGN.Impl.Firebase.Engine
             RGNUnityUpdater updater = go.AddComponent<RGNUnityUpdater>();
             return updater;
         }
+        
         public void DestroyGameObjectWithUpdater(IRGNUpdater rgnUpdater)
         {
             var asComponent = rgnUpdater as RGNUnityUpdater;
@@ -39,5 +42,18 @@ namespace RGN.Impl.Firebase.Engine
                 Object.Destroy(asComponent.gameObject);
             }
         }
+        
+        public void OpenUrl(string url)
+        {
+            if (_openUrlPatch != null)
+            {
+                _openUrlPatch(url);
+                return;
+            }
+            Application.OpenURL(url);
+        }
+
+        public void PatchOpenUrl(System.Action<string> openUrlAction) =>
+            _openUrlPatch = openUrlAction;
     }
 }

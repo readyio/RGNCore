@@ -2,6 +2,7 @@ using System;
 using System.Collections.Specialized;
 using RGN.DeepLink;
 using RGN.ImplDependencies.WebForm;
+using RGN.Utility;
 using UnityEngine;
 #if UNITY_IOS && !UNITY_EDITOR
 using RGN.DeepLink.iOS;
@@ -27,7 +28,7 @@ namespace RGN.WebForm
             OpenWebForm(url, redirectUrl);
         }
 
-        public void SignInWithDeviceCode(string deviceCode, string idToken, Action<string> openUrlAction = null)
+        public void SignInWithDeviceCode(string deviceCode, string idToken)
         {
             string url = GetWebFormDeviceFlowUrl() +
                          "&returnSecureToken=true" +
@@ -35,14 +36,7 @@ namespace RGN.WebForm
                          "&device_id=" + deviceCode +
                          "&idToken=" + idToken +
                          "&platform=" + GetCurrentPlatform();
-            if (openUrlAction != null)
-            {
-                openUrlAction.Invoke(url);
-            }
-            else
-            {
-                Application.OpenURL(url);
-            }
+            RGNCore.I.Dependencies.EngineApp.OpenUrl(url);
         }
 
         public void CreateWallet(WebFormCreateWalletRedirectDelegate redirectCallback, string idToken)
@@ -110,7 +104,7 @@ namespace RGN.WebForm
             if (urlParts.Length > 1)
             {
                 string parameters = urlParts[1];
-                NameValueCollection parsedParameters = RGNDeepLinkHttpUtility.ParseQueryString(parameters);
+                NameValueCollection parsedParameters = HttpUtility.ParseQueryArgs(parameters);
                 if (!string.IsNullOrEmpty(parsedParameters["token"]))
                 {
                     token = parsedParameters["token"];
