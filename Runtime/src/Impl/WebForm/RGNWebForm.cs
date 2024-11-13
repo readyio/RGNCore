@@ -85,7 +85,7 @@ namespace RGN.WebForm
             WebViewPlugin.ChangeURLScheme(redirectUrl);
             WebViewPlugin.OpenURL(url);
 #else
-            Application.OpenURL(url);
+            RGNCore.I.Dependencies.EngineApp.OpenUrl(url);
 #endif
         }
 
