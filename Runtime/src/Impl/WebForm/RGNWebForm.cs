@@ -52,7 +52,8 @@ namespace RGN.WebForm
             OpenWebForm(url, redirectUrl);
         }
 
-        public void OpenMarketplace(WebFormOpenMarketplaceRedirectDelegate redirectCallback, string idToken, string inventoryItemId = null)
+        public void OpenMarketplace(WebFormOpenMarketplaceRedirectDelegate redirectCallback, string idToken,
+            string inventoryItemId = null, string utmSource = null)
         {
             _onWebFormOpenMarketplaceRedirect = redirectCallback;
             string redirectUrl = RGNDeepLinkHttpUtility.GetDeepLinkRedirectScheme();
@@ -62,6 +63,10 @@ namespace RGN.WebForm
             if (!string.IsNullOrEmpty(inventoryItemId))
             {
                 url += "&inventoryItemId=" + inventoryItemId;
+            }
+            if (!string.IsNullOrEmpty(utmSource))
+            {
+                url += "&utm_source=" + utmSource;
             }
             OpenWebForm(url, redirectUrl);
         }
