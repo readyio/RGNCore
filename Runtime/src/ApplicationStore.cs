@@ -27,14 +27,14 @@ namespace RGN
         public const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.ready.gg/?url_redirect=";
 
         // Device flow WebForm URL
-        public const string DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-dev-oauth.firebaseapp.com";
-        public const string STAGING_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-staging-oauth.firebaseapp.com";
-        public const string PRODUCTION_DEVICE_FLOW_SIGN_IN_URL = "https://webgldemo-prod-oauth.firebaseapp.com";
+        public const string DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL = "https://dev-device-oauth.myplay.network";
+        public const string STAGING_DEVICE_FLOW_SIGN_IN_URL = "https://staging-device-oauth.myplay.network";
+        public const string PRODUCTION_DEVICE_FLOW_SIGN_IN_URL = "https://device-oauth.myplay.network";
 
         // Marketplace URL
-        public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.web.app/?url_redirect=";
-        public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.web.app/?url_redirect=";
-        public const string PRODUCTION_MARKETPLACE_URL = "https://marketplace.web.app/?url_redirect=";
+        public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.myplay.network/?url_redirect=";
+        public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.myplay.network/?url_redirect=";
+        public const string PRODUCTION_MARKETPLACE_URL = "https://marketplace.myplay.network/?url_redirect=";
 
         private static int sSeedNumber = int.MinValue;
 
