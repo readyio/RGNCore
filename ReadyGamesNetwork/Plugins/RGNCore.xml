@@ -608,6 +608,55 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="T:RGN.ImplDependencies.Core.Messaging.IMessaging">
+            <summary>
+            This internface is used to abstract the Firebase Messaging implementation from the core package
+            </summary>
+        </member>
+        <member name="E:RGN.ImplDependencies.Core.Messaging.IMessaging.TokenReceived">
+            <summary>
+            This event is fired when the Firebase Messaging token is received. Works only on Android and iOS
+            </summary>
+        </member>
+        <member name="E:RGN.ImplDependencies.Core.Messaging.IMessaging.MessageReceived">
+            <summary>
+            This event is fired when a message is received when the app is in foreground
+            </summary>
+        </member>
+        <member name="M:RGN.ImplDependencies.Core.Messaging.IMessaging.TopicSubscribeAsync(System.String)">
+            <summary>
+            Subscribes the client to a Firebase Messaging topic
+            </summary>
+            <param name="topic">The topic name to subscribe</param>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Core.Messaging.IMessaging.TopicUnsubscribeAsync(System.String)">
+            <summary>
+            Unsubscribes the client from receiving Firebase messages for specific topic.
+            </summary>
+            <param name="topic">The topic name to unsubscribe</param>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Core.Messaging.IMessaging.RequestPermissionAsync">
+            <summary>
+            Explicit request to get the permission from user for receiving messages.
+            The permission is requested as well when the <see cref="E:RGN.ImplDependencies.Core.Messaging.IMessaging.TokenReceived"/> or <see cref="E:RGN.ImplDependencies.Core.Messaging.IMessaging.MessageReceived"/>
+            events are subscribed to.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Core.Messaging.IMessaging.GetTokenAsync">
+            <summary>
+            Get the Firebase Messaging user token to send the messages to individual users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RGN.ImplDependencies.Core.Messaging.IMessaging.DeleteTokenAsync">
+            <summary>
+            Delete the user Messaging token.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:RGN.IRGNCore">
             <summary>
             Ready Games Network core class. Is resposible for user auth and modules initialization
