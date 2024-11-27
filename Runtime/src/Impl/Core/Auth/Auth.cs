@@ -6,6 +6,7 @@ using RGN.ImplDependencies.Core.Auth;
 using RGN.ImplDependencies.Core.Functions;
 using RGN.ImplDependencies.Engine;
 using RGN.ImplDependencies.Serialization;
+using RGN.Jwt;
 
 namespace RGN.Impl.Firebase.Core.Auth
 {
@@ -55,9 +56,14 @@ namespace RGN.Impl.Firebase.Core.Auth
 
         public IUser SetUserTokens(string idToken, string refreshToken)
         {
-            CurrentUser = string.IsNullOrEmpty(idToken) 
-                ? null 
-                : new User(this, _json, idToken, refreshToken);
+            if (!string.IsNullOrEmpty(idToken) && !string.IsNullOrEmpty(refreshToken))
+            {
+                CurrentUser = JwtDecoder.IsValid(idToken) ? new User(this, _json, idToken, refreshToken) : null;
+            }
+            else
+            {
+                CurrentUser = null;
+            }
             
             SaveUserTokens();
 

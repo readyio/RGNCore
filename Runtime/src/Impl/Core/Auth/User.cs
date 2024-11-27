@@ -44,16 +44,10 @@ namespace RGN.Impl.Firebase.Core.Auth
                     _userIdTokenInfo = CreateTokenInfo(tokensPair.IdToken);
                     mAuth.SaveUserTokens();
                 }
-                catch (HttpRequestException httpException)
+                catch (HttpRequestException)
                 {
-                    if (httpException.StatusCode == 400)
-                    {
-                        mAuth.SignOut();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    mAuth.SignOut();
+                    throw;
                 }
             }
             return IdToken;
