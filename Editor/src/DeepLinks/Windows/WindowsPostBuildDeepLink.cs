@@ -28,7 +28,7 @@ namespace RGN.MyEditor
                 writer.Flush();
             }
 
-            AssetDatabase.CopyAsset("Packages/io.getready.rgn.signin.email/Plugins/Windows/RGNDeepLinkReflector.exe",
+            AssetDatabase.CopyAsset("Packages/io.getready.rgn.core/Plugins/Windows/RGNDeepLinkReflector.exe",
                 Path.Combine(Path.GetDirectoryName(pathToBuiltProject)!, $"{Application.productName}DL.exe"));
         }
     }
