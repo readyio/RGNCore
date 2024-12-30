@@ -22,19 +22,19 @@ namespace RGN
             APPLICATION_STORE_FILE_NAME_WITH_EXTENSION;
 
         // Email WebForm sign in URL
-        public const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.myplay.network/?url_redirect=";
-        public const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.myplay.network/?url_redirect=";
-        public const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.myplay.network/?url_redirect=";
+        public const string DEVELOPMENT_EMAIL_SIGN_IN_URL = "https://development-oauth.theplay.network/?url_redirect=";
+        public const string STAGING_EMAIL_SIGN_IN_URL = "https://staging-oauth.theplay.network/?url_redirect=";
+        public const string PRODUCTION_EMAIL_SIGN_IN_URL = "https://oauth.theplay.network/?url_redirect=";
 
         // Device flow WebForm URL
-        public const string DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL = "https://dev-device-oauth.myplay.network";
-        public const string STAGING_DEVICE_FLOW_SIGN_IN_URL = "https://staging-device-oauth.myplay.network";
-        public const string PRODUCTION_DEVICE_FLOW_SIGN_IN_URL = "https://device-oauth.myplay.network";
+        public const string DEVELOPMENT_DEVICE_FLOW_SIGN_IN_URL = "https://development-device-oauth.theplay.network";
+        public const string STAGING_DEVICE_FLOW_SIGN_IN_URL = "https://staging-device-oauth.theplay.network";
+        public const string PRODUCTION_DEVICE_FLOW_SIGN_IN_URL = "https://device-oauth.theplay.network";
 
         // Marketplace URL
-        public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.myplay.network/?url_redirect=";
-        public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.myplay.network/?url_redirect=";
-        public const string PRODUCTION_MARKETPLACE_URL = "https://marketplace.myplay.network/?url_redirect=";
+        public const string DEVELOPMENT_MARKETPLACE_URL = "https://development-marketplace.theplay.network/?url_redirect=";
+        public const string STAGING_MARKETPLACE_URL = "https://staging-marketplace.theplay.network/?url_redirect=";
+        public const string PRODUCTION_MARKETPLACE_URL = "https://marketplace.theplay.network/?url_redirect=";
 
         private static int sSeedNumber = int.MinValue;
 
